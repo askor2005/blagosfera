@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jcrRepository" class="org.apache.jackrabbit.rmi.repository.URLRemoteRepository">
+        <constructor-arg value="${jcr.repository.url}"/>
+    </bean>
+
+    <bean id="jcrSessionFactory" class="org.springframework.extensions.jcr.JcrSessionFactory">
+        <property name="repository" ref="jcrRepository"/>
+        <property name="credentials">
+            <bean class="javax.jcr.SimpleCredentials">
+                <constructor-arg name="userID" value="${jcr.username}"/>
+                <constructor-arg name="password" value="${jcr.password}"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="jcrTemplate" class="org.springframework.extensions.jcr.JcrTemplate">
+        <property name="sessionFactory" ref="jcrSessionFactory"/>
+        <property name="allowCreate" value="true"/>
+    </bean>
+
+</beans>

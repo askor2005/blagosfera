@@ -1,0 +1,1956 @@
+<style>
+    #createPoFieldsBlock{
+        display: none;
+    }
+
+    .inputWithButtonBlock {
+        width: 100%;
+        height: 34px;
+        position: relative;
+    }
+    .inputWithButtonBlock .inputBlock {
+        position: absolute;
+        left: 0px;
+        right: 100px;
+        top: 0px;
+    }
+    .inputWithButtonBlock .buttonBlock {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 100px;
+        text-align: right;
+    }
+    .chooseFieldBlock {
+        /*border: 1px solid #ddd; border-radius: 4px; padding: 5px;*/
+    }
+    label.chooseVariantFieldInVoting {
+        display: none;
+    }
+
+    .dateBatchVotingSettings .input-group {width:100%; padding-top: 10px; padding-bottom: 10px;}
+</style>
+
+<div id="createPoFieldsBlock">
+    <input type="hidden" id="initFormData" value="false" />
+    <div class="form-group infoBlock">
+        Заполните расположенные ниже поля данных информацией о создаваемом Вами юридическом лице.
+        После того, как Вы заполните все поля данных, нажмите кнопку "Начать процедуру создания юридического лица".
+        Вам будет необходимо дождаться согласия всех предполагаемых учредителей,
+        после чего Вы сможете приступить к организации Учредительного собрания и создания Учредительных документов для регистрации в Налоговой.
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Название Потребительского Общества
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>ИНН юридического лица</label>
+                            <input class="form-control" placeholder="ИНН юридического лица" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poName">
+                            <label>Полное название на русском языке</label>
+                            <input id="organizationName" class="form-control" placeholder="Полное название на русском языке" />
+                            <span class="help-block">Полное название пишется с организационно-правовой формой (Например: Потребительское общество "Ромашка")</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poNameShort">
+                            <label>Короткое название на русском языке</label>
+                            <input id="organizationNameShort" class="form-control" placeholder="Короткое название на русском языке" />
+                            <span class="help-block">Короткое название пишется с сокращённой организационно-правовой формой (Например: ПО "Ромашка")</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poEngName">
+                            <label>Полное название на английском языке</label>
+                            <input id="organizationEngName" class="form-control" placeholder="Полное название на английском языке" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poEngNameShort">
+                            <label>Короткое название на английском языке</label>
+                            <input id="organizationEngNameShort" class="form-control" placeholder="Короткое название на английском языке" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Номер регистрации в госреестре (ЕГРЮЛ)</label>
+                            <input class="form-control" placeholder="Номер регистрации в госреестре (ЕГРЮЛ)" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Номер постановки на учёт в ПФР</label>
+                            <input class="form-control" placeholder="Номер постановки на учёт в ПФР" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Номер постановки на учёт в ФОМС</label>
+                            <input class="form-control" placeholder="Номер постановки на учёт в ФОМС" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Номер постановки на учёт в органы статистики</label>
+                            <input class="form-control" placeholder="Номер постановки на учёт в органы статистики" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Учредители
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFounders">
+                            <label>Имя учредителя</label>
+                            <div id="foundersBlock" class="inputWithButtonBlock">
+                                <div id="founderSearchBlock" class="inputBlock">
+                                    <input id="founderName" class="form-control" placeholder="Начните вводить имя учредителя" />
+                                </div>
+                                <div id="addFounderBlock" class="buttonBlock">
+                                    <button id="addFounder" class="btn btn-info" disabled="disabled">Добавить</button>
+                                </div>
+                            </div>
+                            <div id="foundersTable"></div>
+                            <span class="help-block help-block-info">
+                                Учредитель должен быть идентифицированным пользователем Системы.
+                                Если человек, которого Вы желаете добавить в список учредителей,
+                                не является идентифицированным пользователем,
+                                пригласите его в Систему и дождитесь его идентификации.
+                                <br/>
+                                Минимальное количество учредителей для создания Потребительского общества - <span id="minCountFoundersText"></span>.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" >
+                            <div>
+                                <label>
+                                    <input type="radio" name="participantsSourceType" id="votingForParticipants" />
+                                    Провести выборы членов Совета Общества и членов ревизионной комиссии
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="radio" name="participantsSourceType" id="acceptParticipants" />
+                                    Выбрать заранее членов Совета Общества, членов ревизионной комиссии и провести голосования по их утверждению
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Цели и задачи
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poShortTargets">
+                            <label>Цели и задачи юридического лица (идёт в Устав)</label>
+                            <span class="help-block help-block-info">Значение данного поля используется в Уставе и в объединении.</span>
+                            <textarea class="form-control" id="shortTargets" placeholder="Краткое описание целей и задач" rows="4" ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFullTargets">
+                            <label>Развёрнутое описание целей и задач юридического лица (идёт в описание Объединения)</label>
+                            <span class="help-block help-block-info">Значение данного поля используется в объединении.</span>
+                            <textarea id="fullTargets"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Виды деятельности согласно ОКВЭД
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poMainOkved">
+                            <label>Основной вид деятельности юридического лица</label>
+                            <input type="text" class="form-control" id="mainOkved" excluded_values="additionalOkveds" />
+                            <span class="help-block help-block-info">Выберите основной вид деятельности согласно классификатору ОКВЭД</span>
+                        </div>
+                        <div class="form-group" id="poAdditionalOkveds">
+                            <label>Дополнительные виды деятельности юридического лица</label>
+                            <input type="text" class="form-control" id="additionalOkveds" excluded_values="mainOkved" />
+                            <span class="help-block help-block-info">Выберите дополнительные виды деятельности согласно классификатору ОКВЭД (Максимум 56)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Сфера деятельности
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poActivityScope" >
+                            <!--<label>Сфера деятельности</label>-->
+                            <!--<br/>-->
+                            <div id="activityScopes" data-field-name='activity_scope' rameraListEditorName="activity_scope_id"></div>
+                            <span class="help-block help-block-info"></span>
+                            <span style="display : none;" class="help-block help-block-error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" data-group-name="organizationAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Юридический адрес
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+                <a class="pull-right collapse-group-control small" id="copyFromFactAddress" href="#">Скопировать из фактического адреса</a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poCountry">
+                            <label>Страна</label>
+                            <input type="hidden" class="form-control" data-field-internal-name="organizationCountry" id="organizationCountryId" />
+                            <input type="hidden" class="country-control" data-field-internal-name="organizationCountry_NAME" />
+                            <div id="organizationCountry" rameraListEditorName="country_id"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Индекс</label>
+                            <input type="text" class="form-control" data-field-name="organizationPostalCode" id="organizationPostalCode" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poRegion">
+                            <label>Регион</label>
+                            <input type="hidden" data-field-name="regionCode" id="regionCode" />
+                            <input type="text" class="form-control" data-field-name="organizationRegion" data-field-type="REGION" id="organizationRegion" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Район</label>
+                            <input type="hidden" data-field-name="districtDescriptionShort" id="districtDescriptionShort" />
+                            <input type="text" class="form-control" data-field-name="organizationDistrict" data-field-type="DISTRICT" id="organizationDistrict" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poCity">
+                            <label>Населённый пункт</label>
+                            <input type="hidden" data-field-name="cityDescriptionShort" id="cityDescriptionShort" />
+                            <input type="text" class="form-control" data-field-name="organizationCity" data-field-type="CITY" id="organizationCity" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poStreet">
+                            <label>Улица</label>
+                            <input type="hidden" data-field-name="streetDescriptionShort" id="streetDescriptionShort" />
+                            <input type="text" class="form-control" data-field-name="organizationStreet" data-field-type="STREET" id="organizationStreet" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poBuilding">
+                            <label>Дом</label>
+                            <input type="hidden" data-field-name="organizationBuilding_DESCRIPTION" id="organizationBuilding_DESCRIPTION" />
+                            <input type="text" class="form-control" data-field-name="organizationBuilding" data-field-type="BUILDING" id="organizationBuilding" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poRoom">
+                            <label>Офис</label>
+                            <input type="hidden" data-field-name="organizationOffice_DESCRIPTION" />
+                            <input type="text" class="form-control" data-field-name="organizationOffice" id="organizationOffice" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Адрес</label>
+                            <input type="text" class="form-control" disabled="disabled" data-field-name="organizationGeoLocation" data-field-type="GEO_LOCATION"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Координаты</label>
+                            <input type="text" class="form-control" disabled="disabled" data-field-name="organizationGeoPosition" data-field-type="GEO_POSITION"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poOfficeOwnerShipType">
+                            <label>Тип владения офисом</label>
+                            <div class="fieldContainer" id="fieldContainer_OFFICE_OWNERSHIP_TYPE">
+                                <div class="universalList" rameralisteditorname="OFFICE_OWNERSHIP_TYPE" id="officeOwnerShipType"></div>
+                                <div class="fieldFileContainer" id="fieldFileContainer_OFFICE_OWNERSHIP_TYPE">
+                                    <a class="browseFieldFile" has_rights_to_edit="true" file_limit="-1" title="Просмотреть прикреплённые файлы" field_id="officeOwnerShipType" field_files_url="" field_files_save_url=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="display: none;">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poOfficeRentPeriod">
+                            <label>Срок аренды</label>
+                            <input type="text" class="form-control" id="officeRentPeriod"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" name="geo-block">
+                    <br>
+                    <div id="organizationAddress_MAP" class="panel-map" style="height : 300px;"></div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" data-group-name="organizationFactAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Фактический адрес
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+                <a class="pull-right collapse-group-control small" id="copyFromUrAddress" href="#">Скопировать из юридического адреса</a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactCountry">
+                            <label>Страна</label>
+                            <input type="hidden" class="form-control" data-field-internal-name="organizationFactCountry" id="organizationFactCountryId" />
+                            <input type="hidden" class="country-control" data-field-internal-name="organizationFactCountry_NAME" />
+                            <div id="organizationFactCountry" rameraListEditorName="country_id"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Индекс</label>
+                            <input type="text" class="form-control" data-field-name="organizationFactPostalCode" id="organizationFactPostalCode" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactRegion">
+                            <label>Регион</label>
+                            <input type="hidden" data-field-name="factRegionCode" id="factRegionCode" />
+                            <input type="text" class="form-control" data-field-name="organizationFactRegion" data-field-type="REGION" id="organizationFactRegion" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Район</label>
+                            <input type="hidden" data-field-name="factDistrictDescriptionShort" id="factDistrictDescriptionShort" />
+                            <input type="text" class="form-control" data-field-name="organizationFactDistrict" data-field-type="DISTRICT" id="organizationFactDistrict" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactCity">
+                            <label>Населённый пункт</label>
+                            <input type="hidden" data-field-name="factCityDescriptionShort" id="factCityDescriptionShort" />
+                            <input type="text" class="form-control" data-field-name="organizationFactCity" data-field-type="CITY" id="organizationFactCity" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactStreet">
+                            <label>Улица</label>
+                            <input type="hidden" data-field-name="factStreetDescriptionShort" id="factStreetDescriptionShort" />
+                            <input type="text" class="form-control" data-field-name="organizationFactStreet" data-field-type="STREET" id="organizationFactStreet" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactBuilding">
+                            <label>Дом</label>
+                            <input type="hidden" data-field-name="organizationFactBuilding_DESCRIPTION" id="organizationFactBuilding_DESCRIPTION" />
+                            <input type="text" class="form-control" data-field-name="organizationFactBuilding" data-field-type="BUILDING" id="organizationFactBuilding" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactRoom">
+                            <label>Офис</label>
+                            <input type="hidden" data-field-name="organizationFactOffice_DESCRIPTION" />
+                            <input type="text" class="form-control" data-field-name="organizationFactOffice" id="organizationFactOffice" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Адрес</label>
+                            <input type="text" class="form-control" disabled="disabled" data-field-name="organizationFactGeoLocation" data-field-type="GEO_LOCATION"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Координаты</label>
+                            <input type="text" class="form-control" disabled="disabled" data-field-name="organizationFactGeoPosition" data-field-type="GEO_POSITION"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactOfficeOwnerShipType">
+                            <label>Тип владения офисом</label>
+                            <div class="fieldContainer" id="fieldContainer_FACT_OFFICE_OWNERSHIP_TYPE">
+                                <div class="universalList" rameralisteditorname="FACT_OFFICE_OWNERSHIP_TYPE" id="factOfficeOwnerShipType"></div>
+                                <div class="fieldFileContainer" id="fieldFileContainer_FACT_OFFICE_OWNERSHIP_TYPE">
+                                    <a class="browseFieldFile" has_rights_to_edit="true" file_limit="-1" title="Просмотреть прикреплённые файлы" field_id="factOfficeOwnerShipType" field_files_url="" field_files_save_url=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="display: none;">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poFactOfficeRentPeriod">
+                            <label>Срок аренды</label>
+                            <input type="text" class="form-control" id="factOfficeRentPeriod"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" name="geo-block">
+                    <br>
+                    <div id="organizationFactAddress_MAP" class="panel-map" style="height : 300px;"></div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" data-group-name="organizationAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Банковские реквизиты
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>КПП</label>
+                            <input class="form-control" placeholder="КПП" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>ОКПО</label>
+                            <input class="form-control" placeholder="ОКПО" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>ОГРН</label>
+                            <input class="form-control" placeholder="ОГРН" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Расчетный счёт</label>
+                            <input class="form-control" placeholder="Расчётный счёт" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>В каком банке</label>
+                            <input class="form-control" placeholder="В каком банке" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Кор. счёт</label>
+                            <input class="form-control" placeholder="Кор. счет" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>БИК</label>
+                            <input class="form-control" placeholder="БИК" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default" data-group-name="organizationAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Руководство
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poDirectorPosition">
+                            <label>Наименование должности</label>
+                            <div id="directorPosition" rameralisteditorname="COMMUNITY_DIRECTOR_POSITION"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Руководство</label>
+                            <input class="form-control" placeholder="Руководство" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после проведения учредительного собрания</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Номер протокола о назначения руководителя</label>
+                            <input class="form-control" placeholder="Номер протокола о назначения руководителя" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после проведения учредительного собрания</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата начала полномочий</label>
+                            <input class="form-control" placeholder="Дата начала полномочий" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата окончания полномочий</label>
+                            <input class="form-control" placeholder="Дата окончания полномочий" disabled="disabled"/>
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" data-group-name="organizationAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Главный Бухгалтер
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Главный Бухгалтер</label>
+                            <input class="form-control" placeholder="Главный Бухгалтер" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Приказ о назначении</label>
+                            <input class="form-control" placeholder="Приказ о назначении" disabled="disabled"/>
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата начала полномочий</label>
+                            <input class="form-control" placeholder="Дата начала полномочий" disabled="disabled"/>
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата окончания полномочий</label>
+                            <input class="form-control" placeholder="Дата окончания полномочий" disabled="disabled"/>
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" data-group-name="organizationAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Контакты
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Рабочий телефон организации</label>
+                            <input class="form-control" placeholder="Рабочий телефон организации" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дополнительный телефон организации</label>
+                            <input class="form-control" placeholder="Дополнительный телефон организации" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дополнительный телефон организации</label>
+                            <input class="form-control" placeholder="Дополнительный телефон организации" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Сайт организации</label>
+                            <input class="form-control" placeholder="Сайт организации" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Электронная почта организации</label>
+                            <input class="form-control" placeholder="Электронная почта организации" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Члены Совета Общества
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row participantsInSovietBlock" style="display: none;" id="participantsInSovietChooseBlock">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poParticipantsInSoviet">
+                            <label>Имя учредителя</label>
+                            <div id="sovietBlock" class="inputWithButtonBlock">
+                                <div id="sovietSearchBlock" class="inputBlock">
+                                    <select id="participantsSoviet" class="selectpicker" data-live-search="true" data-hide-disabled="true" data-width="100%" title="" ></select>
+                                </div>
+                                <div id="addParticipantSovietBlock" class="buttonBlock">
+                                    <button id="addParticipantSoviet" class="btn btn-info" disabled="disabled">Добавить</button>
+                                </div>
+                            </div>
+                            <div id="participantsSovietTable"></div>
+                            <span class="help-block">
+                                Минимальное количество членов Совета Потребительского общества - <span class="minCountSovietText"></span>.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row participantsInSovietBlock" style="display: none;" id="participantsInSovietCountBlock">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poCountParticipantsInSoviet">
+                            <label>Количество членов Совета Общества</label>
+                            <input type="text" class="form-control" id="countParticipantsInSoviet" placeholder="Количество членов Совета Общества"/>
+                            <span class="help-block">
+                                Минимальное количество членов Совета Потребительского общества - <span class="minCountSovietText"></span>.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Протокол общего собрания Потребительского Общества по выборам Совета</label>
+                            <input class="form-control" placeholder="Протокол общего собрания Потребительского Общества по выборам Совета" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата начала полномочий членов Совета Потребительского Общества</label>
+                            <input class="form-control" placeholder="Дата начала полномочий членов Совета Потребительского Общества" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата окончания полномочий членов Совета Потребительского Общества</label>
+                            <input class="form-control" placeholder="Дата окончания полномочий членов Совета Потребительского Общества" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Протокол собрания Совета Потребительского Общества по выборам председателя</label>
+                            <input class="form-control" placeholder="Протокол собрания Совета Потребительского Общества по выборам председателя" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата начала полномочий Председателя Совета Потребительского Общества</label>
+                            <input class="form-control" placeholder="Дата начала полномочий Председателя Совета Потребительского Общества" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата окончания полномочий Председателя Совета Потребительского Общества</label>
+                            <input class="form-control" placeholder="Дата окончания полномочий Председателя Совета Потребительского Общества" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" data-group-name="organizationAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Правление Потребительского Общества
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Председатель Правления</label>
+                            <input class="form-control" placeholder="Председатель Правления" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Члены Правления</label>
+                            <input class="form-control" placeholder="Члены Правления" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Протокол собрания Совета Потребительского Общества о назначении Председателя Правления</label>
+                            <input class="form-control" placeholder="Протокол собрания Совета Потребительского Общества о назначении Председателя Правления" disabled="disabled" />
+                            <span class="help-block">Поле заполняется после регистрации юридического лица в Государственных органах</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" data-group-name="organizationAddress">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Паевые и Членские взносы
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poEntranceShareFees">
+                            <label>Вступительный взнос (Физические лица)</label>
+                            <div style="display: inline-block; width: 90%">
+                                <input class="form-control" placeholder="Вступительный взнос (Физические лица)" id="entranceShareFees" change_step="1000" />
+                            </div>
+                            <span style="display: inline-block; vertical-align: top; margin: 7px;">руб.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poMinShareFees">
+                            <label>Минимальный паевой взнос (Физические лица)</label>
+                            <div style="display: inline-block; width: 90%">
+                                <input class="form-control" placeholder="Минимальный паевой взнос (Физические лица)" id="minShareFees" change_step="1000" />
+                            </div>
+                            <span style="display: inline-block; vertical-align: top; margin: 7px;">руб.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poMembershipFees">
+                            <label>Членский взнос (Физические лица)</label>
+                            <div style="display: inline-block; width: 90%">
+                                <input class="form-control" placeholder="Членский взнос (Физические лица)" id="membershipFees" change_step="1000" />
+                            </div>
+                            <span style="display: inline-block; vertical-align: top; margin: 7px;">руб.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poCommunityEntranceShareFees">
+                            <label>Вступительный взнос (Юридического лица)</label>
+                            <div style="display: inline-block; width: 90%">
+                                <input class="form-control" placeholder="Вступительный взнос (Юридические лица)" id="communityEntranceShareFees" change_step="1000" />
+                            </div>
+                            <span style="display: inline-block; vertical-align: top; margin: 7px;">руб.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poCommunityMinShareFees">
+                            <label>Минимальный паевой взнос (Юридического лица)</label>
+                            <div style="display: inline-block; width: 90%">
+                                <input class="form-control" placeholder="Минимальный паевой взнос (Юридические лица)" id="communityMinShareFees" change_step="1000" />
+                            </div>
+                            <span style="display: inline-block; vertical-align: top; margin: 7px;">руб.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poCommunityMembershipFees">
+                            <label>Членский взнос (Юридического лица)</label>
+                            <div style="display: inline-block; width: 90%">
+                                <input class="form-control" placeholder="Членский взнос (Юридические лица)" id="communityMembershipFees" change_step="1000" />
+                            </div>
+                            <span style="display: inline-block; vertical-align: top; margin: 7px;">руб.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Члены ревизионной комиссии Общества
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row participantsInAuditCommitteeBlock" style="display: none;" id="participantsInAuditCommitteeChooseBlock">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poParticipantsInAuditCommittee">
+                            <label>Имя учредителя</label>
+                            <div id="auditCommitteeBlock" class="inputWithButtonBlock">
+                                <div id="auditCommitteeSearchBlock" class="inputBlock">
+                                    <select id="participantsAuditCommittee" class="selectpicker" data-live-search="true" data-hide-disabled="true" data-width="100%" title="" ></select>
+                                </div>
+                                <div id="addParticipantAuditCommitteeBlock" class="buttonBlock">
+                                    <button id="addParticipantAuditCommittee" class="btn btn-info" disabled="disabled">Добавить</button>
+                                </div>
+                            </div>
+                            <div id="participantsAuditCommitteeTable"></div>
+                            <span class="help-block help-block-info">
+                                Члены ревизионной комиссии не должны быть из числа членов Совета Общества
+                                <br/>
+                                Минимальное количество членов ревизионной комиссии Потребительского общества - <span class="minCountAuditText"></span>.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row participantsInAuditCommitteeBlock" style="display: none;" id="participantsInAuditCommitteeCountBlock">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poCountParticipantsInAuditCommittee">
+                            <label>Количество членов ревизионной комиссии</label>
+                            <input type="text" class="form-control" id="countParticipantsInAuditCommittee" placeholder="Количество членов ревизионной комиссии"/>
+                            <span class="help-block">
+                                Минимальное количество членов ревизионной комиссии Потребительского общества - <span class="minCountAuditText"></span>.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Протокол общего собрания Потребительского Общества по выборам ревизионной комиссии</label>
+                            <input class="form-control" placeholder="Протокол общего собрания Потребительского Общества по выборам ревизионной комиссии" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата начала полномочий членов ревизионной комиссии</label>
+                            <input class="form-control" placeholder="Дата начала полномочий членов ревизионной комиссии" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Дата окончания полномочий членов ревизионной комиссии</label>
+                            <input class="form-control" placeholder="Дата окончания полномочий членов ревизионной комиссии" disabled="disabled" />
+                            <span class="help-block">Поле заполняется автоматически</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" id="regulationBlock">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Устав
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+
+                <div class="row">
+                    <ul class="nav nav-tabs nav-justified" id="fieldsTabs">
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#writeRegulation-data" class="chooseSourcePoRegulation" id="writeRegulation">
+                                Написать Устав Потребительского Общества
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#generateRegulation-data" class="chooseSourcePoRegulation" id="generateRegulation">
+                                Сгенерировать Устав Потребительского Общества
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="generateRegulationParametersBlock" style="display: none;">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poHasStamp">
+                                <div class="chooseFieldBlock">
+                                    <label>
+                                        <input type="checkbox" id="hasStamp" class="variantField" />
+                                        Потребительское общество имеет печать с полным наименованием
+                                        Потребительского общества на русском языке, штампы и бланки со своим наименованием</label>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="hasStampInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poWhoApprovePosition">
+                                <div class="chooseFieldBlock">
+                                    <label>Кто утверждает положения Потребительского Общества?</label>
+                                    <div id="whoApprovePosition" rameraListEditorName="whoApprovePosition"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="whoApprovePositionInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poCountDaysToQuiteFromPo">
+                                <div class="chooseFieldBlock">
+                                    <label>В течение скольких дней Совет рассматривает заявление пайщика о выходе из Потребительского Общества?</label>
+                                    <div style="display: inline-block; width: 90%">
+                                        <input type="text" class="form-control variantField" id="countDaysToQuiteFromPo" />
+                                    </div>
+                                    <span style="display: inline-block; vertical-align: top; margin: 7px;">дней</span>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="countDaysToQuiteFromPoInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poWhoApproveDatePay">
+                                <div class="chooseFieldBlock">
+                                    <label>Дату выплат выбывающему пайщику утверждает</label>
+                                    <div id="whoApproveDatePay" rameraListEditorName="whoApproveDatePay"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="whoApproveDatePayInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="chooseFieldBlock" id="poCountMonthToSharerPay">
+                                    <label>Количество месяцев на выплату выбывшему пайщику</label>
+                                    <div style="display: inline-block; width: 90%">
+                                        <input type="text" class="form-control variantField" id="countMonthToSharerPay" />
+                                    </div>
+                                    <span style="display: inline-block; vertical-align: top; margin: 7px;">мес.</span>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="countMonthToSharerPayInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poStartPeriodPay">
+                                <div class="chooseFieldBlock">
+                                    <label>Момент с которого начинает отчитываться время на выплату выбывшему пайщику</label>
+                                    <div id="startPeriodPay" rameraListEditorName="startPeriodPay"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="startPeriodPayInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poOnShareDeath">
+                                <div class="chooseFieldBlock">
+                                    <label>Что происходит в случае смерти пайщика?</label>
+                                    <label>
+                                        <input type="radio" name="onShareDeath" value="childMayBeSharer" />
+                                        В случае смерти пайщика его наследники могут быть приняты в
+                                        Потребительское общество решением Совета Общества на основании заявления
+                                        (пункт 3.1 настоящего Устава) с приложением свидетельства о наследстве
+                                        (иное может быть предусмотрено Уставом)
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="onShareDeath" value="payToChild" />
+                                        В случае смерти пайщика Потребительское общество передает наследникам его
+                                        паевой взнос и кооперативные выплаты в порядке, предусмотренном статьями
+                                        5.3 - 5.5 настоящего Устава. Право участия в общих собраниях Потребительского
+                                        общества и другие права пайщиков указанным наследникам не передаются.)
+                                    </label>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="onShareDeathInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poMinCreditApproveSovietPO">
+                                <div class="chooseFieldBlock">
+                                    <label>Общее собрание пайщиков Потребительского Общества принимает решение о получении заемных средств на сумму свыше</label>
+                                    <div style="display: inline-block; width: 90%">
+                                        <input type="text" class="form-control variantField" id="minCreditApproveSovietPO" />
+                                    </div>
+                                    <span style="display: inline-block; vertical-align: top; margin: 7px;">руб.</span>
+
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="minCreditApproveSovietPOInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poMinContractSumApproveSovietPO">
+                                <div class="chooseFieldBlock">
+                                    <label>Общее собрание пайщиков Потребительского Общества утверждает сделки на сумму (в МРОТ) свыше</label>
+                                    <div style="display: inline-block; width: 90%">
+                                        <input type="text" class="form-control variantField" id="minContractSumApproveSovietPO" />
+                                    </div>
+                                    <span style="display: inline-block; vertical-align: top; margin: 7px;">МРОТ</span>
+
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="minContractSumApproveSovietPOInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poSovietOfficePeriod">
+                                <div class="chooseFieldBlock">
+                                    <label>Срок, на который избираются члены Совета и Председатель Совета</label>
+                                    <div id="sovietOfficePeriod" rameraListEditorName="organizationOfficePeriod"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="sovietOfficePeriodInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poPresidentOfSovietKindWorking">
+                                <div class="chooseFieldBlock">
+                                    <label>На какой основе работает Председатель Совета Общества</label>
+                                    <div id="presidentOfSovietKindWorking" rameraListEditorName="presidentOfSovietKindWorking"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="presidentOfSovietKindWorkingInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poParticipantsOfBoardOfficePeriod">
+                                <div class="chooseFieldBlock">
+                                    <label>Срок, на который избираются члены и Председатель Правления</label>
+                                    <div id="participantsOfBoardOfficePeriod" rameraListEditorName="organizationOfficePeriod"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="participantsOfBoardOfficePeriodInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poCountDaysPerMeetingOfBoard">
+                                <div class="chooseFieldBlock">
+                                    <label>Заседание Правления проходит не реже, чем раз в сколько дней</label>
+                                    <div style="display: inline-block; width: 90%">
+                                        <input type="text" id="countDaysPerMeetingOfBoard" class="form-control variantField" />
+                                    </div>
+                                    <span style="display: inline-block; vertical-align: top; margin: 7px;">дней</span>
+
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="countDaysPerMeetingOfBoardInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poQuorumMeetingOfBoard">
+                                <div class="chooseFieldBlock">
+                                    <label>Кворум заседаний членов Правления Общества (в процентах)</label>
+                                    <div style="display: inline-block; width: 90%">
+                                        <input type="text" id="quorumMeetingOfBoard" class="form-control variantField" value="51" />
+                                    </div>
+                                    <span style="display: inline-block; vertical-align: top; margin: 7px;">%</span>
+
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="quorumMeetingOfBoardInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poBoardReportFrequency">
+                                <div class="chooseFieldBlock">
+                                    <label>Правление отсчитывается перед Обществом</label>
+                                    <div id="boardReportFrequency" rameraListEditorName="boardReportFrequency"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="boardReportFrequencyInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poParticipantsAuditCommitteeOfficePeriod">
+                                <div class="chooseFieldBlock">
+                                    <label>Срок, на который избираются члены ревизионной комиссии</label>
+                                    <div id="participantsAuditCommitteeOfficePeriod" rameraListEditorName="organizationOfficePeriod"></div>
+                                    <label class="chooseVariantFieldInVoting">
+                                        <input type="checkbox" id="participantsAuditCommitteeOfficePeriodInVoting" class="chooseVariantFieldInVoting" />
+                                        Решить вопрос на собрании
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div>
+                                    <label>Филлиалы и представительства Общества</label>
+                                </div>
+                                <button id="addBranch" class="btn btn-info">Добавить филиал</button>
+                                <div id="poBranches"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <button id="addRepresentation" class="btn btn-info">Добавить представительство</button>
+                                <div id="poRepresentations"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Виды деятельности</label>
+                                <textarea class="form-control" id="activityTypesText" rows="4" ></textarea>
+                                <span class="help-block help-block-info"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poOrganizationRegulations">
+                                <span class="help-block help-block-info">
+                                    Нажмите кнопку "Сгенерировать Устав" для того, чтобы Система автоматически
+                                    создала Устав на основании шаблона и введённых Вами выше данных. Если Вы желаете
+                                    отредактировать текст созданного Устава, нажмите кнопку "Редактировать Устав".
+                                </span>
+                                <button id="generateOrganizationRegulations" class="btn btn-info">Сгенерировать Устав</button>
+                                <button id="copyOrganizationRegulations" disabled="disabled" class="btn btn-info">Редактировать Устав</button>
+                                <hr/>
+                                <textarea id="organizationRegulations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Номер протокола о принятии Устава</label>
+                                <input class="form-control" placeholder="Номер протокола о принятии Устава" disabled="disabled" />
+                                <span class="help-block">Поле заполняется автоматически</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Дата принятия Устава</label>
+                                <input class="form-control" placeholder="Дата принятия Устава" disabled="disabled" />
+                                <span class="help-block">Поле заполняется автоматически</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="writeRegulationParametersBlock" style="display: none;">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" id="poWriteOrganizationRegulations">
+                                <span class="help-block help-block-info">
+                                </span>
+                                <textarea id="writeOrganizationRegulations"></textarea>
+                                <span class="help-block">При возвращении в режим генерации Устава изменённый текст не сохранится!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Настройки учредительного собрания
+                <a data-toggle="tooltip" data-placement="left" title="" href="#" onclick="return slideBlock($(this));"
+                   class="glyphicon hidden-group-eye glyphicon-arrow-up"
+                   data-original-title="Скрыть блок" data-radom-tooltiped="true"></a>
+            </h4>
+        </div>
+        <div class="panel-collapse in">
+            <div class="panel-body">
+                <div class="row dateBatchVotingSettings">
+                    <div class="col-xs-12">
+                        <div class="input-group date" id="poStartDateBatchVoting">
+                            <span class="input-group-addon">Дата начала собрания</span>
+                            <input type="text" class="form-control" id="startDateBatchVoting" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="button" id="set-start-date-to-current">текущая дата</button>
+                            </span>
+                        </div>
+                        <div class="input-group date" id="poRegistrationBatchVotingEndDate">
+                            <span class="input-group-addon">Дата окончания регистрации в собрании</span>
+                            <input type="text" class="form-control" id="registrationBatchVotingEndDate" />
+                        </div>
+                        <div class="input-group date" id="poEndDateBatchVoting">
+                            <span class="input-group-addon">Дата окончания собрания</span>
+                            <input type="text" class="form-control" id="endDateBatchVoting" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poIsNeedCreateChat">
+                            <label>
+                                <input type="checkbox" id="isNeedCreateChat" />
+                                Создать чат для собрания
+                            </label>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poAddChatToProtocol">
+                            <label>
+                                <input type="checkbox" id="addChatToProtocol" />
+                                Прикрепить стенограмму собрания к протоколу
+                            </label>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poBatchVotingDescription">
+                            <label>Краткое описание учредительного собрания</label>
+                            <textarea id="batchVotingDescription"></textarea>
+                            <span class="help-block">Напишите тему и краткое описание данного учредительного собрания для участников собрания</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group" id="poSecretVoting">
+                            <label>Вид голосования</label>
+                            <select id="secretVoting" class="selectpicker" data-live-search="true" data-hide-disabled="true" data-width="100%" style="display: none;">
+                                <option value="true">Тайное голосование</option>
+                                <option value="false">Открытое голосование</option>
+                            </select>
+                            <span class="help-block">При открытом голосовании будет открытым: в результатах голосований и в протоколе будет отображаться, кто за что голосовал</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script id="foundersTemplate" type="x-tmpl-mustache">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>ФИО участника</th>
+                <th width="100"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#founders}}
+                <tr id="{{id}}">
+                    <td>{{index}}</td>
+                    <td>{{fullName}}</td>
+                    <td class="text-right">
+                        {{#canDelete}}
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-danger deleteFounder" founder_id="{{id}}" title="Удалить"><i class="fa fa-fw fa-times"></i></button>
+                            </div>
+                        {{/canDelete}}
+                    </td>
+                </tr>
+            {{/founders}}
+        </tbody>
+    </table>
+</script>
+
+<script id="participantsTemplate" type="x-tmpl-mustache">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>ФИО участника</th>
+                <th width="100"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#participants}}
+                <tr id="{{id}}">
+                    <td>{{index}}</td>
+                    <td>{{fullName}}</td>
+                    <td class="text-right">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-danger deleteParticipant" participant_id="{{id}}" title="Удалить"><i class="fa fa-fw fa-times"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            {{/participants}}
+        </tbody>
+    </table>
+</script>
+
+<script id="okvedsTemplate" type="x-tmpl-mustache">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th width="100"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#okveds}}
+                <tr id="{{id}}">
+                    <td>{{index}}</td>
+                    <td>{{longName}}</td>
+                    <td class="text-right">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-danger deleteOkved" okved_id="{{id}}" title="Удалить"><i class="fa fa-fw fa-times"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            {{/okveds}}
+        </tbody>
+    </table>
+</script>
+
+<script id="registerPoResponseTemplate" type="x-tmpl-mustache">
+    <p>
+        Для регистрации в учредительном собрании по созданию юридического лица {{additionalParameters.organizationName}} перейдите по
+        <a href="/votingsystem/registrationInVoting.html?batchVotingId={{id}}" target="_blank">ссылке</a>.
+        {{#batchVotingStartAfterRegistration}}
+            Собрание начнётся сразу после окончания регистрации.
+        {{/batchVotingStartAfterRegistration}}
+        {{^batchVotingStartAfterRegistration}}
+            Собрание начнётся {{startDate}}. Перед началом собрания Вам будет выслано напоминание.
+        {{/batchVotingStartAfterRegistration}}
+    </p>
+    <hr/>
+    <div style="text-align: center;">
+        <a class="btn btn-info" href="/votingsystem/registrationInVoting.html?batchVotingId={{id}}" target="_blank">Перейти к собранию</a>
+    </div>
+</script>
+
+<script id="branchTemplate" type="x-tmpl-mustache">
+    <input type="hidden" id="branchType" value="{{branchType}}" />
+    <input type="hidden" id="branchIndex" value="{{index}}" />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label>Название {{branchTypeName}}</label>
+                <input type="text" class="form-control" id="branchName" value="{{branchName}}" />
+                <span class="help-block">Пишется полное название с организационно-правовой формой (Например: Общество с ограниченной ответственностью "Ромашка")</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group" id="branchFunctions">
+                <label>Добавить функцию {{branchTypeName}}</label>
+                <div id="branchFunctionsBlock" class="inputWithButtonBlock">
+                    <div id="branchFunctionBlock" class="inputBlock">
+                        <input id="branchFunctionText" class="form-control" placeholder="Опишите функцию {{branchTypeName}}" />
+                    </div>
+                    <div id="addBranchFunctionBlock" class="buttonBlock">
+                        <button id="addBranchFunctionButton" class="btn btn-info">Добавить</button>
+                    </div>
+                </div>
+                <div id="branchFunctionsTable"></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-group-name="branchAddress">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group" id="poBranchCountry">
+                    <label>Страна</label>
+                    <input type="hidden" class="form-control" data-field-internal-name="branchCountry" value="{{branchCountryId}}"/>
+                    <input type="hidden" class="country-control" data-field-internal-name="branchCountry_NAME" value="{{address.country}}" />
+                    <div id="branchCountry" rameraListEditorName="country_id"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label>Индекс</label>
+                    <input type="text" class="form-control" data-field-name="branchPostalCode" id="branchPostalCode" value="{{address.postalCode}}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group" id="poBranchRegion">
+                    <label>Регион</label>
+                    <input type="hidden" data-field-name="branchRegionCode" id="branchRegionCode" value="{{branchRegionCode}}" />
+                    <input type="text" class="form-control" data-field-name="branchRegion" data-field-type="REGION" id="branchRegion" value="{{address.region}}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label>Район</label>
+                    <input type="hidden" data-field-name="branchDistrictDescriptionShort" id="branchDistrictDescriptionShort" value="{{branchDistrictDescriptionShort}}" />
+                    <input type="text" class="form-control" data-field-name="branchDistrict" data-field-type="DISTRICT" id="branchDistrict" value="{{address.district}}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group" id="poBranchCity">
+                    <label>Населённый пункт</label>
+                    <input type="hidden" data-field-name="branchCityDescriptionShort" id="branchCityDescriptionShort" value="{{branchCityDescriptionShort}}" />
+                    <input type="text" class="form-control" data-field-name="branchCity" data-field-type="CITY" id="branchCity" value="{{address.city}}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group" id="poBranchStreet">
+                    <label>Улица</label>
+                    <input type="hidden" data-field-name="branchStreetDescriptionShort" id="branchStreetDescriptionShort" value="{{branchStreetDescriptionShort}}" />
+                    <input type="text" class="form-control" data-field-name="branchStreet" data-field-type="STREET" id="branchStreet" value="{{address.street}}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group" id="poBranchBuilding">
+                    <label>Дом</label>
+                    <input type="hidden" data-field-name="branchBuilding_DESCRIPTION" id="branchBuilding_DESCRIPTION" value="{{branchBuildingDescription}}" />
+                    <input type="text" class="form-control" data-field-name="branchBuilding" data-field-type="BUILDING" id="branchBuilding" value="{{address.building}}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group" id="poBranchRoom">
+                    <label>Офис</label>
+                    <input type="hidden" data-field-name="branchOffice_DESCRIPTION" value="{{branchOfficeDescription}}" />
+                    <input type="text" class="form-control" data-field-name="branchOffice" id="branchOffice" value="{{address.room}}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <input type="text" class="form-control" disabled="disabled" data-field-name="branchGeoLocation" data-field-type="GEO_LOCATION" value="{{address.geoLocation}}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label>Координаты</label>
+                    <input type="text" class="form-control" disabled="disabled" data-field-name="branchGeoPosition" data-field-type="GEO_POSITION" value="{{address.geoPosition}}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" name="geo-block">
+            <br>
+            <div id="branchAddress_MAP" class="panel-map" style="height : 300px;"></div>
+            <hr>
+        </div>
+    </div>
+</script>
+
+<script id="branchesTableTemplate" type="x-tmpl-mustache">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th width="50"></th>
+                <th width="50"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#branches}}
+                <tr id="{{index}}">
+                    <td>{{index}}</td>
+                    <td>{{branchName}}</td>
+                    <td class="text-right">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-warning editBranch" branch_index="{{index}}" title="Редактировать"><i class="fa fa-fw fa-pencil-square-o"></i></button>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-danger deleteBranch" branch_index="{{index}}" title="Удалить"><i class="fa fa-fw fa-times"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            {{/branches}}
+        </tbody>
+    </table>
+</script>
+
+<script id="branchFunctionsTableTemplate" type="x-tmpl-mustache">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th width="50"></th>
+                <th width="50"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#functions}}
+                <tr id="{{index}}">
+                    <td>{{index}}</td>
+                    <td>
+                        <div function_text_static_index="{{index}}">{{text}}</div>
+                        <div function_text_edit_block_index="{{index}}" style="display: none;">
+                            <input class="form-control" function_text_edit_index="{{index}}" type="text" value="{{text}}" />
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-info saveFunction"    function_index="{{index}}" title="Сохранить" style="display: none;"><i class="fa fa-fw fa-floppy-o"></i></button>
+                        </div>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-warning editFunction" function_index="{{index}}" title="Редактировать"><i class="fa fa-fw fa-pencil-square-o"></i></button>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-danger deleteFunction" function_index="{{index}}" title="Удалить"><i class="fa fa-fw fa-times"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            {{/functions}}
+        </tbody>
+    </table>
+</script>
+
+<!-- Модальное окно c информацией о том, когда начнётся собрание-->
+<div class="modal fade" role="dialog" id="registerPoResponseModal" aria-labelledby="registerPoResponseModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="registerPoResponseModalLabel">Собрание по организации юридического лица</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" role="dialog" id="addBranchModal" aria-labelledby="addBranchModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addBranchModalLabel">Добавить филиал ПО</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button id="saveBranch" class="btn btn-info">Сохранить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="addRepresentationModal" aria-labelledby="addRepresentationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addRepresentationModalLabel">Добавить представительство ПО</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button id="saveRepresentation" class="btn btn-info">Сохранить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="editBranchModal" aria-labelledby="editBranchModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="editBranchModalLabel">Изменить данные филиала ПО</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button id="updateBranch" class="btn btn-info">Сохранить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="editRepresentationModal" aria-labelledby="editRepresentationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="editRepresentationModalLabel">Добавить представительство ПО</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button id="updateRepresentation" class="btn btn-info">Сохранить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

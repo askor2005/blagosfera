@@ -1,0 +1,335 @@
+<md-tabs md-stretch-tabs="always" md-dynamic-height md-stretch-tabs="yes">
+    <md-tab layout="column">
+        <md-tab-label>
+            <i class="material-icons settings-icon">&#xE32A;</i>
+            <span ng-show="userSettings.$mdMedia('min-width: 640px')">{{'security' | translate}}</span>
+        </md-tab-label>
+        <md-tab-body>
+
+            <div flex layout="column" layout-gt-sm="row">
+
+                <md-card flex="50">
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>{{'parallel_sessions' | translate}}</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-card-content flex layout="column">
+                        <md-input-container>
+                            <md-radio-group layout-margin layout-padding layout="row" ng-model="userSettings.settings.allowMultipleSessions">
+                                <md-radio-button ng-value="true" aria-label="Разрешить">{{'allow' | translate}}</md-radio-button>
+                                <md-radio-button ng-value="false" aria-label="Запретить">{{'deny' | translate}}</md-radio-button>
+                            </md-radio-group>
+                        </md-input-container>
+                    </md-card-content>
+
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="userSettings.setAllowMultipleSessions()">{{'apply' | translate}}</md-button>
+                    </md-card-actions>
+                </md-card>
+
+                <md-card flex="50">
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>{{'MOBILE_PHONE_CONFIRM_TITLE' | translate}}</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-card-content flex layout="column">
+                        <md-input-container>
+                            <md-radio-group layout-margin layout-padding layout="row" ng-model="userSettings.settings.identificationMode">
+                                <md-radio-button value="fingerprint">{{'IDENTIFICATION_BY_FINGERPRINT' | translate}}</md-radio-button>
+                                <md-radio-button value="sms">{{'IDENTIFICATION_BY_SMS_CODE' | translate}}</md-radio-button>
+                            </md-radio-group>
+                        </md-input-container>
+
+                        <div layout="row">
+                            <md-input-container class="md-block" style="min-width: 130px;" flex="30" ng-if="userSettings.settings.identificationMode === 'sms'">
+                                <label>{{ 'MOBILE_PHONE' | translate }}</label>
+                                <input  type="text" ng-model="userSettings.settings.phoneVerify.phoneNumber">
+                                <md-tooltip md-direction="top">{{ userSettings.settings.phoneVerify.phoneNumber }}</md-tooltip>
+                            </md-input-container>
+
+                            <div  layout="row" flex="70" layout-align="start center" ng-if="((!userSettings.settings.phoneVerify.verified) || (userSettings.oldPhoneNumber != userSettings.settings.phoneVerify.phoneNumber)) && (userSettings.settings.identificationMode === 'sms')">
+                                <div style="margin-right: 4px;margin-left: 4px" flex="20" layout="row" layout-align="center center" ng-if="userSettings.settings.phoneVerify.secondsLeft > 0">
+                                    <div>
+                                        <md-icon md-font-set="material-icons" class="color_red">timer</md-icon>
+                                    </div>
+                                    {{ userSettings.settings.phoneVerify.secondsLeft }}
+                                </div>
+
+                                <md-button flex ng-if="(!userSettings.settings.phoneVerify.canVerify) || (userSettings.oldPhoneNumber != userSettings.settings.phoneVerify.phoneNumber)"
+                                           ng-disabled="(userSettings.settings.phoneVerify.secondsLeft > 0) && (userSettings.oldPhoneNumber === userSettings.settings.phoneVerify.phoneNumber)"
+                                           ng-click="userSettings.sendVerificationCode()">{{'MOBILE_PHONE_SEND_CODE_BUTTON' | translate}}</md-button>
+
+                                <md-input-container class="md-block" flex="60" ng-if="userSettings.settings.phoneVerify.canVerify">
+                                    <label>{{ 'MOBILE_PHONE_VERIFICATION_CODE' | translate }}</label>
+                                    <input type="number" maxlength="6" size="6"
+                                           ng-model="userSettings.settings.verificationCode"
+                                           ng-disabled="userSettings.settings.verificationInProgress">
+                                </md-input-container>
+
+
+                                <md-button flex="20" ng-if="userSettings.settings.phoneVerify.canVerify"
+                                           ng-click="userSettings.verifyCode()"
+                                           ng-disabled="!userSettings.settings.verificationCode">{{'MOBILE_PHONE_CONFIRM_BUTTON' | translate}}</md-button>
+                            </div>
+
+                            <div flex layout="row" layout-align="end center" ng-if="userSettings.settings.phoneVerify.verified">
+                                <div>
+                                    <md-icon md-font-set="material-icons" class="md-icon-32 color_green">done</md-icon>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-hide="(userSettings.settings.phoneVerify.verified) || (userSettings.settings.identificationMode != 'sms')">
+                            <div ng-show="(userSettings.settings.phoneVerify.secondsLeft > 0) && userSettings.settings.phoneVerify.canVerify">
+                                {{ 'MOBILE_PHONE_VERIFYING_TEXT' | translate }}
+                            </div>
+                            <div ng-show="(userSettings.settings.phoneVerify.secondsLeft > 0) && !userSettings.settings.phoneVerify.canVerify">
+                                {{ 'MOBILE_PHONE_VERIFYING_FAILED_TEXT' | translate }}
+                            </div>
+                            <div ng-show="userSettings.settings.phoneVerify.secondsLeft === 0">
+                                {{ 'MOBILE_PHONE_CONFIRM_TEXT' | translate }}
+                            </div>
+                        </div>
+                        <div ng-show="userSettings.settings.phoneVerify.verified">
+                            {{ 'MOBILE_PHONE_VERIFIED_TEXT' | translate }}
+                        </div>
+                    </md-card-content>
+
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="userSettings.saveIdentificationMode()"
+                                   ng-disabled="!userSettings.settings.phoneVerify.verified">{{'apply' | translate}}</md-button>
+                    </md-card-actions>
+                </md-card>
+
+            </div>
+
+            <md-card flex>
+                <md-toolbar class="md-table-toolbar md-default">
+                    <div class="md-toolbar-tools">
+                        <span>{{'my_sessions' | translate}}</span>
+                    </div>
+                </md-toolbar>
+
+                <md-card-content flex layout="column">
+                    <md-table-container>
+                        <table md-table multiple ng-model="selected" md-progress="promise">
+                            <tbody md-body>
+                            <tr md-row md-select="userSettings.selectedTableItem"
+                                ng-repeat="session in userSettings.settings.userSessions">
+                                <td md-cell><i title="{{session.ip}}" class="material-icons"
+                                               ng-bind-html="userSettings.getDeviceIcon(session.device)"></i></td>
+                                <td md-cell>
+                                    <md-icon title="{{session.os}}"
+                                             md-svg-src="/ng/components/icons/os/{{userSettings.getOsIcon(session.os)}}"
+                                             aria-label="dropdown"></md-icon>
+                                </td>
+                                <td md-cell>
+                                    <md-icon title="{{session.browser}}"
+                                             md-svg-src="/ng/components/icons/browser/{{userSettings.getBrowserIcon(session.browser)}}"
+                                             aria-label="dropdown"></md-icon>
+                                </td>
+                                <td md-cell>
+                                    <button ng-show="session.sessionId != userSettings.settings.currentSessionId"
+                                            ng-click="userSettings.closeSession(session)"><i
+                                            title="{{'close_session' | translate}}" class="material-icons">&#xE872;</i></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-card-content>
+
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button ng-click="userSettings.closeOtherSessions()">{{'close_other_sessions' | translate}}</md-button>
+                </md-card-actions>
+            </md-card>
+
+            <div flex layout="column" layout-gt-sm="row">
+
+                <md-card flex="50">
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>{{'change_password' | translate}}</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-card-content flex layout="column">
+                        <p class="text-muted">{{'change_password_hint' | translate}}</p>
+
+                        <form name="passwordForm" onsubmit="return false;">
+                            <md-input-container
+                                    md-is-error="(passwordForm.oldPassword.$error.required) && (passwordForm.oldPassword.$dirty)"
+                                    layout="column" layout-align="start start">
+                                <label>{{'old_password' | translate}}</label>
+                                <input aria-label="oldPassword" name="oldPassword" ng-model="userSettings.oldPassword" required
+                                       type="password">
+                            </md-input-container>
+                            <md-input-container
+                                    md-is-error="(passwordForm.newPassword.$error.required) && (passwordForm.newPassword.$dirty)"
+                                    layout="column" layout-align="start start">
+                                <label>{{'new_password' | translate}}</label>
+                                <input aria-label="newPassword" ng-model="userSettings.newPassword" name="newPassword" required
+                                       type="password">
+                            </md-input-container>
+                            <md-input-container md-is-error="passwordForm.passwordConfirm.$error.match" layout="column"
+                                                layout-align="start start">
+                                <label>{{'password_confirm' | translate}}</label>
+                                <input aria-label="passwordConfirm" match="userSettings.newPassword" match-ignore-empty="true"
+                                       name="passwordConfirm" ng-model="userSettings.newPasswordConfirm" required type="password"
+                                       id="passwordConfirm">
+                            </md-input-container>
+                        </form>
+                    </md-card-content>
+
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="userSettings.changePassword()">{{'apply' | translate}}</md-button>
+                    </md-card-actions>
+                </md-card>
+
+                <md-card flex="50">
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>{{'change_email' | translate}}</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-card-content flex layout="column">
+                        <p class="text-muted">{{'change_email_hint' | translate}}</p>
+
+                        <md-divider></md-divider>
+
+                        <form name="emailForm" onsubmit="return false;">
+                            <md-input-container md-is-error="(emailForm.code.$error.required) && (emailForm.code.$dirty)"
+                                                layout="column" layout-align="start start">
+                                <label>{{'code' | translate}}</label>
+                                <input ng-model="userSettings.code" name="code" id="code" required aria-label="code">
+                            </md-input-container>
+                            <md-input-container
+                                    md-is-error="((emailForm.newEmail.$error.required) && (emailForm.newEmail.$dirty)) || ((emailForm.newEmail.$error.email) && (emailForm.newEmail.$dirty))"
+                                    layout="column" layout-align="start start">
+                                <label>{{'new_email' | translate}}</label>
+                                <input ng-model="userSettings.newEmail" id="newEmail" name="newEmail" required type="email"
+                                       aria-label="email">
+                            </md-input-container>
+                        </form>
+                    </md-card-content>
+
+                    <md-card-actions>
+                        <div flex layout="column" layout-gt-sm="row" layout-align="end end" layout-align-gt-sm="end center">
+                            <md-button ng-click="userSettings.initChangeEmail()">{{'send_code' | translate}}</md-button>
+                            <md-button ng-click="userSettings.changeEmail()">{{'change_email' | translate}}</md-button>
+                        </div>
+                    </md-card-actions>
+                </md-card>
+
+            </div>
+
+        </md-tab-body>
+    </md-tab>
+    <md-tab>
+        <md-tab-label>
+            <i class="material-icons settings-icon">&#xE8B8;</i>
+            <span ng-show="userSettings.$mdMedia('min-width: 640px')">{{'profile' | translate}}</span>
+        </md-tab-label>
+        <md-tab-body layout="column">
+            <md-input-container>
+                <span>{{'short_user_name' | translate}}</span>
+            </md-input-container>
+
+            <form name="shortLinkForm" ng-submit="userSettings.changeShortLink()">
+                <div layout="row" layout-align="start start">
+                    <md-input-container flex="50">
+                        <input ng-model="userSettings.shortNameLink" aria-label="shortNameLink" readonly="readonly"
+                               contenteditable="false"/>
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <input aria-label="shortLink" required ng-model="userSettings.settings.sharerShortLink"
+                               type="text"/>
+                    </md-input-container>
+                </div>
+                <md-button class="green-button" type="submit">{{'apply' | translate}}</md-button>
+            </form>
+
+            <md-divider></md-divider>
+
+            <md-input-container layout="column" layout-align="start start">
+                <span>{{'timezone' | translate}}</span>
+                <md-select ng-model="userSettings.currentTimezone" placeholder="{{'timezone' | translate}}">
+                    <md-option ng-value="timezone.value" ng-repeat="timezone in userSettings.timezones">
+                        {{timezone.label}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <md-button class="green-button" ng-click="userSettings.changeTimezone()">{{'apply' | translate}}</md-button>
+
+            <md-divider></md-divider>
+
+            <br>
+
+            <span>{{'show_email' | translate}}</span>
+
+            <md-input-container layout="column" layout-align="start start">
+                <md-select ng-model="userSettings.currentShowEmailMode" placeholder="{{'show_email' | translate}}">
+                    <md-option value="ALL">{{'show_email_opts.all' | translate}}</md-option>
+                    <md-option value="CONTACTS">{{'show_email_opts.my_contacts' | translate}}</md-option>
+                    <!--  <md-option value="LISTS">{{'show_email_opts.organizations' | translate}}</md-option>-->
+                     <md-option value="NOBODY">{{'show_email_opts.nobody' | translate}}</md-option>
+                 </md-select>
+             </md-input-container>
+
+             <md-button class="green-button" ng-click="userSettings.changeCurrentShowEmailMode()">{{'apply' | translate}}</md-button>
+
+             <md-divider></md-divider>
+
+             <md-input-container layout="column" layout-align="start start">
+                 <md-button class="green-button" ng-click="userSettings.deleteProfile()">{{'delete_profile' | translate}}</md-button>
+             </md-input-container>
+         </md-tab-body>
+     </md-tab>
+     <md-tab>
+         <md-tab-label layout="row">
+             <i class="material-icons settings-icon">&#xE8F4;</i>
+             <span ng-show="userSettings.$mdMedia('min-width: 640px')">{{'interface' | translate}}</span>
+         </md-tab-label>
+         <md-tab-body>
+             <md-input-container layout="column">
+                 <md-radio-group layout-margin layout-padding ng-model="userSettings.settings.interfaceTooltipEnable"
+                                 layout="row">
+                     <md-radio-button ng-value="true" aria-label="Разрешить">
+                         {{'allow_popup' | translate}}
+                     </md-radio-button>
+                     <md-radio-button ng-value="false" aria-label="Запретить">
+                         {{'deny_popup' | translate}}
+                     </md-radio-button>
+                 </md-radio-group>
+                 <div layout="row">
+                     <md-button class="green-button" ng-click="userSettings.setInterfaceTooltipEnable()">{{'apply' |
+                         translate}}
+                     </md-button>
+                 </div>
+             </md-input-container>
+
+             <div>{{'popup_delay_appear' | translate}} {{userSettings.settings.interfaceTooltipDelayShow}} {{'seconds' | translate}}</div>
+
+             <md-slider aria-label="interfaceTooltipDelayShow" ng-model="userSettings.settings.interfaceTooltipDelayShow"
+                        min="1" max="10">
+             </md-slider>
+
+             <md-button class="green-button" ng-click="userSettings.setInterfaceTooltipDelayShow()">{{'apply' |
+                 translate}}
+             </md-button>
+
+             <div>{{'popup_delay_hide' | translate}} {{userSettings.settings.interfaceTooltipDelayHide}} {{'seconds' | translate}}</div>
+
+             <md-slider aria-label="interfaceTooltipDelayHide" ng-model="userSettings.settings.interfaceTooltipDelayHide" min="1" max="10">
+             </md-slider>
+
+             <md-button class="green-button" ng-click="userSettings.setInterfaceTooltipDelayHide()">{{'apply' | translate}}</md-button>
+         </md-tab-body>
+     </md-tab>
+ </md-tabs>

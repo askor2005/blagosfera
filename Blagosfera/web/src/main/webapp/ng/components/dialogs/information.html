@@ -1,0 +1,20 @@
+<md-dialog aria-label="information.html" ng-cloak>
+    <md-toolbar>
+
+        <div class="md-toolbar-tools">
+            {{dialog.data.title | translate}}
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        {{dialog.data.message | translate}}
+        <a ng-show="dialog.data.link" href="{{dialog.data.link}}">{{dialog.data.linkMessage | translate}}</a>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+
+        <md-button ng-click="dialog.close()">Да</md-button>
+
+    </md-dialog-actions>
+</md-dialog>

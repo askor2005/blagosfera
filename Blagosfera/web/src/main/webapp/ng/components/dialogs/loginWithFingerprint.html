@@ -1,0 +1,79 @@
+<md-dialog aria-label="login.html" ng-cloak id="login-with-fingerprint-dialog">
+    <md-toolbar class="md-accent md-hue-2">
+
+        <div class="md-toolbar-tools">
+            <span>
+                БИОМЕТРИЧЕСКИЙ ВХОД В ЛИЧНЫЙ ИНФОРМАЦИОННЫЙ КАБИНЕТ
+                <md-tooltip md-direction="bottom">
+                    Биометрический вход в Личный Информационный Кабинет
+                </md-tooltip>
+            </span>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        <md-checkbox ng-model="dialog.authSettings.RASIsLocal" aria-label=rasislocal" ng-disabled="dialog.readOnly">
+            Сервер авторизации установлен на этом компьютере
+            <md-tooltip md-direction="top">
+                Отметьте галочку если сервер авторизации установлен и запущен на этом компьютере
+            </md-tooltip>
+        </md-checkbox>
+
+        <div flex layout="row">
+            <md-input-container class="md-block" flex ng-disabled="dialog.authSettings.RASIsLocal">
+                <label>адрес сервера авторизации</label>
+
+                <input type="url" name="username"
+                       ng-model="dialog.authSettings.RASUrl"
+                       ng-disabled="dialog.readOnly || dialog.authSettings.RASIsLocal">
+            </md-input-container>
+
+            <md-button ng-click="dialog.connectToRAS()">далее</md-button>
+        </div>
+
+        <div flex layout="row">
+            <p class="md-body-1">
+                Вы используете сервер авторизации версии: <span>{{dialog.RASVersion}}</span>
+                <br>Минимальная совместимая версия сервера авторизации: <span>{{dialog.RASMinVersion}}</span>
+            </p>
+
+            <div flex></div>
+            <md-icon ng-if="dialog.RASVersionCorrect === true" md-font-set="material-icons" class="md-icon-32 color_green">done</md-icon>
+            <md-icon ng-if="dialog.RASVersionCorrect === false" md-font-set="material-icons" class="md-icon-32 color_red">error_outline</md-icon>
+        </div>
+
+        <div flex layout="row">
+            <p class="md-body-1" ng-if="dialog.RASVersionCorrect">Для прохождения биометрической идентификации нажмите "далее"</p>
+            <p class="md-body-1" ng-if="!dialog.RASVersionCorrect"></p>
+            <div flex></div>
+            <md-button ng-click="dialog.scanFinger()" ng-disabled="!dialog.RASVersionCorrect">далее</md-button>
+        </div>
+
+        <div flex layout="column" ng-show="dialog.scanInProgress">
+            <p class="md-body-1">Просканируйте <b>{{dialog.token.fingerString}}</b></p>
+            <md-progress-linear md-mode="determinate" value="{{dialog.scanProgress}}"></md-progress-linear>
+        </div>
+
+        <div flex layout="row" ng-show="dialog.scanProgress === 100">
+            <p ng-if="dialog.canLogin === true" class="md-body-1">Биометрическая идентификация пройдена успешно.</p>
+            <p ng-if="dialog.canLogin === false" class="md-body-1">Ошибка сканирования.</p>
+
+            <div flex></div>
+            <md-icon ng-if="dialog.canLogin === true" md-font-set="material-icons" class="md-icon-32 color_green">done</md-icon>
+            <md-icon ng-if="dialog.canLogin === false" md-font-set="material-icons" class="md-icon-32 color_red">error_outline</md-icon>
+        </div>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-xs="column" layout-padding>
+
+        <a target="_blank" href="/ras/download">Скачать сервер авторизации "БЛАГОСФЕРА"</a>
+        <div flex></div>
+
+        <div layout="row">
+            <md-button ng-click="dialog.login()" ng-disabled="dialog.readOnly || !dialog.canLogin">Войти</md-button>
+            <md-button ng-click="dialog.cancel()">Отмена</md-button>
+        </div>
+
+    </md-dialog-actions>
+</md-dialog>

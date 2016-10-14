@@ -1,0 +1,34 @@
+<md-dialog aria-label="accessDenied.html" ng-cloak id="access-denied-dialog">
+    <md-toolbar class="md-accent md-hue-2">
+
+        <div class="md-toolbar-tools">
+            <span>
+                ДОСТУП ЗАПРЕЩЕН
+            </span>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+            <md-content flex>
+                <p class="md-body-1">
+                    Доступ к запрашиваемому ресурсу запрещен,
+                    <br>или сессия завершена.
+                    <br>Повторите вход в систему или
+                    <br>обратитесь к администратору.
+                </p>
+            </md-content>
+
+        </form>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-xs="column" layout-padding>
+
+        <div flex></div>
+
+        <div layout="row">
+            <md-button ng-click="dialog.cancel()">OK</md-button>
+        </div>
+
+    </md-dialog-actions>
+</md-dialog>

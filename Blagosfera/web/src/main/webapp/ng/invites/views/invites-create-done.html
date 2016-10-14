@@ -1,0 +1,23 @@
+<md-dialog aria-label="" class="askor-dialog" ng-cloak style="width: 620px; text-align: center; background-image: url('/ng/invites/img/konfeti.png'); background-position: -8px -8px;">
+    <form name="createInviteDone">
+        <md-dialog-content>
+            <div style="text-align: center; width: 100%;">
+                <div style="padding: 84px 0px 0px 0px;">
+                    <h1 style="margin-top: 0px; ">{{'create.final.dialog.header' | translate}}</h1>
+                    <h3>{{'create.final.dialog.header_2' | translate}}</h3>
+                    <div style="padding: 0px 20px; opacity: 0.8;">
+                        <p style="text-align: justify; margin: 0px;"
+                           ng-bind-html="'create.final.dialog.text' | translate:{create:invites.create}"
+                        ></p>
+                    </div>
+                    <md-button ng-click="invites.showTabDialog()" class="md-raised green-button" style="margin-top: 44px;">{{'create.final.dialog.btn' | translate}}</md-button>
+                </div>
+                <div style="height: 84px;">
+                    <div style="padding-top: 20px;">
+                        <md-button class="md-primary" ng-click="invites.closeDoneDialog()">{{'create.final.dialog.link' | translate}}</md-button>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

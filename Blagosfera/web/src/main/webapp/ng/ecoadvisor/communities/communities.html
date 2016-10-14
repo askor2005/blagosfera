@@ -1,0 +1,118 @@
+<md-content layout="column" layout-padding layout-wrap layout-fill ng-cloak>
+
+    <div md-whiteframe="1" layout="row" layout-align="center center">
+        <b>Экономический Советник - Список Объединений</b>
+    </div>
+
+    <div layout="column" ui-tree="communities.communitiesTreeOptions"
+         data-drag-enabled="false"
+         data-empty-placeholder-enabled="false"
+         md-whiteframe="1">
+
+        <div flex ng-if="communities.loadingIndicator">
+            <md-progress-linear md-mode="query"></md-progress-linear>
+        </div>
+
+        <div flex layout="column" ui-tree-nodes ng-model="communities.communities" ng-if="!communities.showLoading">
+            <div flex layout="column" ng-repeat="community in communities.communities" ui-tree-node
+                 collapsed="true" ng-include="'community_renderer.html'"></div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="community_renderer.html">
+        <div layout="row" ng-click="communities.selectCommunity(community.id)">
+            <div flex layout="row">
+                <img class="community-thumb" ng-src="{{community.picture}}">
+
+                <span>
+                    <span>{{community.name}}</span>
+
+                    <md-tooltip md-direction="top">
+                        {{community.name}}
+                    </md-tooltip>
+                </span>
+
+                <span flex></span>
+
+                <span ng-show="community.id == communities.selectedId">
+                    <md-icon md-font-set="material-icons" class="md-icon-24 clickable"
+                             ng-click="communities.openStore(community.id)">store
+                    </md-icon>
+                    <md-tooltip md-direction="top">
+                        Виртуальный склад
+                    </md-tooltip>
+                    &nbsp;&nbsp;
+                </span>
+
+                <span ng-show="community.id == communities.selectedId">
+                    <md-icon md-font-set="material-icons" class="md-icon-24 clickable"
+                             ng-click="communities.openSessions(community.id)">computer
+                    </md-icon>
+                    <md-tooltip md-direction="top">
+                        Сессии операторов-кассиров
+                    </md-tooltip>
+                    &nbsp;&nbsp;
+                </span>
+
+                <span ng-show="community.id == communities.selectedId">
+                    <md-icon md-font-set="material-icons" class="md-icon-24 clickable"
+                             ng-click="communities.openSettings(community.id)">settings
+                    </md-icon>
+                    <md-tooltip md-direction="top">
+                        Экономический Советник
+                    </md-tooltip>
+                    &nbsp;&nbsp;
+                </span>
+
+                <span ng-show="collapsed">
+                    <md-icon md-font-set="material-icons" class="md-icon-24 clickable"
+                             ng-click="$event.stopPropagation(); expand(); communities.getSubgroups(community);">
+                        expand_more
+                    </md-icon>
+                    <md-tooltip md-direction="top">
+                        Развернуть подгруппы
+                    </md-tooltip>
+                    &nbsp;&nbsp;
+                </span>
+
+                <span ng-hide="collapsed">
+                    <md-icon md-font-set="material-icons" class="md-icon-24 clickable"
+                             ng-click="$event.stopPropagation(); collapse();">expand_less
+                    </md-icon>
+                    <md-tooltip md-direction="top">
+                        Свернуть подгруппы
+                    </md-tooltip>
+                    &nbsp;&nbsp;
+                </span>
+            </div>
+        </div>
+
+        <div flex ng-if="community.loadingIndicator">
+            <md-progress-linear md-mode="query"></md-progress-linear>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div flex layout="column" ui-tree-nodes ng-model="community.communities" ng-if="!collapsed">
+            <div flex layout="column" ng-repeat="community in community.communities" ui-tree-node
+                 collapsed="true" ng-include="'community_renderer.html'"></div>
+        </div>
+    </script>
+
+    <!--<div ui-tree="communities.communitiesTreeOptions" data-drag-enabled="false">
+        <ol ui-tree-nodes ng-model="communities.communities">
+            <li ng-repeat="community in communities.communities" ui-tree-node collapsed="true" ng-include="'community_renderer.html'"></li>
+        </ol>
+    </div>
+
+    <script type="text/ng-template" id="community_renderer.html">
+        <div ui-tree-handle ng-hide="true"></div>
+
+        <span ng-click="toggle()">{{community.shortName}}</span>
+
+        <ol ui-tree-nodes ng-model="community.communities" ng-class="{hidden: collapsed}">
+            <li ng-repeat="community in community.communities" ui-tree-node collapsed="true" ng-include="'community_renderer.html'"></li>
+        </ol>
+    </script>-->
+
+</md-content>

@@ -1,0 +1,21 @@
+<md-dialog aria-label="yesNo.html" ng-cloak>
+    <md-toolbar>
+
+        <div class="md-toolbar-tools">
+            {{dialog.data.title | translate}}
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        {{dialog.data.question | translate}}
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+
+        <md-button ng-show="dialog.data.showYes" ng-click="dialog.yes()">Да</md-button>
+        <md-button ng-show="dialog.data.showNo" ng-click="dialog.no()">Нет</md-button>
+        <md-button ng-show="dialog.data.showCancel" ng-click="dialog.cancel()">Отмена</md-button>
+
+    </md-dialog-actions>
+</md-dialog>

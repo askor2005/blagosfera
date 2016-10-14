@@ -1,0 +1,43 @@
+
+<div layout="column">
+    <span>Запросы от пользователей по обратной связи</span>
+</div>
+
+<md-table-container>
+    <table class="table-break-word" mdPageSelect="true" mdBoundaryLinks="true" mdOnPaginate="requests.loadRequests" md-table multiple ng-model="requests.selected" md-progress="promise">
+        <thead md-head >
+        <tr md-row>
+            <th md-column>e-mail</th>
+            <th md-column>тема</th>
+            <th md-column>описание</th>
+            <th md-column>категория</th>
+            <th md-column>Закрыть запрос</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row  ng-repeat="request in requests.requests">
+            <td md-cell>
+                {{request.email}}
+                <a href="mailto:{{request.email}}">Написать пользователю</a>
+            </td>
+            <td md-cell>
+                {{request.theme}}
+            </td>
+            <td md-cell>
+                {{request.description}}
+            </td>
+            <td md-cell>
+                {{request.type.name}}
+            </td>
+            <td md-cell>
+                <button ng-click="requests.resolveRequest(request.id)"><i class="material-icons">&#xE872;</i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <md-table-pagination md-limit="requests.query.limit" md-label="{rowsPerPage: '', of: 'из'}"  md-options="[5,10,15,20]" md-page-select="false" md-page="requests.query.page" md-total="{{requests.total}}" md-on-paginate="requests.loadRequests"></md-table-pagination>
+</md-table-container>
+
+
+
+

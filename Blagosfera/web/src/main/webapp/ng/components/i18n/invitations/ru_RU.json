@@ -1,0 +1,164 @@
+{
+  "invites_list":"Список приглашений",
+  "do_invite_to_system" : "Пригласить в систему",
+  "registeredCount" : "Прошли регистрацию",
+  "verifiedCount" : "Получили идентификацию",
+  "registratorsCount" : "Стали регистраторами",
+  "table.date" : "Дата",
+  "table.name" : "Имя",
+  "table.state" : "Статус",
+  "table.page" : "Страница",
+  "table.countRows" : "Строк на странице:",
+  "table.of" : "из",
+
+  "create.header" : "ПРИГЛАШЕНИЕ НОВОГО ПОЛЬЗОВАТЕЛЯ",
+  "create.email.title" : "Электронная почта",
+  "create.first.tab.btn" : "Далее",
+  "create.first.tab.header" : "Пожалуйста введите электронную почту приглашаемого пользователя",
+
+  "create.second.tab.title" : "Персональные данные",
+  "create.second.tab.btn" : "Далее",
+  "create.second.tab.header" : "Пожалуйста заполните персональные данные пользователя",
+  "create.second.tab.second.name" : "Фамилия",
+  "create.second.tab.first.name" : "Имя",
+  "create.second.tab.middle.name" : "Отчество",
+  "create.second.tab.middle.name.not.exists" : "Нет отчества",
+  "create.second.tab.choose.gender" : "Выберите пол",
+  "create.second.tab.gender.male" : "Мужской",
+  "create.second.tab.gender.female" : "Женский",
+  "create.second.tab.second.name.error" : "Не заполнена фамилия пользователя",
+  "create.second.tab.first.name.error" : "Не заполнено имя пользователя",
+  "create.second.tab.middle.name.error" : "Не заполнено отчество пользователя",
+
+  "create.third.tab.title" : "Отношения",
+  "create.third.tab.btn" : "ПРИГЛАСИТЬ ПОЛЬЗОВАТЕЛЯ",
+  "create.third.tab.choose.state1" : "Пожалуйста выберите степень доверия для",
+  "create.third.tab.choose.state2" : "Я ручаюсь за",
+  "create.third.tab.choose.state3" : "Я знаком лично с",
+  "create.third.tab.count.years" : "Сколько лет вы знакомы с",
+  "create.third.tab.relations.types" : "В каких отношениях вы состоите с",
+
+  "create.final.dialog.header" : "Поздравляем!",
+  "create.final.dialog.header_2" : "Письмо с приглашением отправлено.",
+  "create.final.dialog.text" : "Письмо с приглашением {{create.lastName|petrovichFull:create.firstName:create.middleName:'genitive':create.gender=='male'}} отправлено на указанный адрес <a href='mailto:{{create.email}}'>{{create.email}}</a>. Вы можете следить за статусом приглашения на странице приглашений в своём профиле.",
+  "create.final.dialog.btn" : "ПРИГЛАСИТЬ ЕЩЕ ПОЛЬЗОВАТЕЛЕЙ",
+  "create.final.dialog.link" : "Спасибо, я вернусь к этому позже",
+
+  "accept.notfound" : "Приглашение не найдено",
+  "accept.expired" : "Срок действия приглашения истек",
+
+  "accept.first.tab.btn" : "Далее",
+  "accept.first.tab.title" : "Принять оферту",
+  "accept.first.tab.header" : "Принять оферту",
+  "accept.offer.error" : "Необходимо принять условия оферты",
+  "accept.offer.checkbox" : "Я принимаю",
+  "accept.offer.link" : "оферту системы Благосфера",
+
+  "accept.second.tab.btn" : "Далее",
+  "accept.second.tab.title" : "Придумать пароль",
+  "accept.second.tab.header" : "Придумайте пароль",
+  "accept.second.tab.password" : "Пароль",
+  "accept.second.tab.check.password" : "Повторите Пароль",
+  "accept.second.tab.password.min.length" : "Минимальное количество символов: 8",
+  "accept.second.tab.need.check.password" : "Введите подтверждение пароля",
+  "accept.second.tab.passwords.not.equals" : "Пароли не совпадают",
+  "create.second.tab.need.send.password" : "Отправить пароль на почту",
+  "create.second.tab.need.send.password.warn" : "Это не безопастно!",
+
+  "accept.third.tab.btn" : "Готово",
+  "accept.third.tab.title" : "Выбор фото",
+  "accept.third.tab.header" : "Выбор фото в Ваш профиль",
+
+  "accept.invite.was.accepted" : "Приглашение уже принято",
+  "accept.invite.was.rejected" : "Приглашение уже отклонено",
+  "accept.invite.auth.user" : "Вы не можете принять чужое приглашение в Систему БЛАГОСФЕРА. Сначала завершите текущий сеанс",
+
+  "accept.success.title" :  "Учетная запись активирована!",
+  "accept.result.success" : "Для того чтобы авторизоваться нажмите \"Войти\" и введите ваш e-mail и пароль.",
+
+  "accept.success.close.dialog" : "Закрыть окно",
+  "accept.success.show.login" : "Войти",
+
+  "accept.result.not.found" : "Приглашение не найдено.",
+  "accept.result.expired" : "Действие приглашения истекло.",
+  "accept.result.accepted" : "Приглашение уже принято.",
+  "accept.result.rejected" : "Приглашение уже отклонено.",
+  "accept.result.need.avatar.source" : "Необходимо загрузить фото.",
+  "accept.result.need.avatar" : "Необходимо загрузить фото с изменённым размером.",
+  "accept.result.need.password" : "Необходимо указать пароль.",
+  "accept.result.need.password.length" : "Минимальная длина пароля: 8.",
+
+  "accept.result.reject.success" : "Приглашение отклонено",
+  "accept.result.not.install.inviter" : "У приглашения не установлен создатель",
+
+  "accept.invitation" : "Принять приглашение",
+  "accept.reject.invitation" : "Отклонить приглашение",
+
+  "accept.header1" : "Здравствуйте, {{invitationAccept.pageData.invitedFirstName}} {{invitationAccept.pageData.invitedFatherName}}!",
+  "accept.header2" : "{{invitationAccept.pageData.inviterLastName}} {{invitationAccept.pageData.inviterFirstName}} {{invitationAccept.pageData.inviterFatherName}} пригласил Вас в Систему БЛАГОСФЕРА. Если Вы не знаете {{invitationAccept.pageData.inviterLastName | petrovichFull:invitationAccept.pageData.inviterFirstName:invitationAccept.pageData.inviterFatherName:'genitive':invitationAccept.pageData.inviterSex}} или не желате регистрироваться в Системе БЛАГОСФЕРА, то проигнорируйте данное приглашение.",
+  "accept.invitation.expired" : "Приглашение действительно до {{invitationAccept.pageData.expireDate | date:'HH:mm:ss dd.MM.yyyy'}}",
+
+  "email.format.error" : "Введен некорректный e-mail!",
+
+  "invites.filter.from" : "От",
+  "invites.filter.to" : "До",
+  "invites.filter.notChoose": "Не выбрано",
+
+  "invites.filter.status.title" : "Статус",
+
+  "invites.filter.statusAny" : "Любой",
+  "invites.filter.status0" : "Принято",
+  "invites.filter.status1" : "В ожидании",
+  "invites.filter.status2" : "Просрочено",
+  "invites.filter.status3" : "Отклонено",
+  "invites.filter.status4" : "Профиль перенесён в архив",
+  "invites.filter.status5" : "Профиль удалён",
+
+  "invites.filter.inviteDate" : "Дата приглашения",
+  "invites.filter.registrationDate" : "Дата регистрации",
+  "invites.filter.verified" : "Идентифицирован",
+
+  "invites.filter.isVerified" : " Идентифицирован",
+  "invites.filter.isNotVerified" : " Не идентифицирован",
+
+  "invites.filter.verifiedDate" : "Дата идентификации",
+
+  "invites.filter.countUsers" : "Созданный поток физических лиц",
+
+  "invites.filter.countCommunities" : "Созданный поток юридических лиц",
+  "invites.filter.registratorName" : "Имя Регистратора",
+  "invites.filter.registratorNameLabel" : "с 3 символов",
+
+  "invites.filter.guarantee" : "Я ручаюсь",
+
+  "invites.filter.guarantee.yes" : "Да",
+  "invites.filter.guarantee.no" : "Нет",
+
+  "invites.filter.gender" : "Пол",
+  "invites.filter.gender.male" : "Мужчина",
+  "invites.filter.gender.female" : "Женщина",
+
+  "invites.filter.invites.count" : "Количество отправленных приглашений",
+  "invites.filter.howLongFamiliarStart" : "Сколько лет знакомы",
+
+  "invites.filter.registratorLevel" : "Является Регистратором",
+
+  "invites.filter.registratorLevel1" : "1-го Ранга",
+  "invites.filter.registratorLevel2" : "2-го Ранга",
+  "invites.filter.registratorLevel3" : "3-го Ранга",
+  "invites.filter.registratorLevelNo" : "Нет",
+
+  "invites.filter.emailFilter" : "Поиск по имени или e-mail",
+  "invites.filter.emailFilter.title" : "с 3 символов",
+
+  "invite.detail.show.profile" : "Смотреть профиль",
+  "invite.detail.verified" : "Прошел аттестацию",
+  "invite.detail.verifier.title" : "Аттестовван",
+  "invite.detail.accept" : "Принял приглашение",
+  "invite.detail.accepter" : "Пригласил",
+  "invite.detail.invited" : "Приглашен в систему",
+  "invite.detail.create.stream" : "Созданный поток",
+  "invite.detail.create.stream.users" : "Физические Лица",
+  "invite.detail.create.stream.communities" : "Юридические Лица",
+  "invite.not.verified.user.create.error" : "Отправлять приглашения могут только идентифицированные пользователи. Чтобы иметь возможность приглашать людей в Систему БЛАГОСФЕРА необходимо пройти процедуру идентификации личности у регистратора БЛАГОСФЕРЫ."
+}

@@ -1,0 +1,18 @@
+<li class="list-group-item order-item" ref="<%-data.id%>">
+    <div class="row">
+        <div class="col-md-2" style="padding-left: 5px; padding-right: 0;">
+            <a href="#" class="btn btn-default move-up" ref="<%-data.id%>">
+                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="col-md-8">
+            <img src="<%-data.icon%>" width="16px;" height="16px;"/>
+            <%=data.title%>
+        </div>
+        <div class="col-md-2" style="padding: 0;">
+            <a href="#" class="btn btn-default move-down" ref="<%-data.id%>">
+                <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+</li>

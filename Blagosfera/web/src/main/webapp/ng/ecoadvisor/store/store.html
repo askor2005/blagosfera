@@ -1,0 +1,264 @@
+<md-content layout="column" layout-padding layout-wrap layout-fill ng-cloak>
+
+    <div md-whiteframe="1" layout layout-align="center center">
+        <b>{{store.community.name}}</b>
+    </div>
+
+    <md-card>
+        <md-card-content layout="column" layout-align="space-between">
+
+            <md-toolbar class="md-table-toolbar md-default">
+                <div class="md-toolbar-tools">
+                    Каталог продукции
+
+                    <span flex></span>
+
+                    <md-button ng-click="store.openProductGroupsManageDialog()">
+                        Управление группами
+                    </md-button>
+                    <md-button ng-show="store.isUserSuperAdmin" ng-click="store.openEmuKassaDialog()">
+                        Эмуляция кассы
+                    </md-button>
+                </div>
+                <div class="md-toolbar-tools">
+                    <md-autocomplete flex
+                                     md-selected-item="store.productGroups.selected"
+                                     md-search-text="store.productsGroupsSearchText"
+                                     md-items="item in store.productsGroupsSearch(store.productsGroupsSearchText)"
+                                     md-item-text="item.name"
+                                     md-min-length="0"
+                                     placeholder="введите название группы">
+                        <md-item-template>
+                            <span md-highlight-text="store.productsGroupsSearchText" md-highlight-flags="^i">{{item.name}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            группа не найдена
+                        </md-not-found>
+                    </md-autocomplete>
+
+                    <md-button ng-click="store.setProductsGroup()"
+                               ng-disabled="!store.productGroups.selected || (store.products.selected.length == 0)">
+                        установить для выбранных продуктов
+                    </md-button>
+                </div>
+                <div class="md-toolbar-tools">
+                    <span flex></span>
+
+                    <md-button ng-click="store.resetProductsGroup()" ng-disabled="store.products.selected.length == 0">
+                        сбросить для выбранных продуктов
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-table-container>
+                <table md-table md-row-select ng-model="store.products.selected" md-progress="store.promise">
+                    <thead md-head md-order="store.query.sortColumn" md-on-reorder="store.onReorder">
+                    <tr md-row>
+                        <th md-column></th>
+                        <th md-column md-order-by="code">Код</th>
+                        <th md-column md-order-by="name">Наименование</th>
+                        <th md-column md-order-by="wholesalePriceWithVat" md-numeric>Затраты, с НДС</th>
+                        <th md-column md-numeric md-order-by="finalPriceWithVat">Цена, с НДС</th>
+                        <th md-column md-numeric md-order-by="margin">Наценка</th>
+                        <th md-column md-numeric md-order-by="marginPercentage">Наценка, %</th>
+                        <th md-column md-order-by="group.name">Группа</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row md-select="product" md-select-id="{{product.id}}"
+                        md-auto-select="true" ng-repeat="product in store.products.data"
+                        md-on-select="store.onSelect">
+                        <td md-cell>
+                            <ng-md-icon icon="details" style="fill: grey" class="clickable" size="20"
+                                        ng-click="store.openProductDetailsDialog($event, product)"></ng-md-icon>
+                        </td>
+                        <td md-cell>{{product.code}}</td>
+                        <td md-cell>{{product.name}}</td>
+                        <td md-cell>{{product.wholesalePriceWithVat | currency}}</td>
+                        <td md-cell>{{product.finalPriceWithVat | currency}}</td>
+                        <td md-cell>{{product.margin | currency}}</td>
+                        <td md-cell>{{product.marginPercentage}}%</td>
+                        <td md-cell>{{product.group.name}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+
+            <md-table-pagination md-limit="store.products.query.pageSize" md-page="store.products.query.page"
+                                 md-total="{{store.products.count}}"
+                                 md-on-paginate="store.onPaginate" md-page-select
+                                 md-options="[5, 10, 50, 100]"
+                                 md-label="{page: 'Страница:', rowsPerPage: 'Строк:', of: 'из'}"></md-table-pagination>
+
+        </md-card-content>
+    </md-card>
+</md-content>
+
+<div ng-controller="EcoAdvisorDialogsCtrl as ecoAdvisorDialogs" hide></div>
+
+<script type="text/ng-template" id="productGroupsManageDialogTemplate.html">
+    <md-dialog aria-label="productGroupsManageDialogTemplate.html" ng-cloak style="width: 640px;">
+        <md-toolbar>
+
+            <div class="md-toolbar-tools">
+                <span ng-hide="productGroups.editMode">Группы продукции</span>
+                <span ng-show="productGroups.editMode">Редактирование группы продукции</span>
+
+                <span flex></span>
+            </div>
+
+        </md-toolbar>
+        <md-dialog-content layout-padding>
+
+            <md-list ng-hide="productGroups.editMode">
+                <md-list-item class="secondary-button-padding"
+                              ng-click="productGroups.editProductGroup($event, group)"
+                              ng-show="!productGroups.editMode && productGroups.productGroups.data.length == 0">
+                    <p>Нажмите чтобы добавить новую группу</p>
+                </md-list-item>
+                <md-list-item class="secondary-button-padding"
+                              ng-repeat="group in productGroups.productGroups.data"
+                              ng-click="productGroups.editProductGroup($event, group)">
+                    <p>{{group.name}}</p>
+
+                    <span flex></span>
+
+                    <md-button class="md-secondary" ng-click="productGroups.removeProductGroup($event, $index)">
+                        удалить
+                    </md-button>
+                </md-list-item>
+            </md-list>
+
+            <div ng-show="productGroups.editMode">
+                <md-input-container class="md-block" flex>
+                    <label>название группы</label>
+                    <input type="text" ng-model="productGroups.editName">
+                </md-input-container>
+            </div>
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-padding>
+
+            <md-button ng-click="productGroups.editProductGroup($event)" ng-hide="productGroups.editMode">Добавить
+            </md-button>
+            <md-button ng-click="productGroups.close()" ng-hide="productGroups.editMode">Закрыть</md-button>
+
+            <md-button ng-click="productGroups.saveProductGroup($event)" ng-show="productGroups.editMode">Сохранить
+            </md-button>
+            <md-button ng-click="productGroups.cancelEdit($event)" ng-show="productGroups.editMode">Отменить</md-button>
+
+        </md-dialog-actions>
+    </md-dialog>
+</script>
+
+
+<script type="text/ng-template" id="emuKassaDialogTemplate.html">
+    <md-dialog aria-label="emuKassaDialogTemplate.html" ng-cloak style="width: 100%; height: 100%;">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Эмуляция действий с кассой</span>
+                <span flex></span>
+                <md-button ng-click="emuKassa.closeDialog()">
+                    Закрыть
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout-padding>
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-padding style="overflow: auto;">
+            <div ng-show="emuKassa.inited" style="width: 100%;">
+
+                <md-input-container>
+                    <label>Выбор рабочего места</label>
+                    <md-select name="workplaceId" required ng-model="emuKassa.selectedWorkplace" aria-label="Выбор рабочего места" ng-change="emuKassa.changeWorkplace($event)">
+                        <md-option ng-value="workplace.guid" ng-repeat="workplace in emuKassa.workplaces">{{ workplace.description }}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-button ng-show="!emuKassa.sessionActive && emuKassa.selectedWorkplace != null" ng-click="emuKassa.operatorStart($event)">Открыть сессию кассира
+                </md-button>
+                <span ng-show="emuKassa.sessionActive && !emuKassa.sessionIsMy">Сессия открыта не Вами</span>
+                <span ng-show="emuKassa.sessionActive && emuKassa.sessionIsMy">Сессия открыта</span>
+                <md-button ng-show="emuKassa.sessionActive && emuKassa.sessionIsMy" ng-click="emuKassa.operatorStop($event)">Завершить сессию кассира
+                </md-button>
+
+                <div ng-show="emuKassa.sessionActive && emuKassa.sessionIsMy">
+                    <div ng-show="emuKassa.enableAddProduct">
+                        <md-input-container class="md-block" flex>
+                            <label>Код</label>
+                            <input type="text" ng-model="emuKassa.productForAdd.code">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>Наименование</label>
+                            <input type="text" ng-model="emuKassa.productForAdd.name">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>Количество</label>
+                            <input type="number" ng-model="emuKassa.productForAdd.count">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>Единица измерения</label>
+                            <input type="text" ng-model="emuKassa.productForAdd.unitOfMeasure">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>Оптовая цена, руб. (без НДС)</label>
+                            <input type="number" ng-model="emuKassa.productForAdd.wholesalePrice.value">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>Розничная цена, руб. (без НДС)</label>
+                            <input type="number" ng-model="emuKassa.productForAdd.finalPrice.value">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex>
+                            <label>НДС, %</label>
+                            <input type="number" ng-model="emuKassa.productForAdd.vat">
+                        </md-input-container>
+                        <md-button ng-click="emuKassa.addProduct($event)">Добавить</md-button>
+                    </div>
+
+                    <div ng-show="!emuKassa.enableAddProduct">
+                        <md-button ng-click="emuKassa.showAddProductDialog($event)">Добавить продукт</md-button>
+                        <md-button ng-click="emuKassa.importProducts($event)">Внести продукты</md-button>
+
+                        <table md-table multiple ng-model="emuKassa.tempProducts" md-progress="promise">
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column md-order-by="code">Код</th>
+                                <th md-column md-order-by="name">Наименование</th>
+                                <th md-column md-numeric md-order-by="count">Количество</th>
+                                <th md-column md-order-by="unitOfMeasure">Единица измерения</th>
+                                <th md-column md-order-by="wholesalePrice" md-numeric>Оптовая цена</th>
+                                <th md-column md-numeric md-order-by="finalPriceWithVat">Розничная цена</th>
+                                <th md-column md-numeric md-order-by="vat">НДС, %</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row
+                                ng-repeat="product in emuKassa.tempProducts"
+                                class="md-placeholder" ng-class="$index % 2 == 1 ? 'grey_row' : ''"
+                            >
+                                <td md-cell>{{product.code}}</td>
+                                <td md-cell>{{product.name}}</td>
+                                <td md-cell>{{product.count}}</td>
+                                <td md-cell>{{product.unitOfMeasure}}</td>
+                                <td md-cell>{{product.wholesalePrice.value | currency}}</td>
+                                <td md-cell>{{product.finalPrice.value | currency}}</td>
+                                <td md-cell>{{product.vat}}%</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--name; // Наименование
+                        code; // Код
+                        count; // Количество
+                        unitOfMeasure; // Единица измерения
+                        wholesalePrice; // Оптовая цена
+                        finalPrice; // Розничная цена
+                        vat // НДС
+                        -->
+
+                    </div>
+                </div>
+            </div>
+        </md-dialog-actions>
+    </md-dialog>
+</script>

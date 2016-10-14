@@ -1,0 +1,12 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="documentTypesPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/flowOfDocuments/documentTypes.jsp" />
+    </definition>
+    <definition name="documentTemplatesPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/flowOfDocuments/documentsTemplates.jsp" />
+    </definition>
+    <definition name="documentTemplateEditPage" extends="wideLayout">
+        <put-attribute name="content" value="/views/flowOfDocuments/documentsTemplatesEdit.jsp" />
+    </definition>
+</tiles-definitions>

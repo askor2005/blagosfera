@@ -1,0 +1,5 @@
+{
+  "name": "Blagosfera push service",
+  "gcm_sender_id": "%s",
+  "gcm_user_visible_only": true
+}

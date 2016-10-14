@@ -1,0 +1,7 @@
+.component-form {
+    border-left: 1pt solid #c7cacd;
+}
+
+.component-form textarea.form-control {
+    resize: vertical;
+}

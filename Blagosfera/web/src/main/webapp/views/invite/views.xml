@@ -1,0 +1,14 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="invitePage" extends="layout">
+        <put-attribute name="content" value="/views/invite/invite.jsp" />
+    </definition>
+
+    <definition name="invitesPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/invite/invites.jsp" />
+    </definition>
+
+    <definition name="inviteAcceptRejectPage" template="/views/invite/inviteAcceptReject.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" />
+    </definition>
+</tiles-definitions>

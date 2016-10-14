@@ -1,0 +1,322 @@
+<h2>
+    {{'current_balance' | translate}}
+    <strong>{{account.totalBalance}} {{'currency' | translate}}</strong>
+</h2>
+
+<h3 ng-repeat="acc in account.accounts">
+    {{acc.type.name}}
+    <strong>{{acc.balance}} {{'currency' | translate}}
+    </strong>
+</h3>
+
+<md-divider></md-divider>
+
+<div layout="column">
+    <div layout="column" layout-gt-sm="row">
+        <md-input-container class="md-block" flex>
+            <label>{{'account' | translate}}</label>
+
+            <md-select aria-label="type" ng-model="account.accountTypeId" name="account_type">
+                <md-option value="">{{'account_type.all' | translate}}</md-option>
+                <md-option ng-repeat="account in account.accounts" ng-value="account.type.id">
+                    {{account.type.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex>
+            <label>{{'TRANSACTION_STATE' | translate}}</label>
+
+            <md-select aria-label="type" ng-model="account.transactionState" name="transaction_state">
+                <md-option value="">{{'TRANSACTION_STATE.ANY' | translate}}</md-option>
+                <md-option value="POST">{{'TRANSACTION_STATE.POST' | translate}}</md-option>
+                <md-option value="REJECT">{{'TRANSACTION_STATE.REJECT' | translate}}</md-option>
+                <md-option value="HOLD">{{'TRANSACTION_STATE.HOLD' | translate}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex>
+            <label>{{'TRANSACTION_DIRECTION' | translate}}</label>
+
+            <md-select aria-label="type" ng-model="account.transactionDirection" name="transaction_direction">
+                <md-option value="">{{'TRANSACTION_DIRECTION.ANY' | translate}}</md-option>
+                <md-option value="CREDIT">{{'TRANSACTION_DIRECTION.INBOUND' | translate}}</md-option>
+                <md-option value="DEBIT">{{'TRANSACTION_DIRECTION.OUTBOUND' | translate}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <div flex layout="column">
+            <span>{{'from' | translate}}</span>
+            <md-datepicker md-max-date="account.to" ng-model="account.from"></md-datepicker>
+        </div>
+
+        <div flex layout="column">
+            <span>{{'to' | translate}}</span>
+            <md-datepicker md-min-date="account.from" maxdate="account.maxdate" ng-model="account.to"></md-datepicker>
+        </div>
+    </div>
+
+    <div layout="row">
+        <div flex></div>
+        <md-button class="green-button" ng-click="account.refreshTransactions()">
+            {{'refresh' | translate}}
+        </md-button>
+    </div>
+</div>
+
+<md-table-container>
+    <table mdPageSelect="true" mdBoundaryLinks="true" mdOnPaginate="account.loadTransactions"
+           md-table multiple ng-model="account.selected" md-progress="promise">
+        <thead md-head>
+        <tr md-row>
+            <th md-column>#</th>
+            <th md-column>{{'status' | translate}}</th>
+            <th md-column>{{'table.date_time' | translate}}</th>
+            <th md-column>{{'table.comment' | translate}}</th>
+            <th md-column md-numeric>{{'table.sum' | translate}}</th>
+            <th md-column>{{'table.additional_info' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="transaction in account.transactions">
+            <td md-cell>
+                {{transaction.id}}
+            </td>
+            <td md-cell>
+                <span ng-switch on="transaction.state">
+                    <span ng-switch-when="HOLD">
+                        <i class="material-icons" title="{{'status.locked' | translate}}">&#xE897;</i>
+                    </span>
+                    <span ng-switch-when="REJECT">
+                        <i class="material-icons" title="{{'status.cancelled' | translate}}">&#xE5C9;</i>
+                    </span>
+                    <span ng-switch-when="POST">
+                        <i class="material-icons">&#xE86C;</i>
+                    </span>
+                </span>
+            </td>
+            <td md-cell>
+                <span ng-switch on="transaction.postDate || '_undefined_'">
+                    <span ng-switch-when="_undefined_">
+                        {{transaction.submitDate | date:  'dd.MM.yyyy HH:mm'}}
+                    </span>
+                    <span ng-switch-when-default>
+                        {{transaction.postDate | date : 'dd.MM.yyyy HH:mm'}}
+                    </span>
+                </span>
+            </td>
+            <td md-cell>
+                <span ng-switch on="transaction.type">
+                    <span ng-switch-when="DEBIT">
+                        <span ng-repeat="detail in transaction.myDetails">
+                            <span ng-switch on="detail.type">
+                                <span ng-switch-when="DEBIT">
+                                    {{'transaction_from_account' | translate}} {{detail.accountType.name}}
+
+                                    <span ng-show="detail.shareBookCommunity">
+                                        {{'transaction_from_sharebookcommunity' | translate}}
+                                        <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                    </span>
+
+                                    {{detail.amount}} {{'ra' | translate}}
+                                </span>
+                                <span ng-switch-when="CREDIT">
+                                    <span ng-show="detail.user">
+                                        {{'transaction_to_user' | translate}}
+
+                                        <a href="{{detail.user.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.user.ikp}}">{{detail.user.lastName | petrovichFull:detail.user.firstName:detail.user.secondName:'genitive':detail.user.sex}}</a>
+
+                                        {{detail.accountType.name}}
+
+                                        <span ng-show="detail.shareBookCommunity">
+                                            {{'transaction_to_sharebookcommunity' | translate}}
+                                            <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                               data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                        </span>
+
+                                        {{detail.amount}} {{'ra' | translate}}
+                                    </span>
+                                    <span ng-show="detail.community">
+                                        {{'transaction_to_community' | translate}}
+
+                                        <a href="{{detail.community.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.community.ikp}}">{{detail.community.name}}</a>
+
+                                        {{detail.accountType.name}}
+
+                                        <span ng-show="detail.shareBookCommunity">
+                                            {{'transaction_to_sharebookcommunity' | translate}}
+                                            <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                               data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                        </span>
+
+                                        {{detail.amount}} {{'ra' | translate}}
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span ng-repeat="detail in transaction.othersDetails">
+                            <span ng-switch on="detail.type">
+                                <span ng-switch-when="DEBIT">
+                                    {{'transaction_from_account' | translate}} {{detail.accountType.name}}
+
+                                    <span ng-show="detail.shareBookCommunity">
+                                        {{'transaction_from_sharebookcommunity' | translate}}
+
+                                        <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                    </span>
+
+                                    {{detail.amount}} {{'ra' | translate}}
+                                </span>
+                                <span ng-switch-when="CREDIT">
+                                    <span ng-show="detail.user">
+                                        {{'transaction_to_user' | translate}}
+
+                                        <a href="{{detail.user.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.user.ikp}}">{{detail.user.lastName | petrovichFull:detail.user.firstName:detail.user.secondName:'genitive':detail.user.sex}} </a>
+
+                                        {{detail.accountType.name}}
+
+                                        <span ng-show="detail.shareBookCommunity">
+                                            {{'transaction_to_sharebookcommunity' | translate}}
+
+                                            <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                               data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                        </span>
+
+                                        {{detail.amount}} {{'ra' | translate}}
+                                    </span>
+                                    <span ng-show="detail.community">
+                                        {{'transaction_to_community' | translate}}
+
+                                        <a href="{{detail.community.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.community.ikp}}">{{detail.community.name}}</a>
+
+                                        {{detail.accountType.name}}
+
+                                        <span ng-show="detail.shareBookCommunity">
+                                            {{'transaction_to_sharebookcommunity' | translate}}
+
+                                            <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                               data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                        </span>
+
+                                        {{detail.amount}} {{'ra' | translate}}
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                    <span ng-switch-when="LOCAL">
+                        <span ng-repeat="detail in transaction.myDetails">
+                            <span ng-switch on="detail.type">
+                                <span ng-switch-when="DEBIT">
+                                    {{'transaction_from_account' | translate}} {{detail.accountType.name}}
+
+                                    <span ng-show="detail.shareBookCommunity">
+                                        {{'transaction_from_sharebookcommunity' | translate}}
+
+                                        <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                    </span>
+
+                                    {{detail.amount}} {{'ra' | translate}}
+                                </span>
+                                <span ng-switch-when="CREDIT">
+                                    {{'transaction_to_account' | translate}} {{detail.accountType.name}}
+
+                                    <span ng-show="detail.shareBookCommunity">
+                                        {{'transaction_to_sharebookcommunity' | translate}}
+
+                                        <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                           data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                    </span>
+
+                                    {{detail.amount}} {{'ra' | translate}}
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                    <span ng-switch-when="CREDIT">
+                        <span ng-repeat="detail in transaction.myDetails">
+                            <span ng-show="transaction.senderUser">
+                                {{'transaction_from_user' | translate}}
+
+                                <a href="{{transaction.senderUser.link}}" class='tooltiped-avatar'
+                                   data-sharer-ikp="{{transaction.senderUser.ikp}}">{{transaction.senderUser.lastName | petrovichFull:transaction.senderUser.firstName:transaction.senderUser.secondName:'genitive':transaction.senderUser.sex}}</a>
+
+                                {{'transaction_to_account' | translate}} {{detail.accountType.name}}
+
+                                <span ng-show="detail.shareBookCommunity">
+                                    {{'transaction_to_sharebookcommunity' | translate}}
+
+                                    <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                       data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                </span>
+
+                                {{detail.amount}} {{'ra' | translate}}
+                            </span>
+                            <span ng-show="transaction.senderCommunity">
+                                {{'transaction_from_community' | translate}}
+
+                                <a href="{{transaction.senderCommunity.link}}" class='tooltiped-avatar'
+                                   data-sharer-ikp="{{transaction.senderCommunity.ikp}}">{{transaction.senderCommunity.name}}</a>
+
+                                {{'transaction_to_account' | translate}} {{detail.accountType.name}}
+
+                                <span ng-show="detail.shareBookCommunity">
+                                    {{'transaction_to_sharebookcommunity' | translate}}
+
+                                    <a href="{{detail.shareBookCommunity.link}}" class='tooltiped-avatar'
+                                       data-sharer-ikp="{{detail.shareBookCommunity.ikp}}">{{detail.shareBookCommunity.name}}</a>
+                                </span>
+
+                                {{detail.amount}} {{'ra' | translate}}
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </td>
+            <td md-cell>
+                {{transaction.amount}}
+            </td>
+            <td md-cell>
+                <span ng-switch on="transaction.payment || '_undefined_'">
+                    <span ng-switch-when="_undefined_"/>
+
+                    <span ng-switch-default>
+                        {{'payment_system' | translate}} {{transaction.payment.system}}
+
+                        <span ng-switch on="transaction.payment.sender || '_undefined_'">
+                            <span ng-switch-when="_undefined_"/>
+
+                            <span ng-switch-default>
+                                <br>
+                                {{'sender_wallet' | translate}} {{transaction.payment.sender}}
+                            </span>
+                        </span>
+
+                        <br>{{'receiver_wallet' | translate}} {{transaction.payment.receiver}}
+                        <br>{{'sum_in_roubles' | translate}} {{transaction.payment.rurAmount}}
+                        <br>{{'commission' | translate}} {{transaction.payment.rameraComission}}
+                        <br>{{'commission_amount' | translate}} {{transaction.payment.rameraComissionAmount}}
+                    </span>
+                </span>
+                <span ng-switch on="transaction.description || '_undefined_'">
+                    <span ng-switch-when="_undefined_"/>
+
+                    <span ng-switch-default>
+                        <br>{{'payment_description' | translate}} {{transaction.description}}
+                    </span>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <md-table-pagination md-limit="account.query.limit" md-label="{rowsPerPage: '', of: '{{'of' | translate}}'}"
+                         md-options="[5,10,15,20]" md-page-select="false" md-page="account.query.page"
+                         md-total="{{account.total}}" md-on-paginate="account.loadTransactions"></md-table-pagination>
+</md-table-container>

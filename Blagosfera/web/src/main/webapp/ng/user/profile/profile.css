@@ -1,0 +1,81 @@
+.group-color-example,
+.group-color-example:hover {
+    padding: 3px;
+    margin: 3px;
+    border-width: 1px;
+    border-style: solid;
+    text-align: center;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.group-color-example.group-color-example-1,
+.group-color-example.group-color-example-1:hover {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #428bca;
+}
+
+.group-color-example.group-color-example-2,
+.group-color-example.group-color-example-2:hover {
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #ffffff;
+}
+
+.group-color-example.group-color-example-3,
+.group-color-example.group-color-example-3:hover {
+    background-color: #3c763d;
+    color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.group-color-example.group-color-example-4,
+.group-color-example.group-color-example-4:hover {
+    background-color: #31708f;
+    color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.group-color-example.group-color-example-5,
+.group-color-example.group-color-example-5:hover {
+    background-color: #8a6d3b;
+    color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.group-color-example.group-color-example-6,
+.group-color-example.group-color-example-6:hover {
+    background-color: #a94442;
+    color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.group-color-example.group-color-example-7,
+.group-color-example.group-color-example-7:hover {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.group-color-example.group-color-example-8,
+.group-color-example.group-color-example-8:hover {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.group-color-example.group-color-example-9,
+.group-color-example.group-color-example-9:hover {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.group-color-example.group-color-example-10,
+.group-color-example.group-color-example-10:hover {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}

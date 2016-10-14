@@ -1,0 +1,85 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="adminRoles" extends="layout">
+        <put-attribute name="content" value="/views/admin/roles.jsp"/>
+    </definition>
+
+    <definition name="adminPageEdit" extends="layout">
+        <put-attribute name="content" value="/views/admin/pageEdit.jsp"/>
+    </definition>
+
+    <definition name="adminHelp" extends="layout">
+        <put-attribute name="content" value="/views/admin/help.jsp"/>
+    </definition>
+
+    <definition name="adminHelpEdit" extends="layout">
+        <put-attribute name="content" value="/views/admin/helpEdit.jsp"/>
+    </definition>
+
+    <definition name="adminApplicationEdit" extends="layout">
+        <put-attribute name="content" value="/views/admin/applicationEdit.jsp"/>
+    </definition>
+
+    <definition name="adminMenuEdit" extends="layout">
+        <put-attribute name="content" value="/views/admin/menuEdit.jsp"/>
+    </definition>
+
+    <definition name="adminSystemSettingsPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/admin/systemSettings.jsp"/>
+    </definition>
+
+    <definition name="adminEditFieldsPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/admin/adminEditFields.jsp"/>
+    </definition>
+
+    <definition name="adminNotificationsPage" extends="layout">
+        <put-attribute name="content" value="/views/admin/notifications.jsp"/>
+    </definition>
+
+    <definition name="adminRameraTextsPage" extends="layout">
+        <put-attribute name="content" value="/views/admin/rameraTexts.jsp"/>
+    </definition>
+
+    <definition name="adminActiveSessions" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/admin/activeSessions.jsp"/>
+    </definition>
+
+    <definition name="adminDataPage" extends="layout">
+        <put-attribute name="content" value="/views/admin/data.jsp"/>
+    </definition>
+
+    <definition name="bpeditor" extends="fullscreenLayout">
+        <put-attribute name="content" value="/views/admin/bpeditor/bpeditor.jsp" />
+    </definition>
+
+    <definition name="adminBpTree" extends="layout">
+        <put-attribute name="content" value="/views/admin/bpeditor/bptree.jsp" />
+    </definition>
+
+    <definition name="adminBpComponentsEditor" extends="fullscreenLayout">
+        <put-attribute name="content" value="/views/admin/bpeditor/bp-components-editor.jsp" />
+    </definition>
+
+    <definition name="rootSectionsAdminPage" extends="layout">
+        <put-attribute name="content" value="/views/admin/rootSectionsAdminPage.jsp"/>
+    </definition>
+
+    <definition name="communityPermissionsAdminPage" extends="layout">
+        <put-attribute name="content" value="/views/admin/communityPermissionsAdminPage.jsp"/>
+    </definition>
+
+    <definition name="emailSenderPage" extends="layout">
+        <put-attribute name="content" value="/views/admin/emailSenderPage.jsp"/>
+    </definition>
+
+    <definition name="smstest" extends="layout">
+        <put-attribute name="content" value="/views/admin/smstest.jsp"/>
+    </definition>
+
+    <definition name="adminNewsCategories" extends="layout">
+        <put-attribute name="content" value="/views/admin/newsCategories.jsp" />
+    </definition>
+
+</tiles-definitions>

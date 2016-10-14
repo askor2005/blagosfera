@@ -1,0 +1,20 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="error403" extends="errorLayout">
+        <put-attribute name="content" value="/views/errors/403.jsp" />
+    </definition>
+
+    <definition name="error404" extends="errorLayout">
+        <put-attribute name="content" value="/views/errors/404.jsp" />
+    </definition>
+
+    <definition name="error500" extends="errorLayout">
+        <put-attribute name="content" value="/views/errors/500.jsp" />
+    </definition>
+
+    <definition name="errorOAuth" template="/views/errors/oauth.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" />
+    </definition>
+
+</tiles-definitions>

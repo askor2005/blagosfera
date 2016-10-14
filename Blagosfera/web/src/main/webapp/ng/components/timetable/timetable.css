@@ -1,0 +1,30 @@
+.cell-timetable {
+    width : 21px;
+    height : 20px;
+    text-align : center;
+    cursor : pointer !important;
+}
+
+.cell-timetable-unselected {
+    background-color : #f2dede;
+}
+
+
+.cell-timetable-unselected::after {
+    content : "-";
+}
+
+.cell-timetable-selected {
+    background-color : #dff0d8;
+}
+
+.cell-timetable-selected::after {
+    content : "+";
+}
+.table.table-timetable td.hour-timetable {
+    position: relative;
+    height: 41px;
+    padding-left: 5px;
+    overflow: hidden;
+    left: -2px;
+}

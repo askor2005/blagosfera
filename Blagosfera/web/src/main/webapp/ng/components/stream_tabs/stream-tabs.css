@@ -1,0 +1,83 @@
+/**/
+.tabbable {
+}
+
+.tabbable .tabbable_header {
+    padding: 22px 0px;
+    border-bottom: 2px solid #f5f5f5;
+    text-align: center;
+}
+
+.tabbable .doneTab .circleNumber {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-color: #d0de43;
+    border: 2px solid #d0de43;
+    color: #ffffff;
+    font-size: 1.6em;
+}
+.tabbable .activeTab .circleNumber {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    border: 2px solid #d0de43;
+    color: #d0de43;
+    font-size: 1.6em;
+}
+.tabbable .notActiveTab .circleNumber {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    border: 2px solid #f6f6f6;
+    color: #f6f6f6;
+    font-size: 1.6em;
+}
+
+.tabbable .tabhead{
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.tabbable .leftLine {
+    position: absolute;
+    height: 2px;
+    width: 50%;
+    top: 18px;
+    left: -18px;
+}
+.tabbable .rightLine {
+    position: absolute;
+    height: 2px;
+    width: 50%;
+    top: 18px;
+    right: -18px;
+}
+
+.tabbable .doneTab .paneTitle {
+    color: #d0de43;
+}
+
+.tabbable .activeTab .paneTitle {
+    color: #48575e;
+}
+.tabbable .notActiveTab .paneTitle {
+    color: #9ba3a7;
+}
+
+.tabbable .doneTab .leftLine, .tabbable .doneTab .rightLine {
+    border-top: 2px solid #d0de43;
+}
+.tabbable .activeTab .leftLine {
+    border-top: 2px solid #d0de43;
+}
+.tabbable .activeTab .rightLine {
+    border-top: 2px solid #f6f6f6;
+}
+.tabbable .notActiveTab .leftLine, .tabbable .notActiveTab .rightLine {
+    border-top: 2px solid #f6f6f6;
+}

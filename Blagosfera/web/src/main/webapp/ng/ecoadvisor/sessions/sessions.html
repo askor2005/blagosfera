@@ -1,0 +1,321 @@
+<md-content layout="column" layout-padding layout-wrap layout-fill ng-cloak>
+
+    <div md-whiteframe="1" layout layout-align="center center">
+        <b>{{sessions.community.name}}</b>
+    </div>
+
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Сессии операторов">
+
+            <div layout="row">
+                <md-card flex="25">
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>Рабочие места</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-table-container>
+                        <table md-table md-row-select ng-model="sessions.workplaces.selected"
+                               md-progress="sessions.workplaces.promise">
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column></th>
+                                <th md-column>Номер</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row md-select="workplace" md-select-id="{{workplace.id}}"
+                                md-auto-select="true" ng-repeat="workplace in sessions.workplaces.data"
+                                md-on-select="sessions.onWorkplaceSelect"
+                                md-on-deselect="sessions.onWorkplaceSelect">
+                                <td md-cell><img ng-src="{{workplace.photo}}" class="community-thumb"></td>
+                                <td md-cell>{{workplace.number}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-card>
+
+                <md-card flex>
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>Сессии операторов</span>
+                            <span flex></span>
+                            <md-button ng-click="sessions.openSessionsFilterDialog($event)">
+                                фильтр сессий
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+
+                    <md-table-container>
+                        <table md-table md-row-select ng-model="sessions.sessions.selected" class="md-row-select-single"
+                               md-progress="sessions.sessions.promise">
+                            <thead md-head md-order="sessions.sessions.query.sortColumn"
+                                   md-on-reorder="sessions.onSessionsReorder">
+                            <tr md-row>
+                                <th md-column md-order-by="workplace">Рабочее место</th>
+                                <th md-column>Оператор</th>
+                                <th md-column md-order-by="createdDate">Дата открытия</th>
+                                <th md-column md-order-by="endDate">Дата закрытия</th>
+                                <th md-column md-order-by="active">Статус</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row md-select="session" md-select-id="{{session.id}}"
+                                md-auto-select="true" ng-repeat="session in sessions.sessions.data"
+                                md-on-select="sessions.onSessionSelect"
+                                md-on-deselect="sessions.onSessionDeselect">
+                                <td md-cell>{{sessions.renderWorkplace(session.workplace)}}</td>
+                                <td md-cell>{{session.operator.name}}</td>
+                                <td md-cell nowrap>{{session.createdDate | date : 'MM/dd/yyyy HH:mm'}}</td>
+                                <td md-cell nowrap>{{session.endDate | date : 'MM/dd/yyyy HH:mm'}}</td>
+                                <td md-cell>
+                                    <ng-md-icon icon="close" style="fill: grey" class="clickable" size="16"
+                                                ng-click="sessions.closeSession($event, session)"
+                                                ng-show="session.active"></ng-md-icon>
+                                    <ng-md-icon icon="done" style="fill: grey" size="16"
+                                                ng-hide="session.active"></ng-md-icon>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+
+                    <md-table-pagination md-limit="sessions.sessions.query.pageSize"
+                                         md-page="sessions.sessions.query.page"
+                                         md-total="{{sessions.sessions.count}}"
+                                         md-on-paginate="sessions.onSessionsPage" md-page-select
+                                         md-options="[5, 10, 25, 50, 100]"
+                                         md-label="{page: 'Страница:', rowsPerPage: 'Строк:', of: 'из'}"></md-table-pagination>
+                </md-card>
+            </div>
+
+        </md-tab>
+        <md-tab label="Паевые операции">
+
+            <div flex layout="column">
+                <md-card flex>
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>Паевые операции</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-table-container>
+                        <table md-table md-row-select ng-model="sessions.operations.selected"
+                               md-progress="sessions.operations.promise">
+                            <thead md-head md-order="sessions.operations.query.sortColumn"
+                                   md-on-reorder="sessions.onOperationsReorder">
+                            <tr md-row>
+                                <th md-column></th>
+                                <th md-column md-order-by="createdDate">Дата запроса</th>
+                                <th md-column md-order-by="acceptedDate">Дата подтверждения</th>
+                                <th md-column>Потребитель</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row md-select="operation" md-select-id="{{operation.id}}"
+                                md-auto-select="true" ng-repeat="operation in sessions.operations.data"
+                                md-on-select="sessions.onOperationSelect"
+                                md-on-deselect="sessions.onOperationDeselect">
+                                <td md-cell>
+                                    <ng-md-icon icon="details" style="fill: grey" class="clickable" size="20"
+                                                ng-click="sessions.openOperationDetailsDialog($event, operation)"></ng-md-icon>
+                                    <ng-md-icon icon="folder" style="fill: grey" class="clickable" size="20"
+                                                ng-click="sessions.openDocumentsDialog($event, operation)"></ng-md-icon>
+                                </td>
+                                <td md-cell>{{operation.createdDate | date : 'MM/dd/yyyy HH:mm'}}</td>
+                                <td md-cell>{{operation.acceptedDate | date : 'MM/dd/yyyy HH:mm'}}</td>
+                                <td md-cell>{{operation.customer.name}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+
+                    <md-table-pagination md-limit="sessions.operations.query.pageSize"
+                                         md-page="sessions.operations.query.page"
+                                         md-total="{{sessions.operations.count}}"
+                                         md-on-paginate="sessions.onOperationsPage" md-page-select
+                                         md-options="[5, 10, 25, 50, 100]"
+                                         md-label="{page: 'Страница:', rowsPerPage: 'Строк:', of: 'из'}"></md-table-pagination>
+                </md-card>
+
+                <md-card flex>
+                    <md-toolbar class="md-table-toolbar md-default">
+                        <div class="md-toolbar-tools">
+                            <span>Продукция</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-table-container>
+                        <table md-table ng-model="sessions.products.selected"
+                               md-progress="sessions.products.promise">
+                            <thead md-head md-order="sessions.products.query.sortColumn"
+                                   md-on-reorder="sessions.onProductsReorder">
+                            <tr md-row>
+                                <th md-column></th>
+                                <th md-column md-numeric md-order-by="code">Код</th>
+                                <th md-column md-order-by="name">Наименование</th>
+                                <th md-column md-numeric md-order-by="count">Количество</th>
+                                <th md-column md-numeric md-order-by="finalPriceWithVatTotal">Стоимость</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="product in sessions.products.data">
+                                <td md-cell>
+                                    <ng-md-icon icon="details" style="fill: grey" class="clickable" size="20"
+                                                ng-click="sessions.openProductDetailsDialog($event, product)"></ng-md-icon>
+                                </td>
+                                <td md-cell>{{product.code}}</td>
+                                <td md-cell>{{product.name}}</td>
+                                <td md-cell>{{product.count}}</td>
+                                <td md-cell>{{product.finalPriceWithVatTotal | currency}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+
+                    <md-table-pagination md-limit="sessions.operations.query.pageSize"
+                                         md-page="sessions.operations.query.page"
+                                         md-total="{{sessions.operations.count}}"
+                                         md-on-paginate="sessions.onOperationsPage" md-page-select
+                                         md-options="[5, 10, 25, 50, 100]"
+                                         md-label="{page: 'Страница:', rowsPerPage: 'Строк:', of: 'из'}"></md-table-pagination>
+                </md-card>
+            </div>
+
+        </md-tab>
+    </md-tabs>
+</md-content>
+
+<div ng-controller="EcoAdvisorDialogsCtrl as ecoAdvisorDialogs" hide></div>
+
+<script type="text/ng-template" id="documentsDialogTemplate.html">
+    <md-dialog aria-label="sessionsFilterDialogTemplate.html" ng-cloak>
+        <md-toolbar>
+
+            <div class="md-toolbar-tools">
+                <span>Документы</span>
+            </div>
+
+        </md-toolbar>
+        <md-dialog-content>
+            <table>
+                <tr>
+                    <th>№ документа</th>
+                    <th>Наименование</th>
+                </tr>
+                <tr ng-repeat="document in dialog.operation.documents">
+                    <td nowrap><a href="{{document.link}}" target="_blank">{{document.code}}</a></td>
+                    <td>{{document.name | htmlToPlaintext}}</td>
+                </tr>
+            </table>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-padding>
+
+            <md-button ng-click="dialog.close()">
+                Закрыть
+            </md-button>
+
+        </md-dialog-actions>
+    </md-dialog>
+</script>
+
+<script type="text/ng-template" id="operationDetailsDialogTemplate.html">
+    <md-dialog aria-label="sessionsFilterDialogTemplate.html" ng-cloak>
+        <md-toolbar>
+
+            <div class="md-toolbar-tools">
+                <span>Информация об операции</span>
+            </div>
+
+        </md-toolbar>
+        <md-dialog-content>
+            <table class="dialog-table">
+                <tr>
+                    <td nowrap width="10%"><b>Внесено средств</b></td>
+                    <td nowrap width="5%"></td>
+                    <td width="85%">{{dialog.operation.totals.paymentAmount | currency}}</td>
+                </tr>
+                <tr>
+                    <td nowrap width="10%"><b>Наличные</b></td>
+                    <td nowrap width="5%"></td>
+                    <td width="85%">{{dialog.operation.totals.cash ? 'Да' : 'Нет'}}</td>
+                </tr>
+                <tr>
+                    <td nowrap width="10%"><b>Сдача</b></td>
+                    <td nowrap width="5%"></td>
+                    <td width="85%">{{dialog.operation.totals.changeAmount | currency}}</td>
+                </tr>
+                <tr>
+                    <td nowrap width="10%"><b>Общий взнос</b></td>
+                    <td nowrap width="5%"></td>
+                    <td width="85%">{{dialog.operation.totals.totalFinalAmount | currency}}</td>
+                </tr>
+                <tr>
+                    <td nowrap width="10%"><b>Паевой взнос</b></td>
+                    <td nowrap width="5%"></td>
+                    <td width="85%">{{dialog.operation.totals.totalWholesaleAmount | currency}}</td>
+                </tr>
+                <tr>
+                    <td nowrap width="10%"><b>Членский взнос</b></td>
+                    <td nowrap width="5%"></td>
+                    <td width="85%">{{dialog.operation.totals.membershipFee | currency}}</td>
+                </tr>
+            </table>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-padding>
+
+            <md-button ng-click="dialog.close()">
+                Закрыть
+            </md-button>
+
+        </md-dialog-actions>
+    </md-dialog>
+</script>
+
+<script type="text/ng-template" id="sessionsFilterDialogTemplate.html">
+    <md-dialog aria-label="sessionsFilterDialogTemplate.html" ng-cloak>
+        <md-toolbar>
+
+            <div class="md-toolbar-tools">
+                <span>Настройки фильтра сессий</span>
+            </div>
+
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="column">
+                <md-card>
+                    <md-card-content leyout="column">
+                        <md-input-container class="md-block" style="margin: 0;" flex>
+                            <label>оператор</label>
+                            <input type="text" ng-model="dialog.operator"
+                                   ng-model-options="{updateOn: 'blur'}">
+                        </md-input-container>
+                        <span class="md-subhead">дата открытия</span>
+                        <div layout="column">
+                            <md-datepicker style="margin-right: 0;" ng-model="dialog.createdDateFrom"
+                                           md-placeholder="с"></md-datepicker>
+                            <md-datepicker style="margin-right: 0;" ng-model="dialog.createdDateTo"
+                                           md-placeholder="по"></md-datepicker>
+                        </div>
+                        <span class="md-subhead">статус</span>
+                        <md-radio-group ng-model="dialog.active" layout="row">
+                            <md-radio-button value="" class="md-primary">все</md-radio-button>
+                            <md-radio-button value="active">активные</md-radio-button>
+                            <md-radio-button value="closed">закрытые</md-radio-button>
+                        </md-radio-group>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-padding>
+
+            <md-button ng-click="dialog.apply()">Применить</md-button>
+            <md-button ng-click="dialog.cancel()">Отменить</md-button>
+
+        </md-dialog-actions>
+    </md-dialog>
+</script>

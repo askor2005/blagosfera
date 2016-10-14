@@ -1,0 +1,48 @@
+package ru.radom.kabinet.utils;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+
+/**
+ * Helper class which is able to autowire a specified class. It holds a static reference to the {@link org.springframework.context.ApplicationContext}.
+ */
+@Component("autowireHelper")
+public class AutowireHelper implements ApplicationContextAware {
+
+    private static ApplicationContext applicationContext;
+
+    public AutowireHelper() {
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        AutowireHelper.applicationContext = applicationContext;
+    }
+
+    /**
+     * Tries to autowire the specified instance of the class if one of the specified beans which need to be autowired
+     * are null.
+     *
+     * @param classToAutowire        the instance of the class which holds @Autowire annotations
+     * @param beansToAutowireInClass the beans which have the @Autowire annotation in the specified {#classToAutowire}
+     */
+    public static void autowire(Object classToAutowire, Object... beansToAutowireInClass) {
+        for (Object bean : beansToAutowireInClass) {
+            if (bean == null) {
+                applicationContext.getAutowireCapableBeanFactory().autowireBean(classToAutowire);
+                break;
+            }
+        }
+    }
+
+    /**
+     * find bean in application context
+     *
+     * @param clazz
+     * @return
+     */
+    public static <T extends Object> T getBean(Class<T> clazz) {
+        return applicationContext.getBean(clazz);
+    }
+}

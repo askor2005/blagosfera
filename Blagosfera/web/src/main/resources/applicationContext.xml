@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx       http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/task     http://www.springframework.org/schema/task/spring-task.xsd
+                           http://www.springframework.org/schema/aop      http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                           http://www.springframework.org/schema/util     http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <task:scheduler id="taskScheduler" pool-size="4"/>
+    <task:executor id="taskExecutor" pool-size="4"/>
+    <task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
+
+    <context:property-placeholder location="classpath:/application.properties" ignore-unresolvable="true" order="1"/>
+
+    <context:component-scan base-package="ru.radom.kabinet" annotation-config="true">
+        <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
+
+    <context:component-scan base-package="ru.askor.blagosfera" annotation-config="true">
+        <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
+
+    <context:component-scan base-package="ru.radom.blagosferabp" annotation-config="true"/>
+
+    <context:annotation-config/>
+
+    <!-- TODO remove proxy-target-class="true" -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <tx:annotation-driven transaction-manager="transactionManager" order="1"/>
+
+    <jpa:repositories base-package="ru.askor.blagosfera.data.jpa.repositories"
+                      entity-manager-factory-ref="kabinetEntityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>
+
+    <jpa:repositories base-package="ru.radom.blagosferabp.activiti.dao"
+                      entity-manager-factory-ref="bpEntityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>
+
+    <bean id="buildNumber" class="java.lang.String">
+        <constructor-arg value="${buildNumber}"/>
+    </bean>
+
+    <bean id="buildDate" class="java.lang.String">
+        <constructor-arg value="${buildDate}"/>
+    </bean>
+
+    <bean id="buildBranch" class="java.lang.String">
+        <constructor-arg value="${buildBranch}"/>
+    </bean>
+    <bean id="orderingExecutor" class="ru.radom.kabinet.concurrency.OrderingExecutor">
+        <constructor-arg ref="taskExecutor"/>
+    </bean>
+
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg type="java.util.Properties">
+                    <props>
+                        <prop key="kaptcha.image.width">100</prop>
+                        <prop key="kaptcha.image.height">44</prop>
+                        <prop key="kaptcha.textproducer.char.string">0123456789</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="kabinetDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+          init-method="init" destroy-method="close"
+          depends-on="transactionManager">
+        <property name="xaDataSourceClassName" value="org.postgresql.xa.PGXADataSource"/>
+        <property name="uniqueResourceName" value="kabinetDataSource"/>
+        <property name="poolSize" value="20"/>
+        <property name="maxLifetime" value="60"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="serverName">${db.kabinet.serverName}</prop>
+                <prop key="portNumber">${db.kabinet.portNumber}</prop>
+                <prop key="databaseName">${db.kabinet.databaseName}</prop>
+                <prop key="user">${db.kabinet.username}</prop>
+                <prop key="password">${db.kabinet.password}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="votingDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+          init-method="init" destroy-method="close"
+          depends-on="transactionManager">
+        <property name="xaDataSourceClassName" value="org.postgresql.xa.PGXADataSource"/>
+        <property name="uniqueResourceName" value="votingDataSource"/>
+        <property name="poolSize" value="20"/>
+        <property name="maxLifetime" value="60"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="serverName">${db.voting.serverName}</prop>
+                <prop key="portNumber">${db.voting.portNumber}</prop>
+                <prop key="databaseName">${db.voting.databaseName}</prop>
+                <prop key="user">${db.voting.username}</prop>
+                <prop key="password">${db.voting.password}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="bpDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+          init-method="init" destroy-method="close"
+          depends-on="transactionManager">
+        <property name="xaDataSourceClassName" value="org.postgresql.xa.PGXADataSource"/>
+        <property name="uniqueResourceName" value="bpDataSource"/>
+        <property name="poolSize" value="20"/>
+        <property name="maxLifetime" value="60"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="serverName">${db.bpactiviti.serverName}</prop>
+                <prop key="portNumber">${db.bpactiviti.portNumber}</prop>
+                <prop key="databaseName">${db.bpactiviti.databaseName}</prop>
+                <prop key="user">${db.bpactiviti.username}</prop>
+                <prop key="password">${db.bpactiviti.password}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="jpaProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+            <props>
+                <prop key="javax.persistence.sharedCache.mode">DISABLE_SELECTIVE</prop>
+
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.use_minimal_puts">true</prop>
+                <prop key="hibernate.cache.use_structured_entries">false</prop>
+                <prop key="hibernate.cache.region_prefix">hibernate</prop>
+                <prop key="hibernate.cache.region.factory_class">
+                    org.hibernate.cache.redis.SingletonRedisRegionFactory
+                </prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">
+                    redis.properties
+                </prop>
+
+                <prop key="hibernate.current_session_context_class">
+                    org.springframework.orm.hibernate4.SpringJtaSessionContext
+                </prop>
+                <prop key="hibernate.generate_statistics">false</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+                <prop key="hibernate.jdbc.batch_size">50</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+
+                <prop key="hibernate.transaction.jta.platform">
+                    com.atomikos.icatch.jta.hibernate4.AtomikosJ2eePlatform
+                </prop>
+
+                <prop key="zeroDateTimeBehavior">convertToNull</prop>
+
+                <prop key="javax.persistence.transactionType">JTA</prop>
+                <prop key="hibernate.connection.isolation">3</prop>
+                <prop key="hibernate.connection.release_mode">auto</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="kabinetEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          depends-on="transactionManager">
+        <property name="persistenceUnitName" value="kabinetPU"/>
+        <property name="jtaDataSource" ref="kabinetDataSource"/>
+        <property name="persistenceProviderClass" value="org.hibernate.jpa.HibernatePersistenceProvider"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>org.springframework.data.jpa.convert.threeten</value>
+                <value>ru.radom.kabinet.**</value>
+                <value>ru.askor.blagosfera.data.jpa.entities.**</value>
+            </list>
+        </property>
+        <property name="jpaProperties" ref="jpaProperties"/>
+    </bean>
+
+    <bean id="votingEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          depends-on="transactionManager">
+        <property name="persistenceUnitName" value="votingPU"/>
+        <property name="jtaDataSource" ref="votingDataSource"/>
+        <property name="persistenceProviderClass" value="org.hibernate.jpa.HibernatePersistenceProvider"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>org.springframework.data.jpa.convert.threeten</value>
+                <value>ru.askor.voting.data.jpa.entities.**</value>
+            </list>
+        </property>
+        <property name="jpaProperties" ref="jpaProperties"/>
+    </bean>
+
+    <bean id="bpEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          depends-on="transactionManager">
+        <property name="persistenceUnitName" value="bpPU"/>
+        <property name="jtaDataSource" ref="bpDataSource"/>
+        <property name="persistenceProviderClass" value="org.hibernate.jpa.HibernatePersistenceProvider"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaDialect">
+
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>org.springframework.data.jpa.convert.threeten</value>
+                <value>ru.radom.blagosferabp.**</value>
+            </list>
+        </property>
+        <property name="jpaProperties" ref="jpaProperties"/>
+    </bean>
+
+    <bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp"
+          init-method="init" destroy-method="shutdownWait"/>
+
+    <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
+          init-method="init" destroy-method="close"
+          depends-on="userTransactionService">
+        <property name="startupTransactionService" value="false"/>
+        <property name="forceShutdown" value="false"/>
+    </bean>
+
+    <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp"
+          depends-on="userTransactionService">
+        <property name="transactionTimeout" value="300"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"
+          depends-on="userTransactionService">
+        <property name="transactionManager" ref="atomikosTransactionManager"/>
+        <property name="userTransaction" ref="atomikosUserTransaction"/>
+        <property name="allowCustomIsolationLevels" value="true"/>
+    </bean>
+
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate" >
+        <constructor-arg name="transactionManager" ref="transactionManager" />
+    </bean>
+
+    <bean id="hibernateExceptionTranslator" class="org.springframework.orm.hibernate4.HibernateExceptionTranslator"/>
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <bean id="mimeTypesProviderResource" class="org.springframework.core.io.ClassPathResource">
+        <constructor-arg value="/mime.types" />
+    </bean>
+
+    <util:property-path id="mimeTypesProviderFilePath" path="mimeTypesProviderResource.file.absolutePath" />
+
+    <bean id="mimeTypesFileTypeMap" class="javax.activation.MimetypesFileTypeMap" >
+        <constructor-arg name="mimeTypeFileName" ref="mimeTypesProviderFilePath" />
+    </bean>
+
+</beans>

@@ -1,0 +1,78 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+
+<span class="ecoadvisor-header"><b></b></span>
+
+<div class="mbti-container">
+    <div style="width: 500px; min-height: 300px;" class="mbti-widget">
+        <canvas id="mbti-image" class="chart chart-radar"
+                chart-data="mbti.chartData" chart-labels="mbti.chartLabels"
+                chart-legend="true" chart-series="mbti.chartSeries"
+                chart-options="mbti.chartOptions">
+        </canvas>
+
+        <a id="mbti-save-button" class="mbti-save-icon" target="_blank" download="mbti.png">
+            <ng-md-icon icon="save" class="mbti-save-icon" size="24" ng-click="mbti.saveImage()"></ng-md-icon>
+        </a>
+    </div>
+
+    <div style="width: 500px;" class="mbti-widget">
+        <table width="100%">
+            <tr>
+                <td width="10%"></td>
+                <td>
+                    {{mbti.chartSeries[1]}}
+                </td>
+                <td width="12%"></td>
+            </tr>
+            <tr>
+                <td align="left">
+                    E - I
+                </td>
+                <td>
+                    <div ui-slider="mbti.sliders.ei.options" min="0.00" max="100.00" step="0.01" use-decimals
+                         ng-model="mbti.sliders.ei.val"></div>
+                </td>
+                <td align="right">
+                    {{mbti.sliders.ei.val | number : 2}}
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    S - N
+                </td>
+                <td>
+                    <div ui-slider="mbti.sliders.sn.options" min="0.00" max="100.00" step="0.01" use-decimals
+                         ng-model="mbti.sliders.sn.val"></div>
+                </td>
+                <td align="right">
+                    {{mbti.sliders.sn.val | number : 2}}
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    T - F
+                </td>
+                <td>
+                    <div ui-slider="mbti.sliders.tf.options" min="0.00" max="100.00" step="0.01" use-decimals
+                         ng-model="mbti.sliders.tf.val"></div>
+                </td>
+                <td align="right">
+                    {{mbti.sliders.tf.val | number : 2}}
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    J - P
+                </td>
+                <td>
+                    <div ui-slider="mbti.sliders.jp.options" min="0.00" max="100.00" step="0.01" use-decimals
+                         ng-model="mbti.sliders.jp.val"></div>
+                </td>
+                <td align="right">
+                    {{mbti.sliders.jp.val | number : 2}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+

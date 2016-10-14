@@ -1,0 +1,8 @@
+<ul class="list-group">
+    <% _.each(items, function(item) { %>
+        <li class="list-group-item stencil-item" stencil-id="<%=item.id%>">
+            <img src="/img/bpeditor/<%=item.icon%>" width="16px;" height="16px;"/>
+            <%-item.title || item.name%>
+        </li>
+    <% }); %>
+</ul>

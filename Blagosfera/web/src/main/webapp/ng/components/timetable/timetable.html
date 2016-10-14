@@ -1,0 +1,42 @@
+<div layout="column">
+    <md-table-container >
+<table hide show-gt-md>
+        <tr ng-repeat="day in askorTimetable.days" ng-init="dayIndex = $index">
+            <td>
+                <span>{{day}}</span>
+            </td>
+            <td ng-click="askorTimetable.toggleDay($index)">
+                <input ng-show="!askorTimetable.readonly" type="checkbox" ng-checked="askorTimetable.dayFull($index)"/>
+            </td>
+            <td ng-click="askorTimetable.toggleSelected(dayIndex,$index)" ng-repeat="h in askorTimetable.hours" ng-class="{'cell-timetable cell-timetable-selected' : askorTimetable.timeTableArray[dayIndex][$index], 'cell-timetable cell-timetable-unselected' : !askorTimetable.timeTableArray[dayIndex][$index]}" ></td>
+        </tr>
+    <tr>
+        <td></td>
+        <td></td>
+            <td ng-click="askorTimetable.toggleHour($index)" ng-repeat="h in askorTimetable.hours" class="hour-timetable">
+                <div>{{h}}</div>
+                <input ng-show="!askorTimetable.readonly" ng-checked="askorTimetable.hourFull($index)" type="checkbox" class="changeHour" />
+            </td>
+    </tr>
+</table>
+        <table hide-gt-md>
+            <tr ng-repeat="hour in askorTimetable.hours" ng-init="hourIndex = $index">
+                <td>
+                    <span>{{hour}}</span>
+                </td>
+                <td ng-click="askorTimetable.toggleHour($index)">
+                    <input ng-show="!askorTimetable.readonly" type="checkbox" ng-checked="askorTimetable.hourFull($index)"/>
+                </td>
+                <td ng-click="askorTimetable.toggleSelected($index,hourIndex)" ng-repeat="d in askorTimetable.days" ng-class="{'cell-timetable cell-timetable-selected' : askorTimetable.timeTableArray[$index][hourIndex], 'cell-timetable cell-timetable-unselected' : !askorTimetable[$index][hourIndex]}" ></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td  ng-click="askorTimetable.toggleDay($index)" ng-repeat="d in askorTimetable.days" class="hour-timetable">
+                    <div>{{d}}</div>
+                    <input ng-show="!askorTimetable.readonly" type="checkbox" ng-checked="askorTimetable.dayFull($index)"/>
+                </td>
+            </tr>
+        </table>
+        </md-table-container>
+</div>

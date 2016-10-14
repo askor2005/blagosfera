@@ -1,0 +1,30 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <!--definition name="documentTestAdminPage" template="/views/testDocuments/documentTestAdminPage.jsp" /-->
+
+    <definition name="documentTestAdminPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/testDocuments/documentTestAdminPage.jsp" />
+    </definition>
+
+    <definition name="documentPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/testDocuments/documentPage.jsp" />
+    </definition>
+
+    <definition name="documentListPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/testDocuments/documentListPage.jsp" />
+    </definition>
+
+    <definition name="documentPrintPage" template="/views/testDocuments/documentPrintPage.jsp"/>
+
+    <definition name="signDocumentsListPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/testDocuments/signDocumentsListPage.jsp" />
+    </definition>
+
+    <definition name="testCreateDocument" extends="layout">
+        <put-attribute name="content" value="/views/testDocuments/testCreateDocument.jsp" />
+    </definition>
+
+    <definition name="fieldsStyles" template="/views/testDocuments/documentsStyles.jsp" />
+
+</tiles-definitions>

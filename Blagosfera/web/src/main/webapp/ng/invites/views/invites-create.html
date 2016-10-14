@@ -1,0 +1,187 @@
+<md-dialog aria-label="" class="askor-dialog" ng-cloak id="createInvite">
+    <form name="createInvite">
+        <md-toolbar>
+            <div class="md-toolbar-tools" layout="row" layout-xs="column" flex layout-align="center center">
+                <h2>{{'create.header' | translate}}</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <streamtabs cancel="invites.cancelCreate">
+                <pane
+                        title="{{'create.email.title' | translate}}"
+                        button-title="{{'create.first.tab.btn' | translate}}"
+                        ng-scope="invites"
+                        nexttab="invites.firstTabDone"
+                        next-on-enter="true"
+                        active-tab="true"
+                        >
+                    <div flex layout="row" layout-padding>
+                        <h3 style="text-align: center;">{{'create.first.tab.header' | translate}}</h3>
+                    </div>
+                    <div flex layout="row" ayout-align="center start" layout-padding>
+                        <div flex="25"></div>
+                        <div flex="50">
+                            <md-input-container class="md-block" flex>
+                                <label>{{'create.email.title' | translate}}</label>
+                                <input required
+                                       type="email" name="email"
+                                       data-ng-trim="false"
+                                       ng-model="invites.create.email"
+                                       autofocus
+                                       email-validate
+                                        />
+                                <div ng-messages="createInvite.email.$error" ng-messages-multiple role="alert" ng-show="createInvite.email.$dirty">
+                                    <div ng-message="servererror">{{emailError}}</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div flex="25"></div>
+                    </div>
+                </pane>
+                <pane
+                        title="{{'create.second.tab.title' | translate}}"
+                        button-title="{{'create.second.tab.btn' | translate}}"
+                        nexttab="invites.secondTabDone"
+                        next-on-enter="true"
+                        active-tab="false"
+                        >
+                    <div flex layout="row" layout-padding>
+                        <h3 style="text-align: center;">{{'create.second.tab.header' | translate}}</h3>
+                    </div>
+                    <div flex layout="row" ayout-align="center start">
+                        <div flex="25"></div>
+                        <div flex="50">
+                            <md-input-container class="md-block" flex>
+                                <label>{{'create.second.tab.second.name' | translate}}</label>
+                                <input name="lastName"
+                                       required type="text"
+                                       ng-model="invites.create.lastName"
+                                       ng-change="invites.create.lastNameError=!createInvite.lastName.$valid"
+                                       data-ng-trim="false"
+                                       autofocus
+                                        />
+
+                                <div ng-messages="createInvite.lastName.$error" ng-messages-multiple role="alert" ng-show="
+                                    !createInvite.lastName.$valid && (createInvite.lastName.$dirty || invites.create.secondTabButtonClicked)
+                                ">
+                                    <div ng-message="required">{{'create.second.tab.second.name.error' | translate}}</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>
+                                    {{'create.second.tab.first.name' | translate}}
+                                </label>
+                                <input
+                                        name="firstName" required
+                                        type="text"
+                                        ng-model="invites.create.firstName"
+                                        ng-change="invites.create.firstNameError=!createInvite.firstName.$valid"
+                                        data-ng-trim="false"
+                                        />
+                                <div ng-messages="createInvite.firstName.$error" ng-messages-multiple role="alert" ng-show="
+                                     !createInvite.firstName.$valid && (createInvite.firstName.$dirty || invites.create.secondTabButtonClicked)
+                                ">
+                                    <div ng-message="required">{{'create.second.tab.first.name.error' | translate}}</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div flex="25"></div>
+                    </div>
+                    <div flex layout="row" ayout-align="center start">
+                        <div flex="25"></div>
+                        <div flex="50">
+                            <md-input-container class="md-block" flex>
+                                <label>{{'create.second.tab.middle.name' | translate}}</label>
+                                <input name="middleName" required
+                                       type="text"
+                                       ng-disabled="invites.create.middleNotExists"
+                                       ng-model="invites.create.middleName"
+                                       ng-change="invites.create.middleNameError=invites.create.middleName=='' && !invites.create.middleNotExists"
+                                       data-ng-trim="false"
+                                        />
+                                <div ng-messages="createInvite.middleName.$error" ng-messages-multiple role="alert" ng-show="
+                                     !createInvite.middleName.$valid && (createInvite.middleName.$dirty || invites.create.secondTabButtonClicked)
+                                     && !invites.create.middleNotExists
+                                ">
+                                    <div ng-message="required">{{'create.second.tab.middle.name.error' | translate}}</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div flex="25">
+                            <md-input-container class="md-block" flex>
+                                <md-checkbox ng-model="invites.create.middleNotExists" ng-change="
+                                invites.create.middleName='';
+                                invites.create.middleNameError=invites.create.middleName=='' && !invites.create.middleNotExists;
+                                ">
+                                    {{'create.second.tab.middle.name.not.exists' | translate}}
+                                </md-checkbox>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div flex layout="row" ayout-align="center start">
+                        <div flex="25"></div>
+                        <div flex="50">
+                            <md-input-container class="md-block" flex>
+                                <label>{{'create.second.tab.choose.gender' | translate}}</label>
+                                <label ng-show="createInvite.gender.$valid">{{'create.second.tab.choose.gender' | translate}}</label>
+                                <md-select name="gender" required ng-model="invites.create.gender" aria-label="{{'create.second.tab.choose.gender' | translate}}" ng-change="invites.create.genderError=!createInvite.gender.$valid">
+                                    <md-option value="male" >{{'create.second.tab.gender.male' | translate}}</md-option>
+                                    <md-option value="female" >{{'create.second.tab.gender.female' | translate}}</md-option>
+                                </md-select>
+
+                                <div ng-messages="createInvite.gender.$error" ng-messages-multiple role="alert" ng-show="
+                                     !createInvite.gender.$valid && (createInvite.gender.$dirty || invites.create.secondTabButtonClicked)
+                                ">
+                                    <div ng-message="required">{{'create.second.tab.choose.gender' | translate}}</div>
+                                </div>
+
+                            </md-input-container>
+                        </div>
+                        <div flex="25"></div>
+                    </div>
+                </pane>
+                <pane
+                        title="{{'create.third.tab.title' | translate}}"
+                        button-title="{{'create.third.tab.btn' | translate}}"
+                        nexttab="invites.thirdTabDone"
+                        active-tab="false"
+                        >
+                    <div flex layout="row" layout-padding>
+                        <h3 flex>{{'create.third.tab.choose.state1' | translate}} {{invites.create.fioRodPadeg}}</h3>
+                    </div>
+                    <div flex layout="column" layout-padding>
+                        <div>
+                            <md-checkbox ng-model="invites.create.isGuarantee">
+                                {{'create.third.tab.choose.state2' | translate}} {{invites.create.fioRodPadeg}}
+                            </md-checkbox>
+                        </div>
+                        <div>
+                            <md-checkbox ng-model="invites.create.isKnowPersonally">
+                                {{'create.third.tab.choose.state3' | translate}} {{invites.create.fioTvorPadeg}}
+                            </md-checkbox>
+                        </div>
+                        <div>
+                            <md-input-container class="md-block" ng-show="invites.create.isKnowPersonally" flex>
+                                <label>{{'create.third.tab.count.years' | translate}} {{invites.create.fioTvorPadeg}}</label>
+                                <input required type="number" min="0" max="100" placeholder="" ng-model="invites.create.howLongFamiliar">
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div flex layout="row" layout-padding>
+                        <h3 flex>{{'create.third.tab.relations.types' | translate}} {{invites.create.fioTvorPadeg}}</h3>
+                    </div>
+                    <div layout-padding layout="row" layout-xs="column" layout-wrap>
+                        <div ng-repeat="relation in invites.relations" flex="25">
+                            <md-checkbox ng-model="relation.active">
+                                {{relation.name}}
+                            </md-checkbox>
+                        </div>
+                        <md-input-container class="md-block" flex>
+                            <label style="color: red;">{{invites.create.fillFormError}}</label>
+                        </md-input-container>
+                    </div>
+                </pane>
+            </streamtabs>
+        </md-dialog-content>
+    </form>
+</md-dialog>

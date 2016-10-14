@@ -1,0 +1,28 @@
+<md-dialog aria-label="uploadUserAvatarDialog.html" ng-cloak id="support-request-dialog">
+    <md-toolbar class="md-accent md-hue-2">
+        <div layout-align="center center" class="md-toolbar-tools">
+            <span>
+               ЗАГРУЗИТЬ АВАТАР
+                <md-tooltip md-direction="bottom">
+                    Загрузить аватар
+                </md-tooltip>
+            </span>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+        <choosephoto
+                source-url="dialog.requestData.sourcePhotoUrl"
+                result-url="dialog.requestData.resultPhotoUrl"
+                ></choosephoto>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-xs="column" layout-padding>
+        <div flex></div>
+
+        <div layout="row">
+            <md-button ng-click="dialog.saveAvatar()">Ок</md-button>
+            <md-button ng-click="dialog.cancel()" ng-if="!dialog.cancelDisabled">Отмена</md-button>
+        </div>
+
+    </md-dialog-actions>
+</md-dialog>

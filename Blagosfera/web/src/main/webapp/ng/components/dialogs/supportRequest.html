@@ -1,0 +1,88 @@
+<md-dialog aria-label="supportRequest.html" ng-cloak id="support-request-dialog">
+    <md-toolbar class="md-accent md-hue-2">
+        <div layout-align="center center" class="md-toolbar-tools">
+            <span>
+               ОБРАТНАЯ СВЯЗЬ
+                <md-tooltip md-direction="bottom">
+                   Обратная связь
+                </md-tooltip>
+            </span>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        <form novalidate name="supportForm">
+            <div flex layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>Ваш e-mail</label>
+
+                    <input size="40" required type="email" name="email"
+                           ng-model="dialog.email"
+                           >
+
+                    <div ng-messages="supportForm.email.$error" role="alert">
+                        <div ng-message-exp="['required', 'email']">
+                            Введен некорректный e-mail.
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div flex layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>Тема</label>
+
+                    <input required type="text" name="theme"
+                           ng-model="dialog.theme"
+                            >
+
+                    <div ng-messages="supportForm.theme.$error" role="alert">
+                        <div ng-message-exp="['required', 'theme']">
+                            Не указана тема
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div flex layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>Категория</label>
+
+                    <md-select  ng-model="dialog.supportRequestTypeId">
+                        <md-option  ng-value="type.id" ng-repeat="type in dialog.supportRequestTypes">{{type.name}}
+                        </md-option>
+                     </md-select>
+
+                    <div ng-messages="supportForm.supportRequestTypeId.$error" role="alert">
+                        <div ng-message-exp="['required', 'supportRequestTypeId']">
+                            Не указана категория вопроса
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div flex layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>Текст сообщения</label>
+                    <textarea required rows="10" ng-model="dialog.description"></textarea>
+                    <div ng-messages="supportForm.description.$error" role="alert">
+                        <div ng-message-exp="['required', 'text']">
+                            Не указан текст сообщения
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div flex layout="row" layout-align="center center">
+                <div id="g-recaptcha-support-request" class="recaptcha"></div>
+            </div>
+        </form>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-xs="column" layout-padding>
+        <div flex></div>
+
+        <div layout="row">
+            <md-button ng-click="dialog.saveRequest()" ng-disabled="!supportForm.$valid">Сохранить</md-button>
+            <md-button ng-click="dialog.cancel()" ng-if="!dialog.cancelDisabled">Отмена</md-button>
+        </div>
+
+    </md-dialog-actions>
+</md-dialog>

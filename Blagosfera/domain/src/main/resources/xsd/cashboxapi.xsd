@@ -1,0 +1,348 @@
+<?xml version="1.0" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="operatorStartRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+                <xsd:element name="operatorIkp" type="IKP"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="operatorStartResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status" type="Status"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="operatorStopRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+                <xsd:element name="operatorIkp" type="IKP"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="operatorStopResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status"         type="Status"/>
+                <xsd:element name="duration"       type="xsd:string" minOccurs="0"/>
+                <xsd:element name="exchangesTotal" type="Money"      minOccurs="0"/>
+                <xsd:element name="exchangesCount" type="xsd:int"    minOccurs="0"/>
+                <xsd:element name="products" minOccurs="0">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="product" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:all>
+                                        <xsd:element name="name"       type="xsd:string"/>
+                                        <xsd:element name="code"       type="xsd:string"/>
+                                        <xsd:element name="count"      type="Amount"/>
+                                        <xsd:element name="finalPrice" type="Money"/>
+                                    </xsd:all>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="sessionCheckRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="sessionCheckResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status"                    type="Status"/>
+                <xsd:element name="startDate"                 type="xsd:dateTime" minOccurs="0"/>
+                <xsd:element name="duration"                  type="xsd:int"      minOccurs="0"/>
+                <xsd:element name="operatorIkp"               type="IKP"          minOccurs="0"/>
+                <xsd:element name="operatorName"              type="xsd:string"   minOccurs="0"/>
+                <xsd:element name="shopCommunityName"         type="xsd:string"   minOccurs="0"/>
+                <xsd:element name="cooperativeName"           type="xsd:string"   minOccurs="0"/>
+                <xsd:element name="cooperativeDepartmentName" type="xsd:string"   minOccurs="0"/>
+                <xsd:element name="workplaceName"             type="xsd:string"   minOccurs="0"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="identificationRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+                <xsd:element name="operatorIkp" type="IKP"/>
+                <xsd:element name="ikp"         type="IKP"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="identificationResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status"         type="Status"/>
+                <xsd:element name="shareHolder"    type="ShareHolder" minOccurs="0"/>
+                <xsd:element name="affiliationFee" type="Money"       minOccurs="0"/>
+                <xsd:element name="shareAmountMin" type="Money"       minOccurs="0"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="registerRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+                <xsd:element name="operatorIkp" type="IKP"/>
+                <xsd:element name="ikp"         type="IKP"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="registerResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status" type="Status"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="acceptRegistrationRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+                <xsd:element name="operatorIkp" type="IKP"/>
+                <xsd:element name="ikp"         type="IKP"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="acceptRegistrationResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status" type="Status"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="exchangeRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+                <xsd:element name="operatorIkp" type="IKP"/>
+                <xsd:element name="ikp"         type="IKP"/>
+                <xsd:element name="basket"      type="Basket"/>
+                <xsd:element name="payment"     type="Payment"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="exchangeResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status"    type="Status"/>
+                <xsd:element name="requestId" type="UUID" minOccurs="0"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="acceptExchangeRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="workplaceId" type="UUID"/>
+                <xsd:element name="operatorIkp" type="IKP"/>
+                <xsd:element name="requestId"   type="UUID"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="acceptExchangeResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status"                              type="Status"/>
+                <xsd:element name="communityContributionProtocolNumber" type="xsd:string"   minOccurs="0"/>
+                <xsd:element name="communityContributionProtocolDate"   type="xsd:dateTime" minOccurs="0"/>
+                <xsd:element name="communityRefundProtocolNumber"       type="xsd:string"   minOccurs="0"/>
+                <xsd:element name="communityRefundProtocolDate"         type="xsd:dateTime" minOccurs="0"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="importProductsRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="shop" type="xsd:long"/>
+                <xsd:element name="products">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="product" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:all>
+                                        <xsd:element name="name"           type="xsd:string"/>
+                                        <xsd:element name="code"           type="xsd:string"/>
+                                        <xsd:element name="count"          type="Amount"/>
+                                        <xsd:element name="unitOfMeasure"  type="xsd:string"/>
+                                        <xsd:element name="wholesalePrice" type="Price"/>
+                                        <xsd:element name="finalPrice"     type="Price"/>
+                                        <xsd:element name="vat"            type="Amount"/>
+                                    </xsd:all>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="importProductsResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status" type="Status"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="updatePricesRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="shop" type="xsd:long"/>
+                <xsd:element name="products">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="product" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:all>
+                                        <xsd:element name="code"       type="xsd:string"/>
+                                        <xsd:element name="finalPrice" type="Price"/>
+                                    </xsd:all>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="updatePricesResponse">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="status" type="Status"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="ShareHolder">
+        <xsd:all>
+            <xsd:element name="ikp"                     type="IKP"/>
+            <xsd:element name="avatar"                  type="xsd:base64Binary" minOccurs="0"/>
+            <xsd:element name="firstName"               type="xsd:string"/>
+            <xsd:element name="middleName"              type="xsd:string"/>
+            <xsd:element name="lastName"                type="xsd:string"/>
+            <xsd:element name="fullName"                type="xsd:string"/>
+            <xsd:element name="gender"                  type="xsd:string"/>
+            <xsd:element name="isVerified"              type="xsd:boolean"/>
+            <xsd:element name="isMember"                type="xsd:boolean"/>
+            <xsd:element name="isRegistrationRequested" type="xsd:boolean"/>
+            <xsd:element name="isRegistrationAccepted"  type="xsd:boolean"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="Payment">
+        <xsd:choice>
+            <xsd:element name="cash">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="amount" type="Money"/>
+                    </xsd:all>
+                    <xsd:attribute name="getChange" type="xsd:boolean" use="required"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="nocash">
+                <xsd:complexType/>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="Basket">
+        <xsd:sequence>
+            <xsd:element name="item" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="name"        type="xsd:string"/>
+                        <xsd:element name="code"        type="xsd:string"/>
+                        <xsd:element name="count"       type="Amount"/>
+                        <xsd:element name="coefficient" type="Amount"/>
+                        <xsd:element name="price"       type="Money"/>
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Status">
+        <xsd:all>
+            <xsd:element name="code" type="StatusCode"/>
+            <xsd:element name="message" type="xsd:string"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:simpleType name="StatusCode">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ACCEPTED"/>
+            <xsd:enumeration value="REJECTED"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="IKP">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\p{Nd}{20}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="UUID">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="Price">
+        <xsd:simpleContent>
+            <xsd:extension base="Money">
+                <xsd:attribute name="withVat" type="xsd:boolean" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Money">
+        <xsd:simpleContent>
+            <xsd:extension base="Amount">
+                <xsd:attribute name="currency" type="CurrencyCode" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="Amount">
+        <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="CurrencyCode">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[A-Z]{3}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

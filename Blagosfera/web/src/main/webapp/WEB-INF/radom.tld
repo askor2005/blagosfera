@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+    <tlib-version>1.0</tlib-version>
+    <short-name>radomTlds</short-name>
+    <uri>http://kabinet2.ra-dom.ru/radomTlds</uri>
+    <function>
+        <name>resizeImage</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String resizeImage(java.lang.String, java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>getSimpleClassName</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getSimpleClassName(java.lang.Object)</function-signature>
+    </function>
+	<function>
+        <name>getSetting</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getSetting(java.lang.String, java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>getTimeZone</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.Integer getTimeZone()</function-signature>
+    </function>
+    <function>
+        <name>getServerTimeZone</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.Integer getServerTimeZone()</function-signature>
+    </function>
+	<function>
+        <name>getLongSetting</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>long getLongSetting(java.lang.String, long)</function-signature>
+    </function>    
+	<function>
+        <name>getBooleanSetting</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean getBooleanSetting(java.lang.String, boolean)</function-signature>
+    </function>      
+	<function>
+        <name>getDeclension</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getDeclension(long, java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    </function>
+	<function>
+        <name>replaceLinks</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String replaceLinks(java.lang.String)</function-signature>
+    </function>
+	<function>
+        <name>now</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.util.Date now()</function-signature>
+    </function>    
+	<function>
+        <name>getDatesDistanceHours</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>int getDatesDistanceHours(java.util.Date, java.util.Date)</function-signature>
+    </function>        
+	<function>
+        <name>getHumanReadableDatesDistanceAccusative</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getHumanReadableDatesDistanceAccusative(int)</function-signature>
+    </function>
+	<function>
+        <name>formatMoney</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String formatMoney(java.math.BigDecimal)</function-signature>
+    </function>
+	<function>
+        <name>isActiveCommunityMember</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean isActiveCommunityMember()</function-signature>
+    </function>
+	<function>
+        <name>isRootCommunityCreator</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean isRootCommunityCreator()</function-signature>
+    </function>    
+	<function>
+        <name>hasCommunityPermission</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean hasCommunityPermission(java.lang.String)</function-signature>
+    </function>
+    <!--<function>
+        <name>isCommunityDirector</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean isCommunityDirector()</function-signature>
+    </function>-->
+	<function>
+        <name>startsWith</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean startsWith(java.lang.String, java.lang.String)</function-signature>
+    </function>    
+	<function>
+        <name>communityLabel</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String communityLabel(java.lang.String, java.lang.String)</function-signature>
+    </function>
+	<function>
+        <name>isSharer</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean isSharer()</function-signature>
+    </function>
+    <function>
+        <name>getSharerById</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>ru.radom.kabinet.model.UserEntity getSharerById(java.lang.Long)</function-signature>
+    </function>
+	<function>
+        <name>hasRole</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean hasRole(java.lang.String)</function-signature>
+    </function>
+	<function>
+        <name>checkWebsitePrefix</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String checkWebsitePrefix(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>escape</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String escape(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>unescape</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String unescape(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>systemParameter</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String systemParameter(java.lang.String, java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>getRameraListEditorItemTextById</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getRameraListEditorItemTextById(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>getRameraListEditorItemMnemoCodeById</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getRameraListEditorItemMnemoCodeById(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>getSharerTextBySex</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getSharerTextBySex(ru.radom.kabinet.model.UserEntity, java.lang.String, java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>getPadeg</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getPadeg(java.lang.String, int)</function-signature>
+    </function>
+    <function>
+        <name>getSharerPadeg</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getSharerPadeg(ru.radom.kabinet.model.UserEntity, int)</function-signature>
+    </function>
+    <function>
+        <name>getPassportCitizenshipSettings</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getPassportCitizenshipSettings()</function-signature>
+    </function>
+    <function>
+        <name>isUrl</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean isUrl(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>checkSectionAccessType</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>boolean checkSectionAccessType(ru.radom.kabinet.model.web.Section)</function-signature>
+    </function>
+    <function>
+        <name>numberHumans</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String numberHumans(java.lang.Long)</function-signature>
+    </function>
+    <function>
+        <name>getFirstCommunityByAssociationFormCode</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>ru.askor.blagosfera.domain.community.Community getFirstCommunityByAssociationFormCode(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>getEditorsCommunity</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>ru.askor.blagosfera.domain.community.Community getEditorsCommunity()</function-signature>
+    </function>
+    <function>
+        <name>getFirstFieldFile</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>ru.radom.kabinet.model.fields.FieldFileEntity getFirstFieldFile(ru.radom.kabinet.model.fields.FieldValueEntity)</function-signature>
+    </function>
+    <function>
+        <name>getFirstFieldFileUrl</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getFirstFieldFileUrl(ru.radom.kabinet.model.fields.FieldValueEntity)</function-signature>
+    </function>
+    <function>
+        <name>getSectionLinkByName</name>
+        <function-class>ru.radom.kabinet.expressions.Functions</function-class>
+        <function-signature>java.lang.String getSectionLinkByName(java.lang.String)</function-signature>
+    </function>
+</taglib>

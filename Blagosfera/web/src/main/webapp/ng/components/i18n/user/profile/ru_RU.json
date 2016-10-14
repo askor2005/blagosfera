@@ -1,0 +1,18 @@
+{
+  "NOT_VERIFIED": "Не идентифицирован",
+  "VERIFIED": "Идентифицирован",
+  "INVITED": "Приглашен",
+  "REGISTERED_WITHOUT_INVITATION": "Регистрация без приглашения",
+  "IKP": "ЛИК",
+  "REGISTERED": "Зарегистрирован",
+  "REGISTRATION_DATA": "Регистрационные данные",
+  "VERIFICATION_DATA": "Идентификационные данные",
+  "ADDITIONAL_DATA": "Дополнительные данные",
+  "SAVE": "Сохранить",
+  "USER_NOT_FOUND": "Пользователь не найден",
+  "REGISTRATOR_HIGHEST_LEVEL" : "Регистратор высшей категории",
+  "REGISTRATOR" : "Регистратор",
+  "CATHEGORY" : "категории",
+  "LINK_TO_PROFILE_PAGE": "Ссылка на страницу профиля",
+  "changes_applied" : "Изменения сохранены"
+}

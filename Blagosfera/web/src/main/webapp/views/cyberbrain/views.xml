@@ -1,0 +1,30 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="taskManagementView" extends="wideLayout">
+        <put-attribute name="content" value="/views/cyberbrain/taskManagement.jsp" />
+    </definition>
+
+    <definition name="journalAttentionView" extends="wideLayout">
+        <put-attribute name="content" value="/views/cyberbrain/journalAttention.jsp" />
+    </definition>
+
+    <definition name="thesaurusView" extends="wideLayout">
+        <put-attribute name="content" value="/views/cyberbrain/thesaurus.jsp" />
+    </definition>
+
+    <definition name="knowledgeRepositoryView" extends="wideLayout">
+        <put-attribute name="content" value="/views/cyberbrain/knowledgeRepository.jsp" />
+    </definition>
+
+    <definition name="myKnowledgeView" extends="wideLayout">
+        <put-attribute name="content" value="/views/cyberbrain/myKnowledge.jsp" />
+    </definition>
+
+    <definition name="ratingSystemView" extends="wideLayout">
+        <put-attribute name="content" value="/views/cyberbrain/ratingSystem.jsp" />
+    </definition>
+
+    <definition name="cyberbrainImportExportView" extends="wideLayout">
+        <put-attribute name="content" value="/views/cyberbrain/cyberbrainImportExport.jsp" />
+    </definition>
+</tiles-definitions>

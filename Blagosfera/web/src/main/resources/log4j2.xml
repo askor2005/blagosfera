@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--
+    #log levels: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL
+
+    base directory
+    #glassfish = ${sys:com.sun.aas.instanceRoot}
+    #tomcat = ${sys:catalina.home} or ${sys:catalina.base}
+    -->
+    <loggers>
+        <root level="info">
+            <appender-ref ref="console"/>
+            <appender-ref ref="blagosfera"/>
+        </root>
+
+        <!-- 3rd-party libs logging -->
+
+        <logger name="org.springframework" level="warn" additivity="true"/>
+        <logger name="org.hibernate" level="warn" additivity="true"/>
+        <logger name="com.atomikos" level="error" additivity="true"/>
+        <logger name="org.apache" level="warn" additivity="true"/>
+        <logger name="reactor.io" level="warn" additivity="true"/>
+        <logger name="de.ruedigermoeller" level="error" additivity="true"/>
+        <logger name="org.nustaq" level="error" additivity="true"/>
+
+        <!-- -->
+
+        <logger name="blagosfera" level="info" additivity="false">
+            <appender-ref ref="blagosfera"/>
+        </logger>
+    </loggers>
+    <appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d [session-%X{session-id}] [request-%X{request-id}] [thread-%t] %p %c -- %m%n"/>
+        </Console>
+
+        <RollingFile name="blagosfera"
+                     fileName="${sys:catalina.base}/logs/blagosfera.log"
+                     filePattern="${sys:catalina.base}/logs/${date:yyyy-MM}/blagosfera_common-%d{MM-dd-yyyy}-%i.log.gz"
+                     append="true">
+            <PatternLayout pattern="%d [session-%X{session-id}] [request-%X{request-id}] [thread-%t] %p %c -- %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </appenders>
+</configuration>

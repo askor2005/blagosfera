@@ -1,0 +1,474 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="rules" template="/views/index/rules.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" />
+    </definition>
+
+	<definition name="index" template="/views/index/index.jsp">
+		<put-attribute name="favicon" value="/views/favicon.jsp" />
+	</definition>
+	
+	<definition name="register" template="/views/index/register.jsp">
+		<put-attribute name="favicon" value="/views/favicon.jsp" />
+	</definition>
+	
+	<definition name="activate" template="/views/index/activate.jsp">
+		<put-attribute name="favicon" value="/views/favicon.jsp" />
+	</definition>
+
+	<definition name="activated" template="/views/index/activated.jsp">
+		<put-attribute name="favicon" value="/views/favicon.jsp" />
+	</definition>
+
+	<definition name="recoveryInit" template="/views/index/recoveryInit.jsp">
+		<put-attribute name="favicon" value="/views/favicon.jsp" />
+	</definition>
+	
+	<definition name="recoveryComplete" template="/views/index/recoveryComplete.jsp">
+		<put-attribute name="favicon" value="/views/favicon.jsp" />
+	</definition>
+	
+    <definition name="sharer" extends="layout">
+        <put-attribute name="content" value="/views/sharer/sharer.jsp" />
+    </definition>
+
+    <definition name="sharerContacts" extends="layout">
+        <put-attribute name="content" value="/views/sharer/contacts.jsp" />
+        <put-attribute name="item" value="/views/contacts/item.jsp" cascade="true" />
+    </definition>
+
+    <definition name="instruction" extends="layout">
+        <put-attribute name="content" value="/views/sharer/instruction.jsp" />
+    </definition>
+
+    <definition name="message" extends="layout">
+        <put-attribute name="content" value="/views/sharer/message.jsp" />
+    </definition>
+    
+    <definition name="ramera" extends="layout">
+        <put-attribute name="content" value="/views/sharer/feed.jsp" />
+        <put-attribute name="newsListItem" value="/views/news/listItem.jsp" cascade="true" />
+        <put-attribute name="newsDialog" value="/views/news/dialog.jsp" cascade="true" />
+    </definition>
+    
+	<definition name="news" extends="layout">
+        <put-attribute name="content" value="/views/sharer/news.jsp" />
+    </definition>
+
+    <definition name="sharerSettings" extends="layout">
+        <put-attribute name="content" value="/views/sharer/settings.jsp" />
+    </definition>
+
+    <definition name="account" extends="layout">
+        <put-attribute name="content" value="/views/account/account.jsp" />
+    </definition>
+
+    <definition name="transaction" extends="layout">
+        <put-attribute name="content" value="/views/account/transaction.jsp" />
+    </definition>
+	
+    <definition name="accountPrint" template="/views/account/print.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" />
+    </definition>
+
+    <definition name="accountPay" extends="layout">
+        <put-attribute name="content" value="/views/account/pay.jsp" />
+    </definition>
+
+    <definition name="contactsLists" extends="layout">
+        <put-attribute name="content" value="/views/contacts/lists/lists.jsp" />
+    </definition>
+
+    <definition name="contactsListsEdit" extends="layout">
+        <put-attribute name="content" value="/views/contacts/lists/edit.jsp" />
+    </definition>
+
+
+	<definition name="contactsSearch" extends="layout">
+		<put-attribute name="item" value="/views/contacts/item.jsp" cascade="true" />
+		<put-attribute name="content" value="/views/contacts/search.jsp" />
+        <put-attribute name="sharerRightSidebar" value="/views/layout/sharerRightSidebar.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="contacts" extends="layout">
+		<put-attribute name="item" value="/views/contacts/item.jsp" cascade="true" />
+		<put-attribute name="content" value="/views/contacts/contacts.jsp" />
+	</definition>
+
+	<definition name="contactsRequests" extends="layout">
+		<put-attribute name="item" value="/views/contacts/item.jsp" cascade="true" />
+		<put-attribute name="content" value="/views/contacts/requests.jsp" />
+	</definition>
+
+    <definition name="notifications" extends="layout">
+        <put-attribute name="content" value="/views/notifications/notifications.jsp" />
+    </definition>
+
+    <definition name="chat" extends="layout">
+        <put-attribute name="content" value="/views/chat/chat.jsp" />
+    </definition>
+
+	<definition name="votingCreate" extends="layout">
+        <put-attribute name="content" value="/views/voting/create.jsp" />
+    </definition>
+    
+   	<definition name="votingControl" extends="layout">
+        <put-attribute name="content" value="/views/voting/control.jsp" />
+    </definition>
+    
+    <definition name="votingParticipation" extends="layout">
+        <put-attribute name="content" value="/views/voting/participation.jsp" />
+    </definition>
+
+   	<definition name="votingControlList" extends="layout">
+        <put-attribute name="content" value="/views/voting/controlList.jsp" />
+    </definition>
+    
+    <definition name="votingParticipationList" extends="layout">
+        <put-attribute name="content" value="/views/voting/participationList.jsp" />
+    </definition>
+
+	<definition name="votingTopicList" extends="layout">
+        <put-attribute name="content" value="/views/voting/topicList.jsp" />
+    </definition>        	
+    	
+	<definition name="votingTopicEdit" extends="layout">
+        <put-attribute name="content" value="/views/voting/topicEdit.jsp" />
+    </definition>      
+    	
+	<definition name="documents" extends="wideLayout">
+        <put-attribute name="content" value="/views/documents/documents.jsp" />
+    </definition>          	
+    	
+    <definition name="emailView" extends="layout">
+        <put-attribute name="content" value="/views/email/view.jsp" />
+    </definition>    
+    
+    <definition name="emailEdit" extends="layout">
+        <put-attribute name="content" value="/views/email/edit.jsp" />
+    </definition>        
+
+    <definition name="communitiesListMember" extends="layout">
+        <put-attribute name="content" value="/views/communities/list/member.jsp" />
+        <put-attribute name="item" value="/views/communities/list/item.jsp" cascade="true" />
+    </definition>
+
+    <definition name="groupsRequests" extends="layout">
+        <put-attribute name="content" value="/views/communities/groupsRequests/groupsRequests.jsp" />
+    </definition>
+
+    <definition name="groupsRequest" extends="layout">
+        <put-attribute name="content" value="/views/communities/groupsRequests/groupsRequest.jsp" />
+    </definition>
+
+    <definition name="inputMemberSettings" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/inputMemberSettings.jsp" />
+    </definition>
+
+    <definition name="communitiesListCreator" extends="layout">
+        <put-attribute name="content" value="/views/communities/list/creator.jsp" />
+        <put-attribute name="item" value="/views/communities/list/item.jsp" cascade="true" />
+    </definition>
+    
+	<definition name="communitiesListMyRequests" extends="layout">
+        <put-attribute name="content" value="/views/communities/list/myRequests.jsp" />
+        <put-attribute name="item" value="/views/communities/list/item.jsp" cascade="true" />
+    </definition>
+    
+	<definition name="communitiesListInvites" extends="layout">
+        <put-attribute name="content" value="/views/communities/list/invites.jsp" />
+        <put-attribute name="item" value="/views/communities/list/item.jsp" cascade="true" />
+    </definition>
+    
+    <definition name="communitiesAll" extends="layout">
+        <put-attribute name="content" value="/views/communities/list/all.jsp" />
+        <put-attribute name="item" value="/views/communities/list/item.jsp" cascade="true" />
+    </definition>      
+
+    <definition name="communitiesRequests" extends="layout">
+        <put-attribute name="content" value="/views/communities/requests.jsp" />
+    </definition>      
+
+	<definition name="communityCreate" extends="layout">
+        <put-attribute name="content" value="/views/communities/create.jsp" />
+    </definition>
+
+	<definition name="communityCreateWithoutOrganization" extends="layout">
+        <put-attribute name="content" value="/views/communities/createWithoutOrganization.jsp" />
+    </definition>
+
+    <definition name="communityCreateWithOrganizationIntro" extends="layout">
+        <put-attribute name="content" value="/views/communities/createWithOrganizationIntro.jsp" />
+    </definition>
+
+    <definition name="communityCreateWithOrganization" extends="layout">
+        <put-attribute name="content" value="/views/communities/createWithOrganization.jsp" />
+    </definition>
+
+
+    <definition name="createOrganizationRightSidebar" template="/views/communities/organization/createOrganizationRightSideBar.jsp">
+        <put-attribute name="sharerRightSidebar" value="rightSidebar" />
+    </definition>
+    <definition name="createOrganization" extends="layout">
+        <put-attribute name="content" value="/views/communities/organization/createOrganization.jsp" />
+        <put-attribute name="rightSidebar" value="createOrganizationRightSidebar" />
+    </definition>
+	
+	<definition name="communityLayout" extends="layout">
+		<put-attribute name="communityHeader" value="/views/communities/header.jsp" cascade="true" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+        <put-attribute name="schema" value="/views/communities/schema.jsp" cascade="true" />
+    </definition>
+
+    <definition name="communityNews" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/news.jsp" />
+        <put-attribute name="newsDialog" value="/views/news/dialog.jsp" cascade="true" />
+        <put-attribute name="newsListItem" value="/views/news/listItem.jsp" cascade="true" />
+    </definition>
+
+    <definition name="notVerifiedAccessToCommunity" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/communities/notVerifiedAccessToCommunity.jsp" />
+    </definition>
+
+    <definition name="notVerifiedAccessToCreateCommunity" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/communities/notVerifiedAccessToCreateCommunity.jsp" />
+    </definition>
+    
+    <definition name="communityEdit" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/edit.jsp" />
+    </definition>
+
+    <definition name="communityInfo" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/info.jsp" />
+    </definition>
+	
+	<definition name="communityMembers" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/members.jsp" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+        <put-attribute name="organizationMembersListItem" value="/views/communities/member/organizationMembersListItem.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communityIncomingRequests" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/incomingRequests.jsp" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+        <put-attribute name="organizationMembersListItem" value="/views/communities/member/organizationMembersListItem.jsp" cascade="true" />
+    </definition>
+    
+	<definition name="communityOutgoingRequests" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/outgoingRequests.jsp" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communityInvite" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/invite.jsp" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communitySettings" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/settings/settings.jsp" />
+    </definition>
+
+	<definition name="communitySettingsPosts" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/settings/posts.jsp" />
+    </definition>
+
+	<definition name="communitySettingsMembers" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/settings/members.jsp" />
+    </definition>
+
+	<definition name="communitySettingsDocumentTemplates" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/settings/documentTemplates.jsp" />
+    </definition>
+
+	<definition name="communityConditions" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/conditions.jsp" />
+    </definition>
+
+	<definition name="communityActivityJournal" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/activityJournal.jsp" />
+    </definition>
+
+	<definition name="communityModerateNews" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/moderateNews.jsp" />
+    </definition>        
+
+    <definition name="communityDiscussionsList" extends="communityLayout">
+        <put-attribute name="content" value="/views/discuss/groupDiscussions.jsp"/>
+    </definition>
+    
+    <definition name="communityDiscussionsCreate" extends="communityLayout">
+        <put-attribute name="content" value="/views/discuss/new.jsp"/>
+    </definition>
+    
+    <definition name="communityApplicationStart" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/applicationStart.jsp"/>
+    </definition>
+
+    <definition name="communityCreateSubgroup" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/createSubgroup.jsp"/>
+    </definition>
+    
+	<definition name="communitySubgroups" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/subgroups.jsp"/>
+        <put-attribute name="item" value="/views/communities/list/item.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communityAccount" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/account.jsp"/>
+    </definition>
+    
+	<definition name="communityDeleted" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/deleted.jsp"/>
+    </definition>    
+
+	<definition name="communityInventory" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/inventory.jsp"/>
+    </definition>
+
+    <definition name="createMeeting" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/voting/createMeeting.jsp"/>
+    </definition>
+
+    <definition name="communityVotingPage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/voting/communityVotingPage.jsp"/>
+    </definition>
+
+    <definition name="communityBatchVotingsPage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/voting/communityBatchVotingsPage.jsp"/>
+    </definition>
+
+    <definition name="communityVotingsPage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/voting/communityVotingsPage.jsp"/>
+    </definition>
+
+    <definition name="approveSharersToCooperativePage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/approveSharersToCooperativePage.jsp"/>
+    </definition>
+
+    <definition name="leaveSharersFromCooperativePage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/leaveSharersFromCooperativePage.jsp"/>
+    </definition>
+
+    <definition name="postRequestPage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/postRequestPage.jsp"/>
+    </definition>
+
+
+    <definition name="constructorBatchVotingPage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/constructor/constructorBatchVotingPage.jsp" />
+    </definition>
+    <definition name="batchVotingTemplatesPage" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/batchVotingTemplatesPage.jsp" />
+    </definition>
+
+    <definition name="selectCommunityRegistrator" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/verification/selectCommunityRegistrator.jsp" />
+    </definition>
+
+    <definition name="communityFiles" extends="communityLayout">
+        <put-attribute name="content" value="/views/communities/files.jsp" />
+    </definition>
+
+    
+    <!-- 
+	<definition name="communityNews" extends="layout">
+        <put-attribute name="content" value="/views/communities/news.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+        <put-attribute name="newsDialog" value="/views/news/dialog.jsp" cascade="true" />
+		<put-attribute name="newsListItem" value="/views/news/listItem.jsp" cascade="true" />
+    </definition>
+ 
+	<definition name="communityEdit" extends="layout">
+        <put-attribute name="content" value="/views/communities/edit.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+    </definition>
+	
+	<definition name="communityMembers" extends="layout">
+        <put-attribute name="content" value="/views/communities/members.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communityIncomingRequests" extends="layout">
+        <put-attribute name="content" value="/views/communities/incomingRequests.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+    </definition>
+    
+	<definition name="communityOutgoingRequests" extends="layout">
+        <put-attribute name="content" value="/views/communities/outgoingRequests.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communityInvite" extends="layout">
+        <put-attribute name="content" value="/views/communities/invite.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+        <put-attribute name="membersListItem" value="/views/communities/membersListItem.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communitySettings" extends="layout">
+        <put-attribute name="content" value="/views/communities/settings.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+    </definition>
+
+	<definition name="communityModerateNews" extends="layout">
+        <put-attribute name="content" value="/views/communities/moderateNews.jsp" />
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+    </definition>        
+
+    <definition name="communityDiscussionsList" extends="layout">
+        <put-attribute name="content" value="/views/discuss/groupDiscussions.jsp"/>
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+    </definition>
+    
+    <definition name="communityDiscussionsCreate" extends="layout">
+        <put-attribute name="content" value="/views/discuss/new.jsp"/>
+        <put-attribute name="menu" value="/views/communities/menu.jsp" cascade="true" />
+    </definition>
+-->
+ 
+	<definition name="toolsEks" extends="layout">
+        <put-attribute name="content" value="/views/tools/eks.jsp" />
+    </definition>
+
+    <definition name="discussionNew" extends="layout">
+        <put-attribute name="content" value="/views/discuss/new.jsp" />
+    </definition>
+
+    <definition name="discussionMy" extends="layout">
+        <put-attribute name="content" value="/views/discuss/my.jsp" />
+    </definition>
+
+    <definition name="discussionFind" extends="layout">
+        <put-attribute name="content" value="/views/discuss/find.jsp" />
+    </definition>
+
+    <definition name="discussionView" extends="layout">
+        <put-attribute name="content" value="/views/discuss/view.jsp" />
+    </definition>
+
+    <definition name="ulInfoByINN" extends="layout">
+        <put-attribute name="content" value="/views/ulInfo/skbConturULInfo.jsp" />
+    </definition>
+
+    <definition name="letterAuthorityAdminPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/letterOfAuthority/adminPage.jsp" />
+    </definition>
+    <definition name="myLetterOfAuthority" extends="layout">
+        <put-attribute name="content" value="/views/letterOfAuthority/myLetterOfAuthority.jsp" />
+    </definition>
+    <definition name="ownerLetterOfAuthority" extends="layout">
+        <put-attribute name="content" value="/views/letterOfAuthority/ownerLetterOfAuthority.jsp" />
+    </definition>
+    <definition name="supportRequest" extends="layout">
+        <put-attribute name="content" value="/views/support/supportRequest.jsp"/>
+    </definition>
+
+
+    <definition name="userbatchvotings" extends="layout">
+        <put-attribute name="content" value="/views/uservotings/userBatchVotingsPage.jsp" />
+    </definition>
+
+</tiles-definitions>

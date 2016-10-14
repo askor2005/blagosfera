@@ -1,0 +1,224 @@
+<div ng-if="invitationAccept.pageDataLoaded">
+    <div ng-if="!invitationAccept.authUser">
+        <div ng-if="invitationAccept.requestData.accept == null && invitationAccept.pageData.inviteId != null  &&
+                    invitationAccept.pageData.status == 'NEW_INVITATION' && !invitationAccept.pageData.isExpired" >
+            <div layout="column" flex layout-align="center center">
+                <img class="inviter-avatar" ng-src="{{invitationAccept.pageData.inviterAvatar | resizeImage:100}}" />
+                <h1 >{{'accept.header1' | translate:{invitationAccept:invitationAccept} }}</h1>
+                <h3>{{'accept.header2' | translate:{invitationAccept:invitationAccept} }}</h3>
+                <span class="text-muted">{{'accept.invitation.expired' | translate:{invitationAccept:invitationAccept} }}</span>
+            </div>
+            <md-divider class=""></md-divider>
+            <div layout="row" flex>
+                <div flex="50" layout="row" layout-align="center center"
+                     ng-if="invitationAccept.pageData.inviteId != null  &&
+                            invitationAccept.pageData.status == 'NEW_INVITATION'">
+                    <md-button class="md-primary md-raised" ng-click="invitationAccept.startAcceptInvitation()">
+                        {{'accept.invitation' | translate}}
+                    </md-button>
+                </div>
+
+                <div flex="50" layout="row" layout-align="center center"
+                     ng-if="invitationAccept.pageData.inviteId != null  &&
+                            invitationAccept.pageData.status == 'NEW_INVITATION'">
+                    <md-button class="md-warn md-raised" ng-click="invitationAccept.rejectInvitation()">
+                        {{'accept.reject.invitation' | translate}}
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div flex ng-if="invitationAccept.pageData.inviteId != null && invitationAccept.pageData.status == 'ACCEPTED_INVITATION'">
+            <h2>{{'accept.invite.was.accepted' | translate}}</h2>
+        </div>
+        <div flex ng-if="invitationAccept.pageData.inviteId != null && invitationAccept.pageData.status == 'REJECTED_INVITATION'">
+            <h2>{{'accept.invite.was.rejected' | translate}}</h2>
+        </div>
+        <div flex ng-if="invitationAccept.pageData.inviteId != null && invitationAccept.pageData.isExpired && invitationAccept.pageData.status == 'NEW_INVITATION'">
+            <h2>{{'accept.expired' | translate}}</h2>
+        </div>
+
+
+        <div ng-if="invitationAccept.requestData.accept != null">
+            <div ng-if="!invitationAccept.actionInProcess && invitationAccept.actionResult == null">
+
+                <div ng-if="invitationAccept.pageData.inviteId == null">
+                    <md-content>
+                        <h2>{{'accept.notfound' | translate}}</h2>
+                    </md-content>
+                </div>
+
+                <div ng-if="invitationAccept.requestData.accept &&
+                            invitationAccept.pageData.inviteId != null &&
+                            !invitationAccept.pageData.isExpired &&
+                            invitationAccept.pageData.status == 'NEW_INVITATION'">
+
+                    <div layout="column" flex layout-align="center center">
+                        <img class="inviter-avatar" ng-src="{{invitationAccept.pageData.inviterAvatar | resizeImage:100}}" />
+                        <h1>{{'accept.header1' | translate:{invitationAccept:invitationAccept} }}</h1>
+                        <h3>{{'accept.header2' | translate:{invitationAccept:invitationAccept} }}</h3>
+                        <span class="text-muted">{{'accept.invitation.expired' | translate:{invitationAccept:invitationAccept} }}</span>
+                    </div>
+                    <md-divider class=""></md-divider>
+
+                    <streamtabs cancel="invites.cancelCreate"
+                                show-cancel="false">
+                        <pane
+                                title="{{'accept.first.tab.title' | translate}}"
+                                button-title="{{'accept.first.tab.btn' | translate}}"
+                                nexttab="invitationAccept.firstTabDone"
+                                active-tab="{{invitationAccept.requestData.activeFirstTab}}"
+                                next-on-enter="true"
+                                >
+                            <div style="text-align: center;">
+                                <h2>{{'accept.first.tab.header' | translate}}</h2>
+                                <div ng-show="invitationAccept.acceptOfferError" role="alert">
+                                    <label style="color: red;">{{'accept.offer.error' | translate}}</label>
+                                </div>
+                                <div>
+                                    <md-checkbox required ng-model="invitationAccept.requestData.acceptOffer" ng-change="invitationAccept.acceptOfferError = false" style="vertical-align: top;margin-top: 13px;">
+                                        {{'accept.offer.checkbox' | translate}}
+                                    </md-checkbox>
+                                    <md-button class="md-primary" ng-click="invitationAccept.showOffer()"
+                                               style="vertical-align: top;text-transform: none;"
+                                    >
+                                        {{'accept.offer.link' | translate}}
+                                    </md-button>
+                                </div>
+                            </div>
+                        </pane>
+                        <pane
+                                title="{{'accept.second.tab.title' | translate}}"
+                                button-title="{{'accept.second.tab.btn' | translate}}"
+                                nexttab="invitationAccept.secondTabDone"
+                                active-tab="{{invitationAccept.requestData.activeSecondTab}}"
+                                next-on-enter="true"
+                                >
+                            <form name="invitationAccept.passwordForm">
+                                <div style="text-align: center;">
+                                    <h2>{{'accept.second.tab.header' | translate}}</h2>
+                                    <div flex layout="row">
+                                        <div flex="30"></div>
+                                        <div flex="40">
+                                            <md-input-container class="md-block" flex>
+                                                <label>{{'accept.second.tab.password' | translate}}</label>
+                                                <input required type="password"
+                                                       ng-model="invitationAccept.requestData.password"
+                                                       id="pw1" name="pw1"
+                                                       ng-minlength="8"
+                                                       ng-maxlength="20"
+                                                       autofocus
+                                                        />
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <label>{{'accept.second.tab.check.password' | translate}}</label>
+                                                <input required type="password"
+                                                       ng-model="invitationAccept.requestData.checkPassword"
+                                                       id="pw2" name="pw2"
+                                                       pw-check="pw1" />
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <md-checkbox ng-model="invitationAccept.requestData.needSendPassword">
+                                                    {{'create.second.tab.need.send.password' | translate}}
+                                                </md-checkbox>
+                                                <div class="text-muted msg-error">{{'create.second.tab.need.send.password.warn' | translate}}</div>
+                                            </md-input-container>
+                                        </div>
+                                        <div flex="30" layout="column" layout-align="start start" layout-padding>
+                                            <div class="msg-block">
+                                                <div check-strength="invitationAccept.requestData.password"></div>
+                                            </div>
+                                            <div class="msg-block" ng-show="invitationAccept.passwordForm.$error">
+                                                <div class="msg-error" ng-show="invitationAccept.passwordForm.pw1.$error.minlength">{{'accept.second.tab.password.min.length' | translate}}</div>
+                                                <div class="msg-error" ng-show="invitationAccept.passwordForm.pw2.$error.required && invitationAccept.requestData.password != ''">{{'accept.second.tab.need.check.password' | translate}}</div>
+                                                <div class="msg-error" ng-show="invitationAccept.passwordForm.pw2.$error.pwmatch && !invitationAccept.passwordForm.pw2.$error.required">{{'accept.second.tab.passwords.not.equals' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </pane>
+                        <pane
+                                title="{{'accept.third.tab.title' | translate}}"
+                                button-title="{{'accept.third.tab.btn' | translate}}"
+                                nexttab="invitationAccept.thirdTabDone"
+                                active-tab="{{invitationAccept.requestData.activeThirdTab}}"
+                                >
+                            <div style="text-align: center;">
+                                <h2>{{'accept.third.tab.header' | translate}}</h2>
+                                <choosephoto
+                                        source-url="invitationAccept.requestData.sourcePhotoUrl"
+                                        result-url="invitationAccept.requestData.resultPhotoUrl"
+                                        ></choosephoto>
+                            </div>
+                        </pane>
+                        <!--<pane title="Установить основные данные" button-title="Далее" nexttab="invitationAccept.finalTabDone">
+                            <h2></h2>
+                            <div>
+
+                            </div>
+                        </pane>-->
+                    </streamtabs>
+
+                </div>
+
+                <div ng-if="invitationAccept.pageData.inviteId != null && invitationAccept.pageData.status == 'ACCEPTED_INVITATION'">
+                    <h2>{{'accept.invite.was.accepted' | translate}}</h2>
+                </div>
+                <div ng-if="invitationAccept.pageData.inviteId != null && invitationAccept.pageData.status == 'REJECTED_INVITATION'">
+                    <h2>{{'accept.invite.was.rejected' | translate}}</h2>
+                </div>
+
+                <!--<div flex="" layout="row" layout-align="center center"
+                     ng-if="!invitationAccept.requestData.accept && invitationAccept.pageData.inviteId != null  &&
+                                invitationAccept.pageData.status == 'NEW_INVITATION'">
+                    <md-button class="md-warn md-raised" ng-click="invitationAccept.rejectInvitation()">
+                        {{'accept.reject.invitation' | translate}}
+                    </md-button>
+                </div>-->
+
+
+                <div ng-if="invitationAccept.pageData.isExpired && invitationAccept.pageData.status == 'NEW_INVITATION'">
+                    <h2>{{'accept.expired' | translate}}</h2>
+                </div>
+
+            </div>
+            <div ng-show="invitationAccept.actionInProcess && invitationAccept.actionResult == null">
+                <div flex layout="column" layout-align="start center">
+                    <route-loading-indicator>Загрузка...</route-loading-indicator>
+                </div>
+            </div>
+            <div ng-show="!invitationAccept.actionInProcess && invitationAccept.actionResult != null">
+                <md-content>
+                    <h2>
+                        <div ng-switch="invitationAccept.actionResult">
+                            <span ng-switch-when="ACCEPT_SUCCESS">{{'accept.result.success' | translate}}</span>
+                            <span ng-switch-when="NOT_FOUND">{{'accept.result.not.found' | translate}}</span>
+                            <span ng-switch-when="EXPIRED">{{'accept.result.expired' | translate}}</span>
+                            <span ng-switch-when="ACCEPTED">{{'accept.result.accepted' | translate}}</span>
+                            <span ng-switch-when="REJECTED">{{'accept.result.rejected' | translate}}</span>
+                            <span ng-switch-when="NEED_AVATAR_SOURCE">{{'accept.result.need.avatar.source' | translate}}</span>
+                            <span ng-switch-when="NEED_AVATAR">{{'accept.result.need.avatar' | translate}}</span>
+                            <span ng-switch-when="NEED_PASSWORD">{{'accept.result.need.password' | translate}}</span>
+                            <span ng-switch-when="PASSWORD_ERROR_LENGTH">{{'accept.result.need.password.length' | translate}}</span>
+
+                            <span ng-switch-when="REJECT_SUCCESS">{{'accept.result.reject.success' | translate}}</span>
+                            <span ng-switch-when="NOT_INSTALL_INVITER">{{'accept.result.not.install.inviter' | translate}}</span>
+
+                            <span ng-switch-default>{{invitationAccept.actionResult.message}}</span>
+                        </div>
+                    </h2>
+                </md-content>
+            </div>
+        </div>
+    </div>
+    <div ng-if="invitationAccept.authUser">
+        <div layout="row" flex layout-align="center center">
+            <h1>{{'accept.invite.auth.user' | translate}}</h1>
+        </div>
+    </div>
+</div>
+<div ng-if="!invitationAccept.pageDataLoaded">
+    <div flex layout="column" layout-align="start center">
+        <loading-indicator>Загрузка...</loading-indicator>
+    </div>
+</div>

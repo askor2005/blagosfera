@@ -1,0 +1,23 @@
+<div class="panel-heading" role="tab" id="<%-data.cid%>-heading">
+    <h4 class="panel-title clearfix">
+        <a class="collapsed"
+           role="button"
+           data-toggle="collapse"
+           href="#<%-data.cid%>-collapse"
+           aria-expanded="false"
+           aria-controls="<%-data.cid%>-collapse">
+            <%=data.title%>
+        </a>
+        <div class="pull-right extra-info">
+            <% if(data.description) { %>
+            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+                  data-toggle="tooltip" title="<%-data.description%>"></span>
+            <% } %>
+        </div>
+    </h4>
+</div>
+<div id="<%-data.cid%>-collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="<%-data.cid%>-heading">
+    <div class="panel-body">
+        <textarea class="form-control value-keeper" style="resize: vertical;"></textarea>
+    </div>
+</div>

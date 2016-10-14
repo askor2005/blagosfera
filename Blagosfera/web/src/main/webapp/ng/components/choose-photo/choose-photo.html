@@ -1,0 +1,69 @@
+<div>
+    <form name="chooseFileForm">
+        <div layout="row" layout-xs="column" flex>
+            <div flex="50">
+                <md-button class="md-raised green-button d-icon-button"
+                           ngf-select ng-model="file" name="fileImage" id="fileImage" ngf-pattern="'image/*'"
+                           ngf-accept="'image/*'" ngf-max-size="{{maxUploadSize}}" ngf-min-height="{{minPhotoHeight}}" ngf-min-width="{{minPhotoWidth}}"
+                           ngf-resize="{width: 1000, height: 1000}"
+                           ngf-change="onChooseFile()"
+                        >
+                    <md-icon md-font-set="material-icons" class="clickable" style="color: #02a8f3 !important;">insert_photo</md-icon>
+                    {{'choose.photo.upload.btn' | translate}}
+                </md-button>
+            </div>
+            <div flex="50">
+                <md-button class="md-raised green-button" ng-click="showWebCameraDialog()">
+                    <md-icon md-font-set="material-icons" class="clickable" style="color: red !important;">videocam</md-icon>
+                    {{'choose.photo.webcam.btn' | translate}}
+                </md-button>
+            </div>
+        </div>
+        <div layout="row" layout-xs="column">
+            <div flex style="height: 100%; padding: 10px;">
+                <md-toolbar>
+                    <h4>{{'choose.photo.source.title' | translate}}</h4>
+                </md-toolbar>
+                <md-content style="height: 350px; background: #E4E4E4;">
+                    <div flex style="height: 100%; border: dashed 1px #d3d3d3; padding: 10px;">
+                        <img-crop
+                                ng-show="!imageIsLoading && fileUrl != null && fileUrl !='' && chooseFileForm.$valid"
+                                image="fileUrl"
+                                result-image="croppedImage"
+                                area-type="square"
+                                result-image-size="500"
+                                ></img-crop>
+                        <div ng-show="imageIsLoading">
+                            <loading-indicator>{{'choose.photo.source.loading' | translate}}</loading-indicator>
+                        </div>
+                        <div style="text-align: left;" ng-show="!imageIsLoading && (fileUrl==null || fileUrl=='' || !chooseFileForm.$valid)">
+                            <div ng-show="chooseFileForm.fileImage.$error.maxSize==true" style="color: red;">{{'choose.photo.maxSize.error' | translate}}</div>
+                            <div ng-show="chooseFileForm.fileImage.$error.pattern==true" style="color: red;">{{'choose.photo.pattern.error' | translate}}</div>
+                            <div ng-show="chooseFileForm.fileImage.$error.minHeight==true" style="color: red;">{{'choose.photo.minHeight.error' | translate}}</div>
+                            <div ng-show="chooseFileForm.fileImage.$error.minWidth==true" style="color: red;">{{'choose.photo.minWidth.error' | translate}}</div>
+                            <div>{{'choose.photo.maxSize.info' | translate}} {{maxUploadSize}}</div>
+                            <div>{{'choose.photo.minHeight.info' | translate}} {{minPhotoHeight}}</div>
+                            <div>{{'choose.photo.minWidth.info' | translate}} {{minPhotoWidth}}</div>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
+            <div flex style="height: 100%; padding: 10px;">
+                <md-toolbar>
+                    <h4>{{'choose.photo.result.title' | translate}}</h4>
+                </md-toolbar>
+                <md-content style="height: 350px; background: #E4E4E4;">
+                    <div flex style="height: 100%; border: dashed 1px #d3d3d3; padding: 10px;">
+                        <img style="max-height: 100%; max-width: 100%;"
+                             ng-src="{{croppedImage}}"
+                             ng-show="!imageIsLoading"
+                                />
+                        <div ng-show="imageIsLoading">
+                            <loading-indicator>{{'choose.photo.result.loading' | translate}}</loading-indicator>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
+        </div>
+    </form>
+</div>

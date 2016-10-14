@@ -1,0 +1,108 @@
+<style>
+    .inputWithButtonBlock {
+        width: 100%;
+        height: 34px;
+        position: relative;
+    }
+    .inputWithButtonBlock .inputBlock {
+        position: absolute;
+        left: 0px;
+        right: 100px;
+        top: 0px;
+    }
+    .inputWithButtonBlock .buttonBlock {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 100px;
+        text-align: right;
+    }
+    #sharersProviderSelectedBlock {
+        display: none;
+    }
+</style>
+<div>
+    <div class="col-xs-12">
+        <div class="form-group" id="templateNameBlock">
+            <label>Название шаблона</label>
+            <input id="templateName" class="form-control" placeholder="Название шаблона документа"/>
+            <span class="help-block help-block-info">
+                Производится поиск шаблонов в которых есть только 1 источник данных - Физ.лицо
+            </span>
+        </div>
+        <div class="form-group" id="sharersProviderBlock">
+            <label>
+                <input type="radio" name="sharersProviders" id="sharersProviderAll" checked="checked"/>
+                Отправить для всех пользователей системы
+            </label><br/>
+            <label>
+                <input type="radio" name="sharersProviders" id="sharersProviderMan"/>
+                Отправить для всех мужчин системы
+            </label><br/>
+            <label>
+                <input type="radio" name="sharersProviders" id="sharersProviderWoman"/>
+                Отправить для всех женщин системы
+            </label><br/>
+            <label>
+                <input type="radio" name="sharersProviders" id="sharersProviderSelected"/>
+                Отправить для выбранных пользователей системы
+            </label>
+        </div>
+        <div class="form-group" id="sharersProviderSelectedBlock">
+            <label>Выбор пользователей для отправки письма</label>
+            <div id="sharersBlock" class="inputWithButtonBlock">
+                <div id="sharerSearchBlock" class="inputBlock">
+                    <input id="sharerName" class="form-control" placeholder="Начните вводить имя участника системы" />
+                </div>
+                <div id="addSharerBlock" class="buttonBlock">
+                    <button id="addSharer" class="btn btn-info" disabled="disabled">Добавить</button>
+                </div>
+            </div>
+            <div id="sharersTable"></div>
+        </div>
+        <div class="form-group">
+            <label>Тема письма</label>
+            <input id="mailSubject" class="form-control" placeholder="Тема письма"/>
+        </div>
+        <div class="form-group">
+            <label>Отправитель письма</label>
+            <input id="mailFrom" class="form-control" placeholder="Отправитель письма" value="Система БЛАГОСФЕРА"/>
+        </div>
+
+        <div class="form-group">
+            <button id="sendToEmailButton" class="btn btn-info">Отправить письмо пользователям</button>
+        </div>
+
+        <div class="form-group">
+            <label>Процессы отправки писем</label>
+            <div id="sendMailResults"></div>
+        </div>
+    </div>
+</div>
+
+<script id="sharersTemplate" type="x-tmpl-mustache">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>ФИО участника</th>
+                <th width="100"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#sharers}}
+                <tr id="{{id}}">
+                    <td>{{index}}</td>
+                    <td>{{fullName}}</td>
+                    <td class="text-right">
+                        {{#canDelete}}
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-danger deleteSharer" sharer_id="{{id}}" title="Удалить"><i class="fa fa-fw fa-times"></i></button>
+                            </div>
+                        {{/canDelete}}
+                    </td>
+                </tr>
+            {{/sharers}}
+        </tbody>
+    </table>
+</script>

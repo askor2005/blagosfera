@@ -1,0 +1,4 @@
+<md-switch  ng-change="askorFieldVisibility.toggleVisibility()" ng-if="askorFieldVisibility.hidden != undefined" ng-true-value="false" ng-false-value="true" ng-model="askorFieldVisibility.hidden">
+    <md-icon ng-show="askorFieldVisibility.hidden == false" md-font-set="material-icons" class="md-icon-20">visibility</md-icon>
+    <md-icon ng-show="askorFieldVisibility.hidden == true" md-font-set="material-icons" class="md-icon-20">visibility_off</md-icon>
+</md-switch>

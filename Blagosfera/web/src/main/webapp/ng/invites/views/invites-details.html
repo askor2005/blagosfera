@@ -1,0 +1,76 @@
+<md-dialog aria-label="" class="askor-dialog" ng-cloak>
+    <form name="detailsInvite">
+        <md-toolbar>
+            <div class="md-toolbar-tools" layout="row" layout-xs="column" flex>
+                <h3 flex>{{invite.invitedLastName}} {{invite.invitedFirstName}} {{invite.invitedFatherName}}</h3>
+                <md-button flex class="md-primary header_button" ng-click="setLocation('/user/profile/' + invite.invitedUser.ikp)">
+                    {{'invite.detail.show.profile' | translate}}
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+
+                <div layout="column" flex>
+
+                    <div layout="row" layout-padding layout-align="center center" flex ng-show="invite.invitedUser.verified == 1 && invite.invitedUser.verificationDate != null">
+                        <div flex>
+                            {{invite.invitedUser.verificationDate | simpleDateFormat}}
+                        </div>
+                        <div flex>
+                            {{'invite.detail.verified' | translate}}
+                        </div>
+                        <div flex>
+                            {{'invite.detail.verifier.title' | translate}}
+                            <md-button flex class="md-primary" ng-click="setLocation('/user/profile/' + invite.invitedUser.verifierId)">
+                                {{invite.invitedUser.verifierFirstName | initialFilter}}
+                                {{invite.invitedUser.verifierSecondName | initialFilter}}
+                            </md-button>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-padding layout-align="center center" flex>
+                        <div flex>
+                            {{invite.invitedUser.registrationDate | simpleDateFormat}}
+                        </div>
+                        <div flex>
+                            {{'invite.detail.accept' | translate}}
+                        </div>
+                        <div flex>
+                            {{'invite.detail.accepter' | translate}}
+                            <md-button flex class="md-primary" ng-click="setLocation('/user/profile/' + app.userDetails.ikp)">
+                                {{app.userDetails.shortName}}
+                            </md-button>
+                        </div>
+                    </div>
+                    <div layout="row" layout-padding layout-align="center center" flex>
+                        <div flex>
+                            {{invite.creationDate | simpleDateFormat}}
+                        </div>
+                        <div flex>
+                            {{'invite.detail.invited' | translate}}
+                        </div>
+                        <div flex>
+                            {{'invite.detail.accepter' | translate}}
+                            <md-button flex class="md-primary" ng-click="setLocation('/user/profile/' + app.userDetails.ikp)">
+                                {{app.userDetails.shortName}}
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" layout-padding layout-align="center center" flex>
+                    <h3>{{'invite.detail.create.stream' | translate}}</h3>
+                </div>
+                <div layout="row" layout-xs="column" flex layout-align="center center" layout-padding>
+                    <div flex layout="column" layout-align="center center" >
+                        <div class="stream_value">{{invite.invitedUser.streamSharers}}</div>
+                        <div class="stream_title">{{'invite.detail.create.stream.users' | translate}}</div>
+                    </div>
+                    <div flex layout="column" layout-align="center center" >
+                        <div class="stream_value">{{invite.invitedUser.streamOrganizations}}</div>
+                        <div class="stream_title">{{'invite.detail.create.stream.communities' | translate}}</div>
+                    </div>
+                </div>
+
+        </md-dialog-content>
+    </form>
+</md-dialog>

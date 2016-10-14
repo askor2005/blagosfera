@@ -1,0 +1,246 @@
+<div flex layout="column" layout-gt-sm="row">
+    <div flex="40" flex-xs="100" layout="column">
+
+        <form novalidate name="{{name}}" ng-submit="$event.preventDefault()">
+            <div layout="row">
+            <md-autocomplete flex ng-disabled="addressForm.disabled"
+                             required="true"
+                             md-input-name="countryselect"
+                             md-selected-item="addressForm.address.selectedCountry"
+                             md-search-text="addressForm.address.countrySearchString"
+                             md-items="country in addressForm.matchedCountries(addressForm.address.countrySearchString)"
+                             md-selected-item-change="addressForm.onCountryChange()"
+                             md-item-text="country.label"
+                             md-floating-label="{{addressForm.address.countryLabel | translate}}"
+                             md-no-cache="true"
+                             md-min-length="0">
+                <md-item-template>
+                    <span md-highlight-text="addressForm.address.countrySearchString">{{country.label}}</span>
+                </md-item-template>
+                <!--<div ng-messages="addressForm.countryselect.$error" role="alert">
+                    <div ng-message-exp="['required']">поле обязательно для заполнения</div>
+                </div>-->
+            </md-autocomplete>
+                <askor-field-visibility name="'country'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.country">
+                </askor-field-visibility>
+            </div>
+
+            <section name="otherCountrySection" ng-show="(addressForm.address.selectedCountry != undefined) && (!addressForm.address.kladr.enabled)">
+                <!--<md-input-container flex class="md-block" ng-if="addressForm.address.regionLabel">
+                   <label>{{addressForm.address.regionLabel | translate}}</label>
+                   <input data-field-type="REGION" type="text" required name="region" ng-disabled="addressForm.disabled"
+                          ng-model="addressForm.address.regionName"
+                          ng-change="addressForm.onRegionChange()"/>
+                </md-input-container>-->
+                <div layout="row"  ng-show="addressForm.address.regionLabel" >
+                <md-autocomplete flex ng-disabled="addressForm.disabled"
+                                 required="true"
+                                 md-input-name="regionselect"
+                                 md-selected-item="addressForm.address.selectedRegion"
+                                 md-search-text="addressForm.address.regionSearchString"
+                                 md-items="region in addressForm.matchedRegions(addressForm.address.regionSearchString)"
+                                 md-selected-item-change="addressForm.onRegionSelect()"
+                                 md-item-text="region.label"
+                                 md-floating-label="{{addressForm.address.regionLabel | translate}}"
+                                 md-no-cache="true"
+                                 md-min-length="0">
+                    <md-item-template>
+                        <span md-highlight-text="addressForm.address.regionSearchString">{{region.label}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                    <askor-field-visibility name="'region'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.region">
+                    </askor-field-visibility>
+                    </div>
+                <div layout="row" ng-show="addressForm.address.cityLabel">
+                <md-autocomplete flex ng-disabled="addressForm.disabled"
+                                 required="true"
+                                 md-input-name="cityselect"
+                                 md-selected-item="addressForm.address.selectedCity"
+                                 md-search-text="addressForm.address.citySearchString"
+                                 md-items="city in addressForm.matchedCities(addressForm.address.citySearchString)"
+                                 md-selected-item-change="addressForm.onCitySelect()"
+                                 md-item-text="city.label"
+                                 md-floating-label="{{addressForm.address.cityLabel | translate}}"
+                                 md-no-cache="true"
+                                 md-min-length="0">
+                    <md-item-template>
+                        <span md-highlight-text="addressForm.address.citySearchString">{{city.label}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                    <askor-field-visibility name="'city'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.city">
+                    </askor-field-visibility>
+                </div>
+                <div layout="row" ng-if="addressForm.address.zipLabel">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.zipLabel  | translate}}</label>
+                    <input name="zipGoogle" type="text" name="zip" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.zipCode" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onZipCodeChange()"
+                           ng-pattern="addressForm.address.zipFormat"/>
+                    <div class="zip_hint md_input_hint_bottom" ng-if="addressForm.address.zipHint">пример: {{addressForm.address.zipHint}}</div>
+                    <!--<div ng-messages="addressForm.zip.$error" role="alert">
+                        <div ng-message-exp="['required']">поле обязательно для заполнения</div>
+                        <div ng-message-exp="['pattern']">проверьте формат почтового индекса</div>
+                    </div>-->
+                </md-input-container>
+                    <askor-field-visibility name="'zipCode'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.zipCode">
+                    </askor-field-visibility>
+                </div>
+                <div layout="row" ng-show="addressForm.address.districtLabel">
+                <md-autocomplete flex  ng-disabled="addressForm.disabled"
+                                 required="true"
+                                 md-input-name="districtselect"
+                                 md-selected-item="addressForm.address.selectedDistrict"
+                                 md-search-text="addressForm.address.districtSearchString"
+                                 md-items="district in addressForm.matchedDistricts(addressForm.address.districtSearchString)"
+                                 md-selected-item-change="addressForm.onDistrictSelect()"
+                                 md-item-text="district.label"
+                                 md-floating-label="{{addressForm.address.districtLabel | translate}}"
+                                 md-no-cache="true"
+                                 md-min-length="0">
+                    <md-item-template>
+                        <span md-highlight-text="addressForm.address.districtSearchString">{{district.label}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                    <askor-field-visibility name="'district'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.district">
+                    </askor-field-visibility>
+                </div>
+                <div layout="row" ng-show="addressForm.address.streetLabel">
+                <md-autocomplete flex  ng-disabled="addressForm.disabled"
+                                 required="true"
+                                 md-input-name="streetselect"
+                                 md-selected-item="addressForm.address.selectedStreet"
+                                 md-search-text="addressForm.address.streetSearchString"
+                                 md-items="street in addressForm.matchedStreets(addressForm.address.streetSearchString)"
+                                 md-selected-item-change="addressForm.onStreetSelect()"
+                                 md-item-text="street.label"
+                                 md-floating-label="{{addressForm.address.streetLabel | translate}}"
+                                 md-no-cache="true"
+                                 md-min-length="0">
+                    <md-item-template>
+                        <span md-highlight-text="addressForm.address.streetSearchString">{{street.label}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                    <askor-field-visibility name="'street'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.street">
+                    </askor-field-visibility>
+                  </div>
+                <div layout="row" ng-show="addressForm.address.buildingLabel">
+                <md-autocomplete flex  ng-disabled="addressForm.disabled"
+                                 required="true"
+                                 md-input-name="buildingselect"
+                                 md-selected-item="addressForm.address.selectedBuilding"
+                                 md-search-text="addressForm.address.buildingSearchString"
+                                 md-items="building in addressForm.matchedBuildings(addressForm.address.buildingSearchString)"
+                                 md-selected-item-change="addressForm.onBuildingSelect()"
+                                 md-item-text="building.label"
+                                 md-floating-label="{{addressForm.address.buildingLabel | translate}}"
+                                 md-no-cache="true"
+                                 md-min-length="0">
+                    <md-item-template>
+                        <span md-highlight-text="addressForm.address.buildingSearchString">{{building.label}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                    <askor-field-visibility name="'building'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.building">
+                    </askor-field-visibility>
+                 </div>
+
+            </section>
+
+            <section ng-show="(addressForm.address.selectedCountry != undefined) && (addressForm.address.kladr.enabled)">
+                <div layout="row">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.zipLabel | translate}}</label>
+                    <input type="text" name="zipKladr" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.zipCode" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onZipCodeChange()">
+                </md-input-container>
+                    <askor-field-visibility name="'zipCode'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.zipCode">
+                    </askor-field-visibility>
+                </div>
+                <div layout="row">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.regionLabel | translate}}</label>
+                    <input type="text" required name="regionKladr" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.regionName" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onRegionChange()">
+                </md-input-container>
+                    <askor-field-visibility name="'region'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.region">
+                    </askor-field-visibility>
+                   </div>
+                <div layout="row">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.districtLabel}}</label>
+                    <input type="text" name="districtKladr" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.districtName" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onDistrictChange()">
+                </md-input-container>
+                    <askor-field-visibility name="'district'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.district">
+                    </askor-field-visibility>
+                </div>
+                <div layout="row">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.cityLabel | translate}}</label>
+                    <input type="text" name="cityKladr" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.cityName" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onCityChange()">
+                </md-input-container>
+                    <askor-field-visibility name="'city'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.city">
+                    </askor-field-visibility>
+                 </div>
+                <div layout="row">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.streetLabel}}</label>
+                    <input type="text" required name="streetKladr" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.streetName" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onStreetChange()">
+                </md-input-container>
+                    <askor-field-visibility name="'street'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.street">
+                    </askor-field-visibility>
+                </div>
+                <div layout="row">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.buildingLabel}}</label>
+                    <input type="text" name="buildingKladr" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.buildingName" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onBuildingChange()">
+                </md-input-container>
+                    <askor-field-visibility name="'building'" field-type="addressForm.addressType" field-hidden="addressForm.visibilityMap.building">
+                    </askor-field-visibility>
+                 </div>
+            </section>
+
+            <section ng-show="addressForm.address.selectedCountry">
+                <md-input-container flex class="md-block">
+                    <label>{{addressForm.address.appartmentLabel}}</label>
+                    <input name="roomGoogle" type="text" name="appartment" ng-disabled="addressForm.disabled"
+                           ng-model="addressForm.address.appartmentName" ng-model-options="{updateOn: 'blur'}"
+                           ng-change="addressForm.onAppartmentChange()">
+                </md-input-container>
+            </section>
+        </form>
+    </div>
+
+    <div flex="60" layout="row" layout-padding>
+        <md-divider hide show-gt-sm></md-divider>
+
+        <div flex layout="column">
+            <leaflet id="{{name}}-map" lf-center="addressForm.mapCenter" layers="addressForm.layers" markers="addressForm.markers"></leaflet>
+            <div flex></div>
+            <div layout="row" ng-if="addressForm.address.kladr.enabled">
+                <span ng-class="{'color_red_alert' : addressForm.address.checkFailed}">
+                    <!--{{addressForm.address.kladr.toAddressString()}}-->
+                    {{addressForm.address.toAddressString()}}
+                    <md-tooltip md-direction="top" ng-if="addressForm.address.checkFailed === true">
+                        Адрес не содержится в базе КЛАДР
+                    </md-tooltip>
+                </span>
+                <div flex></div>
+                <md-icon md-font-set="material-icons" class="md-icon-20 color_green" ng-if="addressForm.address.checkFailed === false">check_cirle</md-icon>
+                <md-icon md-font-set="material-icons" class="md-icon-20 color_red_alert" ng-if="addressForm.address.checkFailed === true">warning</md-icon>
+            </div>
+            <div layout="row" ng-if="!addressForm.address.kladr.enabled">
+                {{addressForm.address.toAddressString()}}
+            </div>
+        </div>
+    </div>
+</div>

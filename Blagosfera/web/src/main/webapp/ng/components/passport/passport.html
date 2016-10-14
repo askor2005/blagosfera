@@ -1,0 +1,151 @@
+<div layout="column" layout-padding>
+
+    <span class="panel_caption">Паспортные данные</span>
+
+    <md-divider ng-cloak></md-divider>
+
+    <div layout="row" ng-show="(!askorPassportForm.readonly || askorPassportForm.data.citizenship) || ((!askorPassportForm.readonly || askorPassportForm.data.inn) && (askorPassportForm.currentCitizenshipSettings.showPersonInn)) || ((!askorPassportForm.readonly || askorPassportForm.data.snils) && (askorPassportForm.currentCitizenshipSettings.showSnils))" layout-xs="column">
+        <div layout="row" ng-show="!askorPassportForm.readonly || askorPassportForm.data.citizenship">
+            <md-autocomplete  md-floating-label="Гражданство" ng-disabled="askorPassportForm.readonly"
+                             required="true"
+                             md-input-name="citizenshipselect"
+                             md-selected-item="askorPassportForm.data.citizenship"
+                             md-search-text="askorPassportForm.countrySearchString"
+                             md-items="country in askorPassportForm.matchedCountries(askorPassportForm.countrySearchString)"
+                             md-selected-item-change="askorPassportForm.onCountryChange()"
+                             md-item-text="country.label"
+                             md-no-cache="true"
+                             md-min-length="0">
+                <md-item-template>
+                    <span md-highlight-text="askorPassportForm.countrySearchString">{{country.label}}</span>
+                </md-item-template>
+                </md-autocomplete>
+            <askor-field-visibility name="'citizenship'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.citizenship">
+            </askor-field-visibility>
+            </div>
+        <div layout="row"  ng-show="(!askorPassportForm.readonly || askorPassportForm.data.inn) && (askorPassportForm.currentCitizenshipSettings.showPersonInn)">
+        <md-input-container class="md-block" flex>
+            <label>ИНН</label>
+            <input ui-mask="{{askorPassportForm.currentCitizenshipSettings.maskPersonInn}}"  ng-change="askorPassportForm.setDataToSend('inn',askorPassportForm.data.inn)" ng-model="askorPassportForm.data.inn" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'inn'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.inn">
+            </askor-field-visibility>
+        </div>
+        <div layout="row"  ng-show="(!askorPassportForm.readonly || askorPassportForm.data.snils) && (askorPassportForm.currentCitizenshipSettings.showPersonSnils)">
+        <md-input-container class="md-block" flex>
+            <label>СНИЛС</label>
+            <input ui-mask="{{askorPassportForm.currentCitizenshipSettings.maskSnils}}" ng-change="askorPassportForm.setDataToSend('snils',askorPassportForm.data.snils)" ng-model="askorPassportForm.data.snils" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'snils'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.snils">
+            </askor-field-visibility>
+         </div>
+
+    </div>
+
+    <div layout="row"  layout-xs="column" layout-margin class="md-inline-form" ng-show="((!askorPassportForm.readonly || askorPassportForm.data.passportSeries) && (askorPassportForm.currentCitizenshipSettings.showPassportSerial)) || ((!askorPassportForm.readonly || askorPassportForm.data.passportNumber) && (askorPassportForm.currentCitizenshipSettings.showPassportNumber))">
+        <div layout="row" ng-show="((!askorPassportForm.readonly || askorPassportForm.data.passportSeries) && (askorPassportForm.currentCitizenshipSettings.showPassportSerial))">
+        <md-input-container class="md-block" flex>
+            <label>Серия паспорта</label>
+            <input  ui-mask="{{askorPassportForm.currentCitizenshipSettings.maskPassportSerial}}"   ng-change="askorPassportForm.setDataToSend('passportSeries',askorPassportForm.data.passportSeries)" ng-model="askorPassportForm.data.passportSeries" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'passportSeries'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.passportSeries">
+            </askor-field-visibility>
+            </div>
+        <div layout="row" ng-show="(!askorPassportForm.readonly || askorPassportForm.data.passportNumber) && (askorPassportForm.currentCitizenshipSettings.showPassportNumber)">
+        <md-input-container class="md-block" flex>
+            <label>Номер паспорта</label>
+            <input  ui-mask="{{askorPassportForm.currentCitizenshipSettings.maskPassportNumber}}"  ng-change="askorPassportForm.setDataToSend('passportNumber',askorPassportForm.data.passportNumber)" ng-model="askorPassportForm.data.passportNumber" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'passportNumber'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.passportNumber">
+            </askor-field-visibility>
+        </div>
+
+    </div>
+    <div ng-show="((!askorPassportForm.readonly || askorPassportForm.data.passportExpirationDate) && (askorPassportForm.currentCitizenshipSettings.showPassportExpirationDate)) || ((!askorPassportForm.readonly || askorPassportForm.data.passportExpiredDate) && (askorPassportForm.currentCitizenshipSettings.showPassportExpiredDate))" layout="row" layout-xs="column" layout-margin class="md-inline-form">
+        <div layout="row"  ng-show="(!askorPassportForm.readonly || askorPassportForm.data.passportExpirationDate) && (askorPassportForm.currentCitizenshipSettings.showPassportExpirationDate)">
+        <mdp-date-picker style="bottom: 0px;" ng-change="askorPassportForm.setDataToSendDate('passportExpirationDate',askorPassportForm.data.passportExpirationDate)"  mdp-placeholder="Дата окончания срока действия паспорта"
+                         mdp-format="DD/MM/YYYY"
+                         mdp-disabled="askorPassportForm.readonly"
+                         ng-model="askorPassportForm.data.passportExpirationDate"></mdp-date-picker>
+            <askor-field-visibility name="'passportExpirationDate'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.passportExpirationDate">
+            </askor-field-visibility>
+         </div>
+        <div layout="row"  ng-show="(!askorPassportForm.readonly || askorPassportForm.data.passportExpiredDate) && (askorPassportForm.currentCitizenshipSettings.showPassportExpiredDate)">
+        <mdp-date-picker style="bottom:0px;"  ng-change="askorPassportForm.setDataToSendDate('passportExpiredDate',askorPassportForm.data.passportExpiredDate)"  mdp-placeholder="Срок действия паспорта"
+                         mdp-format="DD/MM/YYYY"
+                         mdp-disabled="askorPassportForm.readonly"
+                         ng-model="askorPassportForm.data.passportExpiredDate"></mdp-date-picker>
+            <askor-field-visibility name="'passportExpiredDate'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.passportExpiredDate">
+            </askor-field-visibility>
+        </div>
+
+    </div>
+    <div ng-show="((!askorPassportForm.readonly || askorPassportForm.data.identicalNumber) && (askorPassportForm.currentCitizenshipSettings.showByIdentificationNumber)) || ((!askorPassportForm.readonly || askorPassportForm.data.kzIdenticalNumber) && (askorPassportForm.currentCitizenshipSettings.showKzIndividualIdentificationNumber))" layout="row" layout-xs="column" layout-margin class="md-inline-form">
+        <div layout="row" ng-show="(!askorPassportForm.readonly || askorPassportForm.data.identicalNumber) && (askorPassportForm.currentCitizenshipSettings.showByIdentificationNumber)">
+        <md-input-container class="md-block" flex>
+            <label>Индивидуальный идентификационный номер</label>
+            <input ui-mask="{{askorPassportForm.currentCitizenshipSettings.maskByIdentificationNumber}}"  ng-change="askorPassportForm.setDataToSend('identicalNumber',askorPassportForm.data.identicalNumber)" ng-model="askorPassportForm.data.identicalNumber" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'identicalNumber'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.identicalNumber">
+            </askor-field-visibility>
+            </div>
+        <div layout="row"  ng-show="(!askorPassportForm.readonly || askorPassportForm.data.kzIdenticalNumber) && (askorPassportForm.currentCitizenshipSettings.showKzIndividualIdentificationNumber)">
+        <md-input-container class="md-block" flex>
+            <label>Индивидуальный идентификационный номер</label>
+            <input ui-mask="{{askorPassportForm.currentCitizenshipSettings.maskKzIndividualIdentificationNumber}}"  ng-change="askorPassportForm.setDataToSend('kzIdenticalNumber',askorPassportForm.data.kzIdenticalNumber)" ng-model="askorPassportForm.data.kzIdenticalNumber" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'kzIdenticalNumber'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.kzIdenticalNumber">
+            </askor-field-visibility>
+        </div>
+
+    </div>
+    <div ng-show="(!askorPassportForm.readonly || askorPassportForm.data.passportIssueDate) || ((!askorPassportForm.readonly || askorPassportForm.data.passportIssuedBy) && (askorPassportForm.currentCitizenshipSettings.showPassportDealer))" layout="row" layout-xs="column" layout-margin class="md-inline-form">
+        <div layout="row"  ng-show="!askorPassportForm.readonly || askorPassportForm.data.passportIssueDate">
+        <mdp-date-picker style="bottom:0px;" ng-change="askorPassportForm.setDataToSendDate('passportIssueDate',askorPassportForm.data.passportIssueDate)"  mdp-placeholder="Дата выдачи паспорта"
+                         mdp-format="DD/MM/YYYY"
+                         mdp-disabled="askorPassportForm.readonly"
+                         ng-model="askorPassportForm.data.passportIssueDate"></mdp-date-picker>
+            <askor-field-visibility name="'passportIssueDate'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.passportIssueDate">
+            </askor-field-visibility>
+         </div>
+        <div layout="row" ng-show="(!askorPassportForm.readonly || askorPassportForm.data.passportIssuedBy) && (askorPassportForm.currentCitizenshipSettings.showPassportDealer)">
+        <md-input-container class="md-block" flex>
+            <label>Кем выдан паспорт</label>
+            <input ng-change="askorPassportForm.setDataToSend('passportIssuedBy',askorPassportForm.data.passportIssuedBy)" ng-model="askorPassportForm.data.passportIssuedBy" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'passportIssuedBy'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.passportIssuedBy">
+            </askor-field-visibility>
+        </div>
+        <div layout="row" ng-show="(!askorPassportForm.readonly || askorPassportForm.data.passportIssuerCode) && (askorPassportForm.currentCitizenshipSettings.showPassportDivision)">
+        <md-input-container class="md-block" flex>
+            <label>Код подразделения</label>
+            <input  ui-mask="{{askorPassportForm.currentCitizenshipSettings.maskPassportDivision}}"  ng-change="askorPassportForm.setDataToSend('passportIssuerCode',askorPassportForm.data.passportIssuerCode)" ng-model="askorPassportForm.data.passportIssuerCode" ng-readonly="askorPassportForm.readonly">
+        </md-input-container>
+            <askor-field-visibility name="'passportIssuerCode'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.passportIssuerCode">
+            </askor-field-visibility>
+        </div>
+
+    </div>
+    <div>
+    <div layout="column" ng-show="!askorPassportForm.readonly || askorPassportForm.data.signature"  layout-align="start start">
+        <label>Образец подписи</label>
+        <md-divider></md-divider>
+        <div layout="row" layout-align="start center">
+        <img style="height: 30px" ng-src="{{askorPassportForm.data.signature}}"/>
+            <md-button  type="file"
+                        ng-disabled="askorPassportForm.readonly"
+                       ngf-select ng-model="file" name="fileImage" id="fileImage" ngf-pattern="'image/*'"
+                       ngf-accept="'image/*'" ngf-max-size="{{maxUploadSize}}" ngf-min-height="{{minPhotoHeight}}" ngf-min-width="{{minPhotoWidth}}"
+                       ngf-resize="{width: 1000, height: 1000}"
+                       ngf-change="onChooseFile()"
+                    >Загрузить</md-button>
+            <askor-field-visibility name="'signature'" field-type="'basic_information'" field-hidden="askorPassportForm.data.basicInfoVisibilityMap.signature">
+            </askor-field-visibility>
+           </div>
+          <label>Используется для отображения Вашей цифровой подписи в документообороте. Изображение в формате png размером 100х30.</label>
+    </div>
+    </div>
+
+
+
+</div>

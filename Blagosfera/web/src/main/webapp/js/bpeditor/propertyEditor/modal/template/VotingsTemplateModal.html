@@ -1,0 +1,379 @@
+<div class="modal-dialog" style="width: 900px;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2>Голосования в собрании <span id="editModeText" style="color: red; display: none;">режим редактирования</span></h2>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Наименование голосования</label>
+                        <input type="text" class="form-control" id="votingSubject" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Описание голосования</label>
+                        <textarea id="votingDescription"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Текст варианта голосования при его победе</label>
+                        <textarea id="votingWinnerText">Победитель голосования</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Графа "Предложили" в протоколе</label>
+                        <textarea id="sentence"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Графа "Постановили" в протоколе в случае успешного завершения голосования</label>
+                        <textarea id="successDecree"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Графа "Постановили" в протоколе в случае неудачного завершения голосования</label>
+                        <textarea id="failDecree"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Условие создания голосования</label>
+                        <input type="text" class="form-control" id="votingCreateCondition" value="true" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Тип голосования</label>
+                        <select id="votingType" class="selectpicker" data-live-search="true" data-hide-disabled="true" data-width="100%">
+                            <option value="-1">-Ничего не выбрано-</option>
+                            <option value="SINGLE_SELECTION">Голосование с единичным выбором</option>
+                            <option value="PRO_CONTRA">Голосование За/Против</option>
+                            <option value="MULTIPLE_SELECTION">Голосование с множественным выбором</option>
+                            <option value="CANDIDATE">Выборы</option>
+                            <option value="INTERVIEW">Интервью</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isVoteCancellable" checked="checked">
+                            Возможность переголосовать
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isVoteCommentsAllowed">
+                            Возможность оставить комментарий к голосованию
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isVisible" checked="checked">
+                            Видимость голосования
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="addAbstain" checked="checked">
+                            Добавить вариант "Воздержаться" (Против всех)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="display: none;" id="isFailOnContraResultBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isFailOnContraResult">
+                            Завершать голосование если большинство проголосует "Против"
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="row" style="display: none;" id="isCandidateProposeBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isCandidatePropose" />
+                            Голосование для выдвижения пользователя в кандидаты в следующих выборах
+                        </label>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="row" style="display: none;">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isMultipleWinners" />
+                            Несколько победителей
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="display: none;" id="minWinnersCountBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Минимальное количество победителей</label>
+                        <input type="text" class="form-control" id="minWinnersCount"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="display: none;" id="maxWinnersCountBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Максимальное количество победителей</label>
+                        <input type="text" class="form-control" id="maxWinnersCount"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Минимальный процент для победы</label>
+                        <input type="text" class="form-control" id="percentForWin" value="51" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="display: none;" id="minSelectionCountBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Минимальное количество выбираемых вариантов</label>
+                        <input type="text" class="form-control" id="minSelectionCount" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="display: none;" id="maxSelectionCountBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Максимальное количество выбираемых вариантов</label>
+                        <input type="text" class="form-control" id="maxSelectionCount" />
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="row" style="display: none;" id="isVariantProposeBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isVariantPropose" />
+                            Интервью для создания вариантов в следующем голосовании
+                        </label>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="row" id="votingButtonsContentBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Дополнительные кнопки голосоания с контентом в модальном окне</label>
+                        <button class="btn btn-primary" id="addVotingButtonContentButton" >Добавить кнопку</button>
+                        <div class="col-md-12" id="votingButtonsContents">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Кнопки с контентом</th>
+                                    <th style="width: 50px;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="display: none;" id="chooseVotingItemsTypeBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div>
+                            <label>
+                                <input type="radio" name="votingItemsSource" id="addMine" checked="checked" />
+                                Добавить варианты голосования
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" name="votingItemsSource" id="votingItemsFromVar" />
+                                Создать варианты голосования из переменной
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" name="votingItemsSource" id="genFromInterview" />
+                                Создать варианты голосования из интервью
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" name="votingItemsSource" id="genFromWinnersOtherVoting" />
+                                Сгенерировать из победивших вариантов другого голосования
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" name="votingItemsSource" id="genFromLosersOtherVoting" />
+                                Сгенерировать из проигравших вариантов другого голосования
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row votingSourceBlock" style="display: none;" id="votingItemsVarBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Переменная списка вариантов</label>
+                        <input type="text" class="form-control" id="votingItemsVar" />
+                    </div>
+                </div>
+            </div>
+            <div class="row votingSourceBlock" style="display: none;" id="addMineBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div style="position: relative; height: 50px;">
+                            <div style="position: absolute; left: 0px; right: 100px;">
+                                <input type="text" class="form-control" id="votingItemName" />
+                            </div>
+                            <div style="position: absolute; width: 100px; right: 0px; text-align: right;">
+                                <button class="btn btn-success" id="addVotingItem">Добавить</button>
+                            </div>
+                        </div>
+                        <label>Варианты голосований</label>
+                        <div class="col-md-12" id="votingItems">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Наименование варианта</th>
+                                        <th style="width: 50px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row votingSourceBlock" style="display: none;" id="otherVotingSourceBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Список голосований</label>
+                        <select id="otherVotingSource" class="selectpicker" data-live-search="true" data-hide-disabled="true" data-width="100%"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button class="btn btn-success" id="addVoting">Добавить голосование</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="votings">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Наименование голосования</th>
+                                <th style="width: 50px;"></th>
+                                <th style="width: 50px;"></th>
+                                <th style="width: 50px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal">Отмена</button>
+            <button class="btn btn-primary accept">Сохранить</button>
+            <button class="btn btn-primary accept" data-dismiss="modal">Сохранить и выйти</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="votingButtonModal" aria-labelledby="meetingTargetsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2>Добавить\Редактировать кнопку в голосовании</h2>
+            </div>
+            <div class="modal-body">
+
+                <div class="row" >
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div>
+                                <label>Текст кнопки</label>
+                                <input type="text" class="form-control" id="votingButtonName" />
+                            </div>
+                            <div>
+                                <label>Контент</label>
+                                <textarea id="votingButtonContent"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="cancelSaveVotingButtonContentButton">Отмена</button>
+                <button class="btn btn-primary" id="saveVotingButtonContentButton">Сохранить и выйти</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="fingerInstruction" extends="layout">
+        <put-attribute name="content" value="/views/bio/fingerInstruction.jsp" />
+    </definition>
+
+</tiles-definitions>

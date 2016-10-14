@@ -1,0 +1,63 @@
+<div flex layout="column" layout-fill>
+
+    <div flex ui-tree="app.navigationTreeOptions"
+         data-drag-enabled="false"
+         data-empty-placeholder-enabled="false">
+
+        <div flex layout="row" layout-align="start center" class="md-button md-raised md-primary"
+             ng-if="app.navigationContext.title != null"
+             ng-click="app.navigateBack(app.navigationContext)">
+
+            <span>
+                <md-icon md-font-set="material-icons" class="md-icon-24 color_white">arrow_back</md-icon>
+                &nbsp;&nbsp;
+            </span>
+
+            <md-icon md-font-set="material-icons" class="md-icon-24 color_white">{{app.navigationContext.icon}}
+            </md-icon>
+            &nbsp;&nbsp;
+
+            <span class="overflow_ellipsis">{{app.navigationContext.title}}</span>
+            <span flex>&nbsp;&nbsp;</span>
+        </div>
+
+        <div ui-tree-nodes ng-model="app.navigationContext.items">
+            <div ng-repeat="item in app.navigationContext.items" ui-tree-node
+                 collapsed="app.navigationContext.collapsed" ng-include="'nav_menu_renderer.html'"></div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="nav_menu_renderer.html">
+        <div flex layout="row" layout-align="start center" ng-click="app.navigationMenuItemClick($event, this, item);"
+             class="md-button"
+             ng-class="{'md-raised md-primary': item.items.length || item.switchMenu}">
+
+            <md-icon md-font-set="material-icons" class="md-icon-24 color_white">{{item.icon}}</md-icon>
+            &nbsp;&nbsp;
+
+            <span class="overflow_ellipsis">{{item.title}}</span>
+
+            <span flex>&nbsp;&nbsp;</span>
+
+            <span ng-if="item.expandable && item.collapsed && item.items.length">
+                <md-icon md-font-set="material-icons" class="md-icon-24 color_white">expand_more</md-icon>
+            </span>
+
+            <span ng-if="item.expandable && !item.collapsed && item.items.length">
+                <md-icon md-font-set="material-icons" class="md-icon-24 color_white">expand_less</md-icon>
+            </span>
+
+            <span ng-if="item.switchMenu">
+                <md-icon md-font-set="material-icons" class="md-icon-24 color_white">arrow_forward</md-icon>
+            </span>
+        </div>
+
+        <div ui-tree-nodes ng-model="item.items" ng-if="!item.collapsed && item.expandable">
+            <div ng-repeat="item in item.items" ui-tree-node ng-include="'nav_menu_renderer.html'"
+                 collapsed="item.collapsed"></div>
+        </div>
+    </script>
+
+    <md-divider></md-divider>
+
+</div>

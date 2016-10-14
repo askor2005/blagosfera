@@ -1,0 +1,19 @@
+<md-dialog aria-label="" class="askor-dialog" ng-cloak style="text-align: center;">
+    <form name="createInvite">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 style="width: 100%;">{{'create.header' | translate}}</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div ng-bind-html="offerText" style="text-align: left; padding: 10px;"></div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <div style="text-align: center;">
+                <md-button class="md-primary" ng-click="closeOffer()">
+                    Закрыть окно
+                </md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

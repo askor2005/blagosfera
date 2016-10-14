@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/mvc     http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/util    http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="ru.radom.kabinet" use-default-filters="false" annotation-config="true">
+        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
+
+    <context:component-scan base-package="ru.askor.blagosfera" use-default-filters="false" annotation-config="true">
+        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
+
+    <!--<context:annotation-config/>-->
+
+    <bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+        <property name="order" value="1"/>
+        <property name="exposeContextBeansAsAttributes" value="true"/>
+        <property name="redirectHttp10Compatible" value="false"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/views/**/views.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="ru.radom.kabinet.web.resolvers.SharerResolver"/>
+        </mvc:argument-resolvers>
+
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/octet-stream</value>
+                    </list>
+                </property>
+            </bean>
+
+            <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg name="defaultCharset" value="#{T(java.nio.charset.StandardCharsets).UTF_8}"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain</value>
+                        <value>text/html</value>
+                    </list>
+                </property>
+            </bean>
+
+            <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+                <constructor-arg name="marshaller" ref="jaxbMarshaller"/>
+                <constructor-arg name="unmarshaller" ref="jaxbMarshaller"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/xml</value>
+                    </list>
+                </property>
+            </bean>
+
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="jacksonObjectMapper"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="jacksonObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+        <property name="indentOutput" value="false"/>
+        <property name="simpleDateFormat" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"/>
+    </bean>
+
+    <bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="schemas">
+            <list>
+                <value>classpath:/xsd/cashboxapi.xsd</value>
+            </list>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>ru.askor.blagosfera.domain.xml.cashbox</value>
+            </list>
+        </property>
+        <property name="marshallerProperties">
+            <map>
+                <entry>
+                    <key>
+                        <util:constant static-field="javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT"/>
+                    </key>
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+
+            <mvc:exclude-mapping path="/rules"/>
+            <mvc:exclude-mapping path="/recovery"/>
+            <mvc:exclude-mapping path="/activate"/>
+            <mvc:exclude-mapping path="/activated"/>
+            <mvc:exclude-mapping path="/register"/>
+            <mvc:exclude-mapping path="/invite/**/accept"/>
+            <mvc:exclude-mapping path="/invite/**/reject"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/oauth/token"/>
+            <mvc:exclude-mapping path="/stomp_endpoint/**"/>
+            <mvc:exclude-mapping path="/i/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/fonts/**"/>
+            <mvc:exclude-mapping path="/sounds/**"/>
+            <mvc:exclude-mapping path="/tinymce/**"/>
+            <mvc:exclude-mapping path="/templates/**"/>
+            <mvc:exclude-mapping path="/tls/**"/>
+            <mvc:exclude-mapping path="/finger_emulator/**"/>
+            <mvc:exclude-mapping path="/test"/>
+            <mvc:exclude-mapping path="/finger/**"/>
+            <mvc:exclude-mapping path="/shop/**"/>
+            <mvc:exclude-mapping path="/ramera_list_editor/**"/>
+            <mvc:exclude-mapping path="/voting/**"/>
+            <mvc:exclude-mapping path="/admin/docs/process/**"/>
+            <mvc:exclude-mapping path="/document/service/documentPrintPage"/>
+            <mvc:exclude-mapping path="/document/service/fieldsStyles"/>
+            <mvc:exclude-mapping path="/cashbox/**"/>
+            <mvc:exclude-mapping path="/push/gcm/last.json"/>
+            <mvc:exclude-mapping path="/push/gcm/read"/>
+            <mvc:exclude-mapping path="/push/gcm/manifest.json"/>
+            <mvc:exclude-mapping path="/push/gcm/pushWorker"/>
+            <mvc:exclude-mapping path="/api/**"/>
+
+            <bean class="ru.radom.kabinet.interceptors.LayoutInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="ru.radom.kabinet.interceptors.GlobalSettingsInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+
+            <mvc:exclude-mapping path="/rules"/>
+            <mvc:exclude-mapping path="/recovery"/>
+            <mvc:exclude-mapping path="/activate"/>
+            <mvc:exclude-mapping path="/activated"/>
+            <mvc:exclude-mapping path="/register"/>
+            <mvc:exclude-mapping path="/invite/**/accept"/>
+            <mvc:exclude-mapping path="/invite/**/reject"/>
+            <mvc:exclude-mapping path="/invite/**/login"/>
+            <mvc:exclude-mapping path="/oauth/token"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/i/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/fonts/**"/>
+            <mvc:exclude-mapping path="/sounds/**"/>
+            <mvc:exclude-mapping path="/tinymce/**"/>
+            <mvc:exclude-mapping path="/templates/**"/>
+            <mvc:exclude-mapping path="/tls/**"/>
+            <mvc:exclude-mapping path="/stomp_endpoint/**"/>
+            <mvc:exclude-mapping path="/test"/>
+            <mvc:exclude-mapping path="/finger/**"/>
+            <mvc:exclude-mapping path="/shop/**"/>
+            <mvc:exclude-mapping path="/voting/**"/>
+            <mvc:exclude-mapping path="/cashbox/**"/>
+            <mvc:exclude-mapping path="/notifications/gcm/last.json"/>
+            <mvc:exclude-mapping path="/notifications/gcm/read"/>
+            <mvc:exclude-mapping path="/api/**"/>
+
+            <bean class="ru.radom.kabinet.security.SharerInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/group/**"/>
+
+            <mvc:exclude-mapping path="/tls/**"/>
+            <mvc:exclude-mapping path="/cashbox/**"/>
+            <mvc:exclude-mapping path="/api/**"/>
+            <mvc:exclude-mapping path="/**.json"/>
+
+            <bean class="ru.radom.kabinet.interceptors.CommunityInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+
+            <mvc:exclude-mapping path="/cashbox/**"/>
+            <mvc:exclude-mapping path="/test/**"/>
+            <mvc:exclude-mapping path="/finger/**"/>
+            <mvc:exclude-mapping path="/i/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/fonts/**"/>
+            <mvc:exclude-mapping path="/sounds/**"/>
+            <mvc:exclude-mapping path="/tinymce/**"/>
+            <mvc:exclude-mapping path="/templates/**"/>
+            <mvc:exclude-mapping path="/tls/**"/>
+            <mvc:exclude-mapping path="/push/gcm/last.json"/>
+            <mvc:exclude-mapping path="/push/gcm/read"/>
+            <mvc:exclude-mapping path="/push/gcm/manifest.json"/>
+            <mvc:exclude-mapping path="/push/gcm/pushWorker"/>
+            <mvc:exclude-mapping path="/api/**"/>
+
+            <bean class="ru.radom.kabinet.interceptors.NotificationInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <mvc:resources mapping="/i/**" location="/i/" order="-1"/>
+    <mvc:resources mapping="/img/**" location="/img/" order="-1"/>
+    <mvc:resources mapping="/js/**" location="/js/" order="-1"/>
+    <mvc:resources mapping="/css/**" location="/css/" order="-1"/>
+    <mvc:resources mapping="/fonts/**" location="/fonts/" order="-1"/>
+    <mvc:resources mapping="/sounds/**" location="/sounds/" order="-1"/>
+    <mvc:resources mapping="/tinymce/**" location="/tinymce/" order="-1"/>
+    <mvc:resources mapping="/templates/**" location="/templates/" order="-1"/>
+    <mvc:resources mapping="/tls/**" location="/tls/" order="-1"/>
+
+    <mvc:resources mapping="/ng/**" location="/ng/" order="-1"/>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/**">pagesController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="pagesController" class="ru.radom.kabinet.web.pages.PagesController"/>
+
+    <bean id="webSocketConfig" class="ru.askor.blagosfera.web.config.WebSocketConfig"/>
+</beans>

@@ -1,0 +1,17 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="selectRegistrator" extends="wideLayout">
+        <put-attribute name="content" value="/views/registration/registrators.jsp" />
+        <put-attribute name="item" value="/views/registration/itemRegistrator.jsp" cascade="true" />
+        <put-attribute name="requestDialog" value="/views/registration/createCertificationRequestDialog.jsp" cascade="true" />
+    </definition>
+    <definition name="processRequests" extends="layout">
+        <put-attribute name="content" value="/views/registration/requests.jsp" />
+        <put-attribute name="item" value="/views/registration/itemRequest.jsp" cascade="true" />
+        <put-attribute name="processDialog" value="/views/registration/processCertificationRequestDialog.jsp" cascade="true" />
+        <put-attribute name="cancelDialog" value="/views/registration/cancelCertificationRequestDialog.jsp" cascade="true" />
+        <put-attribute name="viewDialog" value="/views/registration/viewCertificationRequestDialog.jsp" cascade="true" />
+    </definition>
+
+</tiles-definitions>

@@ -1,0 +1,91 @@
+#invitesBlock {
+    border: 2px solid #f7f7f7;
+}
+
+.invite-circle, .invite-circle-0, .invite-circle-1, .invite-circle-2, .invite-circle-3, .invite-circle-4, .invite-circle-5 {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.invite-circle-0 {
+    background-color: #75e4da;
+}
+.invite-circle-1 {
+    background-color: #d8d8d8;
+}
+.invite-circle-2 {
+    background-color: #979797;
+}
+.invite-circle-3 {
+    border: 2px solid #ff0000;
+    width: 16px;
+    height: 16px;
+}
+.invite-circle-4, .invite-circle-5 {
+    border: 2px solid #cecece;
+    width: 16px;
+    height: 16px;
+}
+
+.invite-row {
+    white-space: nowrap;
+}
+
+.invite-row-4, .invite-row-5 {
+    color: #cecece;
+}
+
+.invite-cell-text {
+    vertical-align: middle;
+    display: inline-block;
+    height: 20px;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.invites-table {
+}
+
+.invites-table thead {
+    background-color: #37474f;
+}
+.invites-table thead th * {
+    color: #FFFFFF;
+}
+
+.invites-table tr.grey_row {
+    background-color: #fafafa;
+}
+
+.invites-table tr:hover td {
+    background-color: #E0E0DD;
+}
+
+.invites_header {
+    margin: 6px;
+}
+
+.header_button {
+    color: rgb(96, 125, 139) !important;
+}
+.stream_value {
+    color: #37474f;
+    font-size: 53px;
+}
+
+.stream_title {
+    color: #37474f;
+    font-size: 20px;
+}
+
+#invitesBlock .md-table-pagination {
+    font-size: 17px;
+}
+
+#createInvite .md-input-message-animation {
+    opacity: 1;
+    margin-top: 0px !important;
+}

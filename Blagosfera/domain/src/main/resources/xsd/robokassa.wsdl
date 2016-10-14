@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://merchant.roboxchange.com/WebService/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://merchant.roboxchange.com/WebService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://merchant.roboxchange.com/WebService/">
+      <s:element name="GetPaymentMethods">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantLogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPaymentMethodsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaymentMethodsResult" type="tns:PaymentMethodsList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PaymentMethodsList">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ResponseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Methods" type="tns:ArrayOfMethod" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ResponseData" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Result" nillable="true" type="tns:Result" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Result">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Code" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMethod">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Method" nillable="true" type="tns:Method" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Method">
+        <s:attribute name="Code" type="s:string" />
+        <s:attribute name="Description" type="s:string" />
+      </s:complexType>
+      <s:element name="GetCurrencies">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantLogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCurrenciesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCurrenciesResult" type="tns:CurrenciesList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CurrenciesList">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ResponseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Groups" type="tns:ArrayOfPaymentMethodGroup" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfPaymentMethodGroup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Group" nillable="true" type="tns:PaymentMethodGroup" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PaymentMethodGroup">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfCurrency" />
+            </s:sequence>
+            <s:attribute name="Code" type="s:string" />
+            <s:attribute name="Description" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseData" />
+      <s:complexType name="Currency">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Rate" type="tns:Rate" />
+            </s:sequence>
+            <s:attribute name="Label" type="s:string" />
+            <s:attribute name="Alias" type="s:string" />
+            <s:attribute name="Name" type="s:string" />
+            <s:attribute name="MinValue" type="s:decimal" />
+            <s:attribute name="MaxValue" type="s:decimal" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Rate">
+        <s:attribute name="IncSum" type="s:decimal" use="required" />
+      </s:complexType>
+      <s:complexType name="ArrayOfCurrency">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Currency" nillable="true" type="tns:Currency" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetRates">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantLogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IncCurrLabel" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OutSum" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRatesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRatesResult" type="tns:RatesList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RatesList">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ResponseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Groups" type="tns:ArrayOfPaymentMethodGroup" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CalcOutSumm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantLogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IncCurrLabel" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IncSum" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CalcOutSummResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CalcOutSummResult" type="tns:CalcSummsResponseData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CalcSummsResponseData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ResponseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="OutSum" type="s:decimal" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="OpState">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantLogin" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InvoiceID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Signature" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OpStateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OpStateResult" type="tns:OperationStateResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OperationStateResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ResponseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="State" type="tns:OperationState" />
+              <s:element minOccurs="0" maxOccurs="1" name="Info" type="tns:OperationInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="OperationState">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Code" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RequestDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="StateDate" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OperationInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="IncCurrLabel" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IncSum" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="IncAccount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PaymentMethod" type="tns:OperationPaymentMethod" />
+          <s:element minOccurs="0" maxOccurs="1" name="OutCurrLabel" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="OutSum" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OperationPaymentMethod">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OperationInfoExt">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:OperationInfo">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OpKey" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="OpStateExt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantLogin" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InvoiceID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Signature" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OpStateExtResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OpStateExtResult" type="tns:OperationStateResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLimit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantLogin" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLimitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLimitResult" type="tns:LimitResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="LimitResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ResponseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Limit" type="s:decimal" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="PaymentMethodsList" nillable="true" type="tns:PaymentMethodsList" />
+      <s:element name="CurrenciesList" nillable="true" type="tns:CurrenciesList" />
+      <s:element name="RatesList" nillable="true" type="tns:RatesList" />
+      <s:element name="CalcSummsResponseData" nillable="true" type="tns:CalcSummsResponseData" />
+      <s:element name="OperationStateResponse" nillable="true" type="tns:OperationStateResponse" />
+      <s:element name="LimitResponse" nillable="true" type="tns:LimitResponse" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPaymentMethodsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaymentMethods" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentMethodsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaymentMethodsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrenciesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCurrencies" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrenciesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCurrenciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRatesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRates" />
+  </wsdl:message>
+  <wsdl:message name="GetRatesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="CalcOutSummSoapIn">
+    <wsdl:part name="parameters" element="tns:CalcOutSumm" />
+  </wsdl:message>
+  <wsdl:message name="CalcOutSummSoapOut">
+    <wsdl:part name="parameters" element="tns:CalcOutSummResponse" />
+  </wsdl:message>
+  <wsdl:message name="OpStateSoapIn">
+    <wsdl:part name="parameters" element="tns:OpState" />
+  </wsdl:message>
+  <wsdl:message name="OpStateSoapOut">
+    <wsdl:part name="parameters" element="tns:OpStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="OpStateExtSoapIn">
+    <wsdl:part name="parameters" element="tns:OpStateExt" />
+  </wsdl:message>
+  <wsdl:message name="OpStateExtSoapOut">
+    <wsdl:part name="parameters" element="tns:OpStateExtResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLimitSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLimit" />
+  </wsdl:message>
+  <wsdl:message name="GetLimitSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLimitResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentMethodsHttpGetIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentMethodsHttpGetOut">
+    <wsdl:part name="Body" element="tns:PaymentMethodsList" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrenciesHttpGetIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrenciesHttpGetOut">
+    <wsdl:part name="Body" element="tns:CurrenciesList" />
+  </wsdl:message>
+  <wsdl:message name="GetRatesHttpGetIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="IncCurrLabel" type="s:string" />
+    <wsdl:part name="OutSum" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetRatesHttpGetOut">
+    <wsdl:part name="Body" element="tns:RatesList" />
+  </wsdl:message>
+  <wsdl:message name="CalcOutSummHttpGetIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="IncCurrLabel" type="s:string" />
+    <wsdl:part name="IncSum" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CalcOutSummHttpGetOut">
+    <wsdl:part name="Body" element="tns:CalcSummsResponseData" />
+  </wsdl:message>
+  <wsdl:message name="OpStateHttpGetIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="InvoiceID" type="s:string" />
+    <wsdl:part name="Signature" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="OpStateHttpGetOut">
+    <wsdl:part name="Body" element="tns:OperationStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="OpStateExtHttpGetIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="InvoiceID" type="s:string" />
+    <wsdl:part name="Signature" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="OpStateExtHttpGetOut">
+    <wsdl:part name="Body" element="tns:OperationStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLimitHttpGetIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLimitHttpGetOut">
+    <wsdl:part name="Body" element="tns:LimitResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentMethodsHttpPostIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPaymentMethodsHttpPostOut">
+    <wsdl:part name="Body" element="tns:PaymentMethodsList" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrenciesHttpPostIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrenciesHttpPostOut">
+    <wsdl:part name="Body" element="tns:CurrenciesList" />
+  </wsdl:message>
+  <wsdl:message name="GetRatesHttpPostIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="IncCurrLabel" type="s:string" />
+    <wsdl:part name="OutSum" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetRatesHttpPostOut">
+    <wsdl:part name="Body" element="tns:RatesList" />
+  </wsdl:message>
+  <wsdl:message name="CalcOutSummHttpPostIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="IncCurrLabel" type="s:string" />
+    <wsdl:part name="IncSum" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CalcOutSummHttpPostOut">
+    <wsdl:part name="Body" element="tns:CalcSummsResponseData" />
+  </wsdl:message>
+  <wsdl:message name="OpStateHttpPostIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="InvoiceID" type="s:string" />
+    <wsdl:part name="Signature" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="OpStateHttpPostOut">
+    <wsdl:part name="Body" element="tns:OperationStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="OpStateExtHttpPostIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+    <wsdl:part name="InvoiceID" type="s:string" />
+    <wsdl:part name="Signature" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="OpStateExtHttpPostOut">
+    <wsdl:part name="Body" element="tns:OperationStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLimitHttpPostIn">
+    <wsdl:part name="MerchantLogin" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLimitHttpPostOut">
+    <wsdl:part name="Body" element="tns:LimitResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="GetPaymentMethods">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение списка способов оплаты, доступных магазину</wsdl:documentation>
+      <wsdl:input message="tns:GetPaymentMethodsSoapIn" />
+      <wsdl:output message="tns:GetPaymentMethodsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencies">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение списка валют, доступных магазину</wsdl:documentation>
+      <wsdl:input message="tns:GetCurrenciesSoapIn" />
+      <wsdl:output message="tns:GetCurrenciesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение текущих курсов валют / расчет сумм оплаты в различных валютах</wsdl:documentation>
+      <wsdl:input message="tns:GetRatesSoapIn" />
+      <wsdl:output message="tns:GetRatesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CalcOutSumm">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Расчет сумм оплаты в различных валютах</wsdl:documentation>
+      <wsdl:input message="tns:CalcOutSummSoapIn" />
+      <wsdl:output message="tns:CalcOutSummSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OpState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации об операции и ее текущего состояния</wsdl:documentation>
+      <wsdl:input message="tns:OpStateSoapIn" />
+      <wsdl:output message="tns:OpStateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OpStateExt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации об операции и ее текущего состояния</wsdl:documentation>
+      <wsdl:input message="tns:OpStateExtSoapIn" />
+      <wsdl:output message="tns:OpStateExtSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLimit">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации о доступном лимите платежей</wsdl:documentation>
+      <wsdl:input message="tns:GetLimitSoapIn" />
+      <wsdl:output message="tns:GetLimitSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServiceHttpGet">
+    <wsdl:operation name="GetPaymentMethods">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение списка способов оплаты, доступных магазину</wsdl:documentation>
+      <wsdl:input message="tns:GetPaymentMethodsHttpGetIn" />
+      <wsdl:output message="tns:GetPaymentMethodsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencies">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение списка валют, доступных магазину</wsdl:documentation>
+      <wsdl:input message="tns:GetCurrenciesHttpGetIn" />
+      <wsdl:output message="tns:GetCurrenciesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение текущих курсов валют / расчет сумм оплаты в различных валютах</wsdl:documentation>
+      <wsdl:input message="tns:GetRatesHttpGetIn" />
+      <wsdl:output message="tns:GetRatesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CalcOutSumm">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Расчет сумм оплаты в различных валютах</wsdl:documentation>
+      <wsdl:input message="tns:CalcOutSummHttpGetIn" />
+      <wsdl:output message="tns:CalcOutSummHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OpState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации об операции и ее текущего состояния</wsdl:documentation>
+      <wsdl:input message="tns:OpStateHttpGetIn" />
+      <wsdl:output message="tns:OpStateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OpStateExt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации об операции и ее текущего состояния</wsdl:documentation>
+      <wsdl:input message="tns:OpStateExtHttpGetIn" />
+      <wsdl:output message="tns:OpStateExtHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLimit">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации о доступном лимите платежей</wsdl:documentation>
+      <wsdl:input message="tns:GetLimitHttpGetIn" />
+      <wsdl:output message="tns:GetLimitHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServiceHttpPost">
+    <wsdl:operation name="GetPaymentMethods">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение списка способов оплаты, доступных магазину</wsdl:documentation>
+      <wsdl:input message="tns:GetPaymentMethodsHttpPostIn" />
+      <wsdl:output message="tns:GetPaymentMethodsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencies">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение списка валют, доступных магазину</wsdl:documentation>
+      <wsdl:input message="tns:GetCurrenciesHttpPostIn" />
+      <wsdl:output message="tns:GetCurrenciesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение текущих курсов валют / расчет сумм оплаты в различных валютах</wsdl:documentation>
+      <wsdl:input message="tns:GetRatesHttpPostIn" />
+      <wsdl:output message="tns:GetRatesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CalcOutSumm">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Расчет сумм оплаты в различных валютах</wsdl:documentation>
+      <wsdl:input message="tns:CalcOutSummHttpPostIn" />
+      <wsdl:output message="tns:CalcOutSummHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OpState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации об операции и ее текущего состояния</wsdl:documentation>
+      <wsdl:input message="tns:OpStateHttpPostIn" />
+      <wsdl:output message="tns:OpStateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OpStateExt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации об операции и ее текущего состояния</wsdl:documentation>
+      <wsdl:input message="tns:OpStateExtHttpPostIn" />
+      <wsdl:output message="tns:OpStateExtHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLimit">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение информации о доступном лимите платежей</wsdl:documentation>
+      <wsdl:input message="tns:GetLimitHttpPostIn" />
+      <wsdl:output message="tns:GetLimitHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPaymentMethods">
+      <soap:operation soapAction="http://merchant.roboxchange.com/WebService/GetPaymentMethods" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencies">
+      <soap:operation soapAction="http://merchant.roboxchange.com/WebService/GetCurrencies" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRates">
+      <soap:operation soapAction="http://merchant.roboxchange.com/WebService/GetRates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalcOutSumm">
+      <soap:operation soapAction="http://merchant.roboxchange.com/WebService/CalcOutSumm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpState">
+      <soap:operation soapAction="http://merchant.roboxchange.com/WebService/OpState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpStateExt">
+      <soap:operation soapAction="http://merchant.roboxchange.com/WebService/OpStateExt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLimit">
+      <soap:operation soapAction="http://merchant.roboxchange.com/WebService/GetLimit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPaymentMethods">
+      <soap12:operation soapAction="http://merchant.roboxchange.com/WebService/GetPaymentMethods" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencies">
+      <soap12:operation soapAction="http://merchant.roboxchange.com/WebService/GetCurrencies" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRates">
+      <soap12:operation soapAction="http://merchant.roboxchange.com/WebService/GetRates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalcOutSumm">
+      <soap12:operation soapAction="http://merchant.roboxchange.com/WebService/CalcOutSumm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpState">
+      <soap12:operation soapAction="http://merchant.roboxchange.com/WebService/OpState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpStateExt">
+      <soap12:operation soapAction="http://merchant.roboxchange.com/WebService/OpStateExt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLimit">
+      <soap12:operation soapAction="http://merchant.roboxchange.com/WebService/GetLimit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceHttpGet" type="tns:ServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetPaymentMethods">
+      <http:operation location="/GetPaymentMethods" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencies">
+      <http:operation location="/GetCurrencies" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRates">
+      <http:operation location="/GetRates" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalcOutSumm">
+      <http:operation location="/CalcOutSumm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpState">
+      <http:operation location="/OpState" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpStateExt">
+      <http:operation location="/OpStateExt" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLimit">
+      <http:operation location="/GetLimit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceHttpPost" type="tns:ServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetPaymentMethods">
+      <http:operation location="/GetPaymentMethods" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencies">
+      <http:operation location="/GetCurrencies" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRates">
+      <http:operation location="/GetRates" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalcOutSumm">
+      <http:operation location="/CalcOutSumm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpState">
+      <http:operation location="/OpState" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpStateExt">
+      <http:operation location="/OpStateExt" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLimit">
+      <http:operation location="/GetLimit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="https://auth.robokassa.ru/Merchant/WebService/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="https://auth.robokassa.ru/Merchant/WebService/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceHttpGet" binding="tns:ServiceHttpGet">
+      <http:address location="https://auth.robokassa.ru/Merchant/WebService/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+      <http:address location="https://auth.robokassa.ru/Merchant/WebService/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,74 @@
+<md-dialog aria-label="smsConfirm.html" ng-cloak id="sms-dialog">
+    <md-toolbar class="md-accent md-hue-2">
+
+        <div class="md-toolbar-tools">
+            <span>
+                ПОДТВЕРЖДЕНИЕ ОПЕРАЦИИ
+            </span>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        <form novalidate name="smsForm">
+
+            <md-content flex>
+                <p class="md-body-1">
+                    <md-button class="md-fab md-mini background_color_white" aria-label="avatar">
+                        <img class="layout-fab-img" ng-src="{{ dialog.userInfo.avatar | resizeImage:40 }}" alt="avatar">
+                    </md-button>
+
+                    <b>{{ dialog.userInfo.shortName }}</b>, для подтверждения операции введите код полученный в СМС и нажмите кнопку Подтвердить
+                </p>
+            </md-content>
+
+            <div flex layout="row">
+                <div flex layout="row" layout-align="center center">
+                    <div>
+                        <md-icon md-font-set="material-icons" class="color_red">timer</md-icon>
+                    </div>
+                    {{ dialog.secondsLeft }}
+                </div>
+
+                <md-input-container class="md-block" flex>
+                    <label>код</label>
+
+                    <input type="number" min="000000" max="999999" step="1" name="code"
+                           ng-model="dialog.verificationCode" required
+                           ng-disabled="dialog.verificationInProgress || (dialog.secondsLeft == 0)">
+
+                    <div ng-messages="smsForm.code.$error" role="alert">
+                        <div ng-message-exp="['required']">
+                            введите код подтверждения
+                        </div>
+                        <div ng-message-exp="['min', 'max']">
+                            введен некорректный код
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-button class="md-fab md-mini" aria-label="login"
+                           ng-click="dialog.newCode()"
+                           ng-disabled="dialog.verificationInProgress || (dialog.secondsLeft > 0)">
+                    <md-icon md-font-set="material-icons" class="color_white">sms</md-icon>
+
+                    <md-tooltip md-direction="top">
+                        Выслать код повторно
+                    </md-tooltip>
+                </md-button>
+            </div>
+
+        </form>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-xs="column" layout-padding>
+
+        <div flex></div>
+
+        <div layout="row">
+            <md-button ng-click="dialog.confirm()" ng-disabled="!smsForm.$valid || dialog.verificationInProgress">Подтвердить</md-button>
+            <md-button ng-click="dialog.cancel()">Отмена</md-button>
+        </div>
+
+    </md-dialog-actions>
+</md-dialog>

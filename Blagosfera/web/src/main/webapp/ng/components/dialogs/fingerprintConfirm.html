@@ -1,0 +1,67 @@
+<md-dialog aria-label="fingerprintConfirm.html" ng-cloak id="fingerprint-dialog">
+    <md-toolbar class="md-accent md-hue-2">
+
+        <div class="md-toolbar-tools">
+            <span>
+                ПОДТВЕРЖДЕНИЕ ОПЕРАЦИИ
+            </span>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        <div flex layout="column">
+            <p class="md-body-1">
+                <md-button class="md-fab md-mini background_color_white" aria-label="avatar">
+                    <img class="layout-fab-img" ng-src="{{ dialog.userInfo.avatar | resizeImage:40 }}" alt="avatar">
+                </md-button>
+
+                <b>{{ dialog.userInfo.shortName }}</b>, для подтверждения операции нажмите кнопку Подтвердить, затем просканируйте <b>{{dialog.fingerString}}</b>
+            </p>
+
+            <md-progress-linear md-mode="determinate" value="{{dialog.scanProgress}}" ng-show="dialog.scanInProgress"></md-progress-linear>
+        </div>
+
+        <div flex layout="column">
+            <div flex layout="row">
+                <md-checkbox ng-model="dialog.authSettings.RASIsLocal" aria-label=rasislocal" ng-disabled="dialog.readOnly">
+                    Сервер авторизации установлен на этом компьютере
+                    <md-tooltip md-direction="top">
+                        Отметьте галочку если сервер авторизации установлен и запущен на этом компьютере
+                    </md-tooltip>
+                </md-checkbox>
+            </div>
+
+            <div flex layout="row" ng-hide="dialog.authSettings.RASIsLocal">
+                <md-input-container class="md-block" flex ng-disabled="dialog.authSettings.RASIsLocal">
+                    <label>адрес сервера авторизации</label>
+
+                    <input name="username"
+                           ng-model="dialog.authSettings.RASUrl"
+                           ng-disabled="dialog.readOnly || dialog.authSettings.RASIsLocal">
+                </md-input-container>
+            </div>
+
+            <div flex layout="row" ng-show="dialog.scanProgress === 100">
+                <p ng-if="dialog.canLogin === true" class="md-body-1">Биометрическая идентификация пройдена успешно.</p>
+                <p ng-if="dialog.canLogin === false" class="md-body-1">Ошибка сканирования.</p>
+
+                <div flex></div>
+                <md-icon ng-if="dialog.canLogin === true" md-font-set="material-icons" class="md-icon-32 color_green">done</md-icon>
+                <md-icon ng-if="dialog.canLogin === false" md-font-set="material-icons" class="md-icon-32 color_red">error_outline</md-icon>
+            </div>
+        </div>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-xs="column" layout-padding>
+
+        <a target="_blank" href="/ras/download">Скачать сервер авторизации "БЛАГОСФЕРА"</a>
+        <div flex></div>
+
+        <div layout="row">
+            <md-button ng-click="dialog.confirm()" ng-disabled="dialog.readOnly || dialog.scanInProgress">Подтвердить</md-button>
+            <md-button ng-click="dialog.cancel()">Отмена</md-button>
+        </div>
+
+    </md-dialog-actions>
+</md-dialog>

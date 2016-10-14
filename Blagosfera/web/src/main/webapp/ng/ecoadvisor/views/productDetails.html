@@ -1,0 +1,79 @@
+<md-dialog aria-label="Информация о продукте" ng-cloak>
+    <md-toolbar>
+
+        <div class="md-toolbar-tools">
+            Информация о продукте
+
+            <span flex></span>
+
+            <md-button class="md-icon-button" ng-click="dialog.close()">
+                <ng-md-icon icon="close" style="fill: white" class="clickable" size="24"
+                            aria-label="close"></ng-md-icon>
+            </md-button>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        <table class="dialog-table">
+            <tr>
+                <td nowrap width="10%"><b>Код продукта</b></td>
+                <td nowrap width="5%"></td>
+                <td width="85%">{{dialog.product.code}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Наименование</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.name}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Базовое количество</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.baseCount}} {{dialog.product.unitOfMeasure}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Закупочная цена (без НДС)</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.wholesalePrice | currency}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Закупочная цена (с НДС)</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.wholesalePriceWithVat | currency}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Розничная цена (без НДС)</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.finalPrice | currency}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Розничная цена (с НДС)</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.finalPriceWithVat | currency}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>НДС (%)</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.vat}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Наценка</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.margin | currency}}</td>
+            </tr>
+            <tr>
+                <td nowrap><b>Наценка, %</b></td>
+                <td nowrap></td>
+                <td>{{dialog.product.marginPercentage | number : 2}}</td>
+            </tr>
+        </table>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-padding>
+
+        <md-button ng-click="dialog.close()">
+            Закрыть
+        </md-button>
+
+    </md-dialog-actions>
+</md-dialog>

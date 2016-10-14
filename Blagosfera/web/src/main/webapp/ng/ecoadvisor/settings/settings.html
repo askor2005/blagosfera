@@ -1,0 +1,679 @@
+<md-content layout="column" layout-padding layout-wrap layout-fill ng-cloak>
+
+    <div md-whiteframe="1" flex layout layout-align="center center">
+        <b>{{settings.community.name}}</b>
+    </div>
+
+    <form novalidate name="ecsSettingsForm">
+
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Экономический советник">
+
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-subhead">Исходная бухгалтерская информация</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout="column" layout-align="space-between">
+
+                        <md-toolbar class="md-table-toolbar md-default">
+                            <div class="md-toolbar-tools">
+                                <md-autocomplete flex
+                                                 md-selected-item="settings.productGroups.selected"
+                                                 md-selected-item-change="settings.productGroupSelected(item)"
+                                                 md-search-text="settings.productsGroupsSearchText"
+                                                 md-items="item in settings.productsGroupsSearch(settings.productsGroupsSearchText)"
+                                                 md-item-text="item.name"
+                                                 md-min-length="0"
+                                                 placeholder="введите название группы">
+                                    <md-item-template>
+                                        <span md-highlight-text="settings.productsGroupsSearchText"
+                                              md-highlight-flags="^i">{{item.name}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        группа не найдена
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </div>
+                        </md-toolbar>
+
+                        <md-table-container>
+                            <table md-table ng-model="settings.productsSelected" md-progress="settings.promise">
+                                <thead md-head md-order="settings.query.sortColumn" md-on-reorder="settings.onReorder">
+                                <tr md-row>
+                                    <th md-column></th>
+                                    <th md-column md-order-by="code">Код</th>
+                                    <th md-column md-order-by="name">Наименование</th>
+                                    <th md-column md-order-by="wholesalePriceWithVat" md-numeric>Затраты, с НДС</th>
+                                    <th md-column md-numeric md-order-by="finalPriceWithVat">Цена, с НДС</th>
+                                    <th md-column md-numeric md-order-by="margin">Наценка</th>
+                                    <th md-column md-numeric md-order-by="marginPercentage">Наценка, %</th>
+                                </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row ng-repeat="product in settings.products.data">
+                                    <td md-cell>
+                                        <ng-md-icon icon="details" style="fill: grey" class="clickable" size="20"
+                                                    ng-click="settings.openProductDetailsDialog($event, product)"></ng-md-icon>
+                                    </td>
+                                    <td md-cell>{{product.code}}</td>
+                                    <td md-cell>{{product.name}}</td>
+                                    <td md-cell>{{product.wholesalePriceWithVat | currency}}</td>
+                                    <td md-cell>{{product.finalPriceWithVat | currency}}</td>
+                                    <td md-cell>{{product.margin | currency}}</td>
+                                    <td md-cell>{{product.marginPercentage}}%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+
+                        <md-table-pagination md-limit="settings.products.query.pageSize"
+                                             md-page="settings.products.query.page"
+                                             md-total="{{settings.products.count}}"
+                                             md-on-paginate="settings.onPaginate" md-page-select
+                                             md-options="[5, 10, 50, 100]"
+                                             md-label="{page: 'Страница:', rowsPerPage: 'Строк:', of: 'из'}"></md-table-pagination>
+
+                        <div flex layout="column" layout-padding>
+                            <div flex layout="row">
+                                <div flex>Стоимость приобретения товара магазином (так называемые прямые затраты):</div>
+                                <div flex="10">{{settings.ecoAdvisor.data.directCosts | currency}}</div>
+                            </div>
+                            <div flex layout="row">
+                                <div flex>Цена товара при его продаже в магазине (В ТОМ ЧИСЛЕ НДС):</div>
+                                <div flex="10">{{settings.ecoAdvisor.data.finalCosts | currency}}</div>
+                            </div>
+                        </div>
+
+                    </md-card-content>
+                </md-card>
+
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-subhead">Исходная информация</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout="column">
+
+                        <div layout="row">
+                            <md-input-container class="md-block" flex>
+                                <label>ОХР</label>
+                                <md-tooltip md-direction="bottom">Общехозяйственные расходы (ОХР), %</md-tooltip>
+
+                                <input required type="number" min="0" max="100" name="generalRunningCosts"
+                                       ng-model="settings.ecoAdvisor.settings.generalRunningCosts"
+                                       ng-model-options="{updateOn: 'blur'}">
+
+                                <div ng-messages="ecsSettingsForm.generalRunningCosts.$error" multiple
+                                     md-auto-hide="false">
+                                    <div ng-message="required">значение не задано</div>
+                                    <div ng-message="min">минимальное значение поля равно 0</div>
+                                    <div ng-message="max">максимальное значение поля равно 100</div>
+                                    <div ng-message="number">значение должно быть целым числом</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>зарплата</label>
+                                <!--<md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">help_outline</md-icon>-->
+                                <md-tooltip md-direction="bottom">Зарплата вместе со ВСЕМИ зарплатными налогами
+                                    составляет
+                                    по отношению к ОХР, не более, %
+                                </md-tooltip>
+
+                                <input required type="number" min="0" max="100" name="wage"
+                                       ng-model="settings.ecoAdvisor.settings.wage"
+                                       ng-model-options="{updateOn: 'blur'}">
+
+                                <div ng-messages="ecsSettingsForm.wage.$error" multiple md-auto-hide="false">
+                                    <div ng-message="required">значение не задано</div>
+                                    <div ng-message="min">минимальное значение поля равно 0</div>
+                                    <div ng-message="max">максимальное значение поля равно 100</div>
+                                    <div ng-message="number">значение должно быть целым числом</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>НДС</label>
+                                <!--<md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">help_outline</md-icon>-->
+                                <md-tooltip md-direction="bottom">Ставка налога на добавленную стоимость, %</md-tooltip>
+
+                                <input required type="number" min="0" max="100" name="vat"
+                                       ng-model="settings.ecoAdvisor.settings.vat"
+                                       ng-model-options="{updateOn: 'blur'}">
+
+                                <div ng-messages="ecsSettingsForm.vat.$error" multiple md-auto-hide="false">
+                                    <div ng-message="required">значение не задано</div>
+                                    <div ng-message="min">минимальное значение поля равно 0</div>
+                                    <div ng-message="max">максимальное значение поля равно 100</div>
+                                    <div ng-message="number">значение должно быть целым числом</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>налог на прибыль</label>
+                                <!--<md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">help_outline</md-icon>-->
+                                <md-tooltip md-direction="bottom">Ставка налога на прибыль, %</md-tooltip>
+
+                                <input required type="number" min="0" max="100" name="taxOnProfits"
+                                       ng-model="settings.ecoAdvisor.settings.taxOnProfits"
+                                       ng-model-options="{updateOn: 'blur'}">
+
+                                <div ng-messages="ecsSettingsForm.taxOnProfits.$error" multiple md-auto-hide="false">
+                                    <div ng-message="required">значение не задано</div>
+                                    <div ng-message="min">минимальное значение поля равно 0</div>
+                                    <div ng-message="max">максимальное значение поля равно 100</div>
+                                    <div ng-message="number">значение должно быть целым числом</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>подоходный налог</label>
+                                <!--<md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">help_outline</md-icon>-->
+                                <md-tooltip md-direction="bottom">Ставка подоходного налога (НДФЛ), %</md-tooltip>
+
+                                <input required type="number" min="0" max="100" name="incomeTax"
+                                       ng-model="settings.ecoAdvisor.settings.incomeTax"
+                                       ng-model-options="{updateOn: 'blur'}">
+
+                                <div ng-messages="ecsSettingsForm.incomeTax.$error" multiple md-auto-hide="false">
+                                    <div ng-message="required">значение не задано</div>
+                                    <div ng-message="min">минимальное значение поля равно 0</div>
+                                    <div ng-message="max">максимальное значение поля равно 100</div>
+                                    <div ng-message="number">значение должно быть целым числом</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>доля собственника</label>
+                                <!--<md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">help_outline</md-icon>-->
+                                <md-tooltip md-direction="bottom">Доля Собственника в Уставном капитале, %</md-tooltip>
+
+                                <input required type="number" min="0" max="100" name="proprietorshipInterest"
+                                       ng-model="settings.ecoAdvisor.settings.proprietorshipInterest"
+                                       ng-model-options="{updateOn: 'blur'}">
+
+                                <div ng-messages="ecsSettingsForm.proprietorshipInterest.$error" multiple
+                                     md-auto-hide="false">
+                                    <div ng-message="required">значение не задано</div>
+                                    <div ng-message="min">минимальное значение поля равно 0</div>
+                                    <div ng-message="max">максимальное значение поля равно 100</div>
+                                    <div ng-message="number">значение должно быть целым числом</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>обл. дивидендов</label>
+                                <!--<md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">help_outline</md-icon>-->
+                                <md-tooltip md-direction="bottom">Ставка обложения выплачиваемых дивидендов для доли
+                                    собственника физического лица, %
+                                </md-tooltip>
+
+                                <input required type="number" min="0" max="100" name="taxOnDividends"
+                                       ng-model="settings.ecoAdvisor.settings.taxOnDividends"
+                                       ng-model-options="{updateOn: 'blur'}">
+
+                                <div ng-messages="ecsSettingsForm.taxOnDividends.$error" multiple md-auto-hide="false">
+                                    <div ng-message="required">значение не задано</div>
+                                    <div ng-message="min">минимальное значение поля равно 0</div>
+                                    <div ng-message="max">максимальное значение поля равно 100</div>
+                                    <div ng-message="number">значение должно быть целым числом</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout="row">
+                            <div flex="40" layout layout-align="start center">Доля чистой прибыли, остающаяся в расп.
+                                Компании, %
+                            </div>
+
+                            <md-slider flex min="0" max="100" step="1" aria-label="slider"
+                                       ng-model="settings.ecoAdvisor.settings.companyProfit"></md-slider>
+
+                            <div flex="5" flex-offset="5" layout layout-align="center center">
+                                <input flex type="number" ng-model="settings.ecoAdvisor.settings.companyProfit"
+                                       ng-disabled="true">
+                            </div>
+                        </div>
+
+                        <div layout="row">
+                            <div flex="40" layout layout-align="start center">НАЦЕНКА, %</div>
+
+                            <md-slider flex min="{{settings.marginSliderMin}}" max="{{settings.marginSliderMax}}"
+                                       step="1" aria-label="slider"
+                                       ng-model="settings.ecoAdvisor.settings.margin"
+                                       ng-blur="settings.onMarginSliderChange(settings.ecoAdvisor.settings.margin)"></md-slider>
+
+                            <div flex="5" flex-offset="5" layout layout-align="center center">
+                                <input flex type="number" ng-model="settings.ecoAdvisor.settings.margin"
+                                       ng-disabled="true">
+                            </div>
+                        </div>
+
+                        <div layout="row">
+                            <div flex="40" layout layout-align="start center">Оценка товара, как паевого взноса, %</div>
+
+                            <md-slider flex min="0" max="100" step="1" aria-label="slider"
+                                       ng-model="settings.ecoAdvisor.settings.shareValue"></md-slider>
+
+                            <div flex="5" flex-offset="5" layout layout-align="center center">
+                                <input flex type="number" ng-model="settings.ecoAdvisor.settings.shareValue"
+                                       ng-disabled="true">
+                            </div>
+                        </div>
+
+                        <div layout="row">
+                            <div flex="40" layout layout-align="start center">Доля средств, которую Собственник
+                                оставляет в КУч, %
+                            </div>
+
+                            <md-slider flex min="0" max="100" step="1" aria-label="slider"
+                                       ng-model="settings.ecoAdvisor.settings.departmentPart"></md-slider>
+
+                            <div flex="5" flex-offset="5" layout layout-align="center center">
+                                <input flex type="number" ng-model="settings.ecoAdvisor.settings.departmentPart"
+                                       ng-disabled="true">
+                            </div>
+                        </div>
+
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="settings.ecoAdvisor.saveSettings()" ng-disabled="!ecsSettingsForm.$valid">
+                            Сохранить
+                        </md-button>
+                        <md-button ng-click="settings.ecoAdvisor.reloadSettings()">Отменить</md-button>
+                        <md-button ng-click="settings.ecoAdvisor.reports.calculate()"
+                                   ng-disabled="!ecsSettingsForm.$valid">Рассчитать
+                        </md-button>
+                        <md-button ng-click="settings.export2excel()" ng-disabled="!ecsSettingsForm.$valid">
+                            <md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">
+                                file_download
+                            </md-icon>
+                            Excel
+                        </md-button>
+                    </md-card-actions>
+                </md-card>
+
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    Распределение паевой выгоды
+                </md-tab-label>
+
+                <md-tab-body>
+
+                    <div layout="row">
+
+                        <md-card flex>
+                            <md-card-content layout="column" layout-margin>
+
+                                <div layout="row">
+                                    <div flex layout layout-align="start center">{{settings.bonus.chart.labels[0]}}
+                                    </div>
+                                    <div flex="5" flex-offset="5" layout layout-align="end center">
+                                        {{settings.bonus.chart.data[0] | number : 0}}%
+                                    </div>
+                                </div>
+
+                                <div layout="column" ng-repeat="allocationItem in settings.bonus.allocationItems">
+                                    <div flex layout layout-align="start center">{{allocationItem.receiverType.title}}
+                                    </div>
+
+                                    <div layout="row">
+                                        <md-slider flex flex-offset="5" min="0"
+                                                   max="{{allocationItem.sliderOptions.max}}" step="1"
+                                                   aria-label="slider"
+                                                   ng-model="allocationItem.allocationPercent"
+                                                   ng-change="settings.sliderChanged()"></md-slider>
+
+                                        <div flex="5" flex-offset="5" layout layout-align="center center">
+                                            <input flex type="text" ng-model="allocationItem.allocationPercent"
+                                                   ng-disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </md-card-content>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button ng-click="settings.saveAllocationItems($event)"
+                                           ng-disabled="!settings.canSaveAllocationItems()">Сохранить
+                                </md-button>
+                                <md-button ng-click="settings.reloadAllocationItems($event)"
+                                           ng-disabled="!settings.canSaveAllocationItems()">Отменить
+                                </md-button>
+                            </md-card-actions>
+                        </md-card>
+
+                        <md-card flex="40">
+                            <md-card-content layout="column">
+
+                                <canvas class="chart chart-polar-area"
+                                        chart-legend="true" chart-options="settings.bonus.chart.options"
+                                        chart-data="settings.bonus.chart.data"
+                                        chart-labels="settings.bonus.chart.labels">
+                                </canvas>
+
+                            </md-card-content>
+                        </md-card>
+
+                    </div>
+
+                </md-tab-body>
+            </md-tab>
+            <md-tab label="Отчет">
+
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-subhead">ИСПОЛЬЗОВАНИЕ КУПЛИ-ПРОДАЖИ ТОВАРОВ</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout="column" layout-margin>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Цена товара при его продаже в магазине (В ТОМ
+                                ЧИСЛЕ НДС):
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.finalCosts | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Абсолютная величина ОХР</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.generalRunningCosts | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">База для рассчета НДС</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.vatBase | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">НДС</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.vat | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Абсолютная величина зарплаты</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.wage | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Сумма всех затрат</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.totalCosts | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">База для рассчета налога на прибыль</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.taxOnProfitsBase | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Налог на прибыль</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.taxOnProfits | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Общее налоговое обременение</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.taxes | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Чистая прибыль</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.netProfit | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Сумма остающаяся в Компании</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.companyProfit | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Дивиденды, для выплаты собственнику</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.dividends | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Подоходный налог от дивидендов</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.taxOnDividends | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Чистая сумма средств, остающихся у
+                                собственника
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.proprietorProfit | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Итог: сумма средств, остающаяся в распоряжении
+                                Компании и собственника
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report1.total | currency}}
+                            </div>
+                        </md-content>
+
+                    </md-card-content>
+                </md-card>
+
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-subhead">ИСПОЛЬЗОВАНИЕ ПАЕВОГО ОБМЕНА</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout="column" layout-margin>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">НДС</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.vat | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Минимальная оценка товара как паевого взноса
+                                (себестоимость пая)
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.minShareValue | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Максимальная оценка товара, как паевого
+                                взноса
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.maxShareValue | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Оценка товара, как паевого взноса</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.shareValue | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Cумма средств, оставшаяся в распоряжении
+                                Компании
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.companyProfit | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">База налога на прибыль</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.taxOnProfitsBase | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Налог на прибыль</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.taxOnProfits | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Сумма, образующаяся в ПО, которая
+                                распределяется между Куч, Собственником, ПО и "Покупателем"
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.cooperativeAmount | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Подоходный налог, который должен уплатить
+                                собственник
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.taxOnProprietorIncome | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Эффект от перехода к ПАЕ (общее снижение
+                                налоговой нагрузки)
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.effect | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Сумма средств Собственника, остающаяся в Куч
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.proprietorPartInCooperative | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">"Отложенный подоходный налог"</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.taxOnCompanyProfits | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Выгода потребителя</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.consumerBonus | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">Выгода ПО</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.cooperativeBonus | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Выгода Собственника и Компании</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.proprietorAndCompanyBonus | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">цена товара для потребителя с учетом выгоды
+                                эквивалентна снижению на
+                            </div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.differenceInPercentsForConsumer | number : 2}}%
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row" class="md-hue-1">
+                            <div flex layout layout-align="start center">Итоговая выгода Собственника и Компании</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.totalProprietorAndCompanyBonus | currency}}
+                            </div>
+                        </md-content>
+
+                        <md-content layout="row">
+                            <div flex layout layout-align="start center">выгода эквивалентна увеличению на</div>
+                            <div flex="5" flex-offset="5" layout layout-align="end center">
+                                {{settings.ecoAdvisor.reports.report2.differenceInPercents | number : 2}}%
+                            </div>
+                        </md-content>
+
+                        <div layout="row">
+
+                            <div flex="50" layout="column">
+
+                                <canvas class="chart chart-bar" chart-legend="false"
+                                        chart-data="settings.ecoAdvisor.charts.chart1.data"
+                                        chart-options="settings.ecoAdvisor.charts.chart1.options"
+                                        chart-labels="settings.ecoAdvisor.charts.chart1.labels"
+                                        chart-series="settings.ecoAdvisor.charts.chart1.series">
+                                </canvas>
+
+                            </div>
+
+                            <div flex layout="column">
+
+                                <!-- chart-line-alt does not work??? -->
+                                <canvas class="chart chart-line" chart-legend="true"
+                                        chart-data="settings.ecoAdvisor.charts.chart2.data"
+                                        chart-options="settings.ecoAdvisor.charts.chart2.options"
+                                        chart-labels="settings.ecoAdvisor.charts.chart2.labels"
+                                        chart-series="settings.ecoAdvisor.charts.chart2.series">
+                                </canvas>
+
+                            </div>
+
+                        </div>
+
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="settings.ecoAdvisor.reports.calculate()"
+                                   ng-disabled="!ecsSettingsForm.$valid">Рассчитать
+                        </md-button>
+                        <md-button ng-click="settings.export2excel()" ng-disabled="!ecsSettingsForm.$valid">
+                            <md-icon md-font-set="material-icons" style="width: 16px; height: 16px; font-size: 16px;">
+                                file_download
+                            </md-icon>
+                            Excel
+                        </md-button>
+                    </md-card-actions>
+                </md-card>
+
+            </md-tab>
+        </md-tabs>
+
+    </form>
+</md-content>
+
+<div ng-controller="EcoAdvisorDialogsCtrl as ecoAdvisorDialogs" hide></div>

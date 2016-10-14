@@ -1,0 +1,25 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="communityDocumentPage" extends="onlyRightSidebarLayout">
+        <put-attribute name="content" value="/views/communities/documents/communityDocumentPage.jsp" />
+        <put-attribute name="schema" value="/views/communities/schema.jsp" cascade="true" />
+    </definition>
+
+    <definition name="communityDocumentListPage" extends="onlyRightSidebarLayout">
+        <put-attribute name="content" value="/views/communities/documents/communityDocumentListPage.jsp" />
+        <put-attribute name="schema" value="/views/communities/schema.jsp" cascade="true" />
+    </definition>
+
+    <definition name="communityCreateDocumentPage" extends="onlyRightSidebarLayout">
+        <put-attribute name="content" value="/views/communities/documents/communityCreateDocumentPage.jsp" />
+        <put-attribute name="schema" value="/views/communities/schema.jsp" cascade="true" />
+    </definition>
+
+    <definition name="communitySignDocumentListPage" extends="onlyRightSidebarLayout">
+        <put-attribute name="content" value="/views/communities/documents/communitySignDocumentListPage.jsp" />
+        <put-attribute name="schema" value="/views/communities/schema.jsp" cascade="true" />
+    </definition>
+
+</tiles-definitions>
+

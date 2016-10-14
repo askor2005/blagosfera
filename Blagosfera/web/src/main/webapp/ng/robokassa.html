@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/ng/" target="">
+
+    <meta charset="utf-8">
+    <meta name="description" content="Система БЛАГОСФЕРА">
+    <meta name="author" content="НТЦ Аскор">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Пополнение счета</title>
+
+    <link rel="icon" type="image/x-icon" href="lib/img/favicon.png">
+</head>
+<body>
+
+<script src="lib/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script type="application/javascript">
+    function getQueryParam(name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results == null) {
+            return null;
+        } else {
+            return results[1] || 0;
+        }
+    }
+
+    var login = getQueryParam('login');
+    var test = getQueryParam('test');
+    var invoice = getQueryParam('inv');
+    var amount = getQueryParam('amount');
+    var description = "Пополнение счета";
+    var crc = getQueryParam('crc');
+    var url = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormMS.js?MerchantLogin=' + login + '&OutSum=' + amount + '&InvoiceID=' + invoice + '&Description=' + description + '&SignatureValue=' + crc + '&Culture=ru&Encoding=utf-8&IsTest=' + test;
+
+    $(document).ready(function () {
+
+        document.write = function (input) {
+            document.body.innerHTML += input;
+        };
+
+        $.getScript(url);
+
+    });
+</script>
+
+</body>
+</html>

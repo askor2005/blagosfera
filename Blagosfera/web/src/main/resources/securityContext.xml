@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <security:global-method-security secured-annotations="disabled" jsr250-annotations="disabled"
+                                     pre-post-annotations="enabled">
+        <!--<security:expression-handler ref="expressionHandler"/>-->
+    </security:global-method-security>
+
+    <!--<bean id="expressionHandler"
+          class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+        <property name="permissionEvaluator" ref="permissionEvaluator"/>
+    </bean>
+
+    <bean id="permissionEvaluator" class="org.springframework.security.acls.AclPermissionEvaluator">
+        <constructor-arg ref="aclService"/>
+    </bean>
+
+    <bean id="aclService" class="org.springframework.security.acls.jdbc.JdbcMutableAclService">
+        <constructor-arg ref="kabinetDataSource"/>
+        <constructor-arg ref="lookupStrategy"/>
+        <constructor-arg ref="aclCache"/>
+        
+        <property name="classIdentityQuery" value="select currval(pg_get_serial_sequence('acl_class', 'id'))"/>
+        <property name="sidIdentityQuery" value="select currval(pg_get_serial_sequence('acl_sid', 'id'))"/>
+    </bean>
+
+    <bean id="lookupStrategy" class="org.springframework.security.acls.jdbc.BasicLookupStrategy">
+        <constructor-arg ref="kabinetDataSource"/>
+        <constructor-arg ref="aclCache"/>
+        <constructor-arg ref="aclAuthorizationStrategy"/>
+        <constructor-arg ref="aclAuditLogger"/>
+    </bean>
+
+    <bean id="aclCache" class="org.springframework.security.acls.domain.SpringCacheBasedAclCache">
+        <constructor-arg name="cache" ref="redisAclCache"/>
+        <constructor-arg name="aclAuthorizationStrategy" ref="aclAuthorizationStrategy"/>
+        <constructor-arg name="permissionGrantingStrategy" ref="permissionGrantingStrategy"/>
+    </bean>
+
+    <bean id="aclAuthorizationStrategy" class="org.springframework.security.acls.domain.AclAuthorizationStrategyImpl">
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.core.authority.SimpleGrantedAuthority">
+                    <constructor-arg value="ROLE_ADMIN"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="permissionGrantingStrategy" class="org.springframework.security.acls.domain.DefaultPermissionGrantingStrategy">
+        <constructor-arg name="auditLogger" ref="aclAuditLogger"/>
+    </bean>
+
+    <bean id="aclAuditLogger" class="org.springframework.security.acls.domain.ConsoleAuditLogger"/>-->
+
+    <security:http pattern="/ng/**" security="none"/>
+
+    <security:http pattern="/i/**" security="none"/>
+    <security:http pattern="/img/**" security="none"/>
+    <security:http pattern="/js/**" security="none"/>
+    <security:http pattern="/templates/**" security="none"/>
+    <security:http pattern="/css/**" security="none"/>
+    <security:http pattern="/fonts/**" security="none"/>
+    <security:http pattern="/sounds/**" security="none"/>
+    <security:http pattern="/now" security="none"/>
+    <security:http pattern="/test" security="none"/>
+    <security:http pattern="/favicon.ico" security="none"/>
+    <security:http pattern="/tinymce/**" security="none"/>
+
+    <security:http pattern="/rules" security="none"/>
+    <security:http pattern="/register" security="none"/>
+    <security:http pattern="/invite/**/accept" security="none"/>
+    <security:http pattern="/invite/**/reject" security="none"/>
+    <security:http pattern="/invite/accept.json" security="none"/>
+    <security:http pattern="/push/gcm/last.json" security="none"/>
+    <security:http pattern="/push/gcm/read" security="none"/>
+
+    <security:http pattern="/test/**" security="none"/>
+
+    <security:http pattern="/finger/get.json" security="none"/>
+    <security:http pattern="/finger/token.json" security="none"/>
+    <security:http pattern="/finger/save.json" security="none"/>
+    <security:http pattern="/finger/savefinger.json" security="none"/>
+    <security:http pattern="/finger/initTokenByEmail.json" security="none"/>
+    <security:http pattern="/finger/initTokenByIkp.json" security="none"/>
+
+    <security:http pattern="/login" security="none"/>
+
+    <security:http use-expressions="true" auto-config="false" entry-point-ref="authenticationEntryPoint">
+        <security:csrf disabled="true"/>
+
+        <security:custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrentSessionRememberMeFilter"/>
+
+        <security:access-denied-handler error-page="/error/403"/>
+
+        <security:intercept-url pattern="/api/**" access="permitAll"/>
+
+        <security:intercept-url pattern="/payments/**" access="permitAll"/>
+        <security:intercept-url pattern="/captcha-image/**" access="permitAll"/>
+        <security:intercept-url pattern="/" access="permitAll"/>
+        <security:intercept-url pattern="/activate" access="permitAll"/>
+        <security:intercept-url pattern="/sections/current_sections.json" access="permitAll"/>
+        <security:intercept-url pattern="/feedback**" access="permitAll"/>
+        <security:intercept-url pattern="/feedback/save.json" access="permitAll"/>
+        <security:intercept-url pattern="/jivosite/info.json" access="permitAll"/>
+        <security:intercept-url pattern="/activated" access="permitAll"/>
+        <security:intercept-url pattern="/photo/**" access="permitAll"/>
+        <security:intercept-url pattern="/recovery/**" access="permitAll"/>
+        <security:intercept-url pattern="/invite/**/login" access="permitAll"/>
+        <security:intercept-url pattern="/invitationaccept/**" access="permitAll"/>
+
+        <security:intercept-url pattern="/ras/**" access="permitAll"/>
+        <security:intercept-url pattern="/cashbox/**" access="permitAll"/>
+
+        <security:intercept-url pattern="/news/community.json" access="permitAll"/>
+
+        <security:intercept-url pattern="/email/**" access="hasAnyRole('ADMIN')"/>
+
+        <security:intercept-url pattern="/admin/systemSettings/**" access="hasAnyRole('SUPERADMIN')"/>
+        <security:intercept-url pattern="/admin/systemSettings" access="hasAnyRole('SUPERADMIN')"/>
+        <security:intercept-url pattern="/admin/roles/**" access="hasAnyRole('SUPERADMIN')"/>
+        <security:intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN')"/>
+
+        <security:intercept-url pattern="/Благосфера/редактор/страница/**"
+                                access="hasAnyRole('BLAGOSFERA_PAGES_EDITOR')"/>
+        <security:intercept-url pattern="/blagosfera/editor/page/**" access="hasAnyRole('BLAGOSFERA_PAGES_EDITOR')"/>
+
+        <security:intercept-url pattern="/Благосфера/редактор/меню"
+                                access="hasAnyRole('ADMIN', 'BLAGOSFERA_MENU_EDITOR')"/>
+
+        <security:intercept-url pattern="/Благосфера/**" access="permitAll"/>
+        <security:intercept-url pattern="/blagosfera/page/static/get/**" access="permitAll"/>
+
+        <security:intercept-url pattern="/sharer/verify.json" access="hasAnyRole('REGISTRATOR_SHARERS_ACCEPTER')"/>
+
+        <security:intercept-url pattern="/error/**" access="permitAll"/>
+        <security:intercept-url pattern="/help/**" access="permitAll"/>
+
+        <security:intercept-url pattern="/sharer/delete_other_profile.json"
+                                access="hasRole('BLAGOSFERA_SHARERS_DELETER')"/>
+
+        <security:intercept-url pattern="/**" access="hasAnyRole('USER')"/>
+
+        <security:headers>
+            <security:frame-options policy="SAMEORIGIN"/>
+        </security:headers>
+
+        <!--<security:port-mappings>
+            <security:port-mapping http="80" https="443"/>
+        </security:port-mappings>-->
+
+        <security:session-management session-authentication-strategy-ref="sas"/>
+
+        <security:anonymous username="guest" granted-authority="GUEST"/>
+    </security:http>
+
+    <bean id="sas"
+          class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <constructor-arg>
+            <list>
+                <bean class="ru.radom.kabinet.security.ConcurrentSessionControlStrategy">
+                    <constructor-arg name="sessionRegistry" ref="sessionRegistry"/>
+                    <property name="maximumSessions" value="1"/>
+                    <property name="exceptionIfMaximumExceeded" value="false"/>
+                </bean>
+
+                <bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"/>
+                <!--bean class="org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy"/-->
+
+                <bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+                    <constructor-arg ref="sessionRegistry"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="authenticationEntryPoint" class="ru.radom.kabinet.security.AuthenticationEntryPoint">
+        <constructor-arg name="loginFormUrl" value="/login?redirected"/>
+        <property name="useForward" value="false"/>
+    </bean>
+
+    <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
+
+    <bean class="org.springframework.security.web.session.HttpSessionEventPublisher"/>
+
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="rememberMeAuthenticationProvider"/>
+        <security:authentication-provider ref="daoAuthenticationProvider"/>
+    </security:authentication-manager>
+
+    <!-- database authentication -->
+
+    <bean id="daoAuthenticationProvider"
+          class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/>
+        <property name="passwordEncoder" ref="radomPasswordEncoder"/>
+        <property name="saltSource" ref="radomSaltSource"/>
+    </bean>
+
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!-- remember-me authentication -->
+
+    <bean id="concurrentSessionRememberMeFilter" class="ru.radom.kabinet.security.filter.ConcurrentSessionRememberMeFilter">
+        <constructor-arg name="authenticationManager" ref="authenticationManager"/>
+        <constructor-arg name="rememberMeServices" ref="rememberMeServices"/>
+        <constructor-arg name="sessionRegistry" ref="sessionRegistry"/>
+        <constructor-arg name="expiredUrl" value="/login?expired"/>
+    </bean>
+
+    <bean id="rememberMeServices"
+          class="ru.radom.kabinet.security.rememberme.PersistentTokenBasedRememberMeServices">
+        <constructor-arg name="key" value="remember-me-key"/>
+        <constructor-arg name="userDetailsService" ref="userDetailsService"/>
+        <constructor-arg name="tokenRepository" ref="persistentTokenRepository"/>
+        <constructor-arg name="cachedTokenValidityTime" value="10000"/>
+        <property name="alwaysRemember" value="false"/>
+        <property name="parameter" value="r"/>
+    </bean>
+
+    <bean id="rememberMeAuthenticationProvider"
+          class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <constructor-arg name="key" value="remember-me-key"/>
+    </bean>
+
+    <bean id="persistentTokenRepository"
+          class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <property name="dataSource" ref="kabinetDataSource"/>
+        <property name="createTableOnStartup" value="false"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,157 @@
+.small_distance {
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+
+.large_distance {
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.scrollAnchor{
+    width: 50%;
+    margin: 10px 20%;
+    background-image: url("/i/ajax-loader-small.gif");
+    background-repeat: NO-REPEAT;
+    background-position: 50% 50%;
+}
+
+
+
+.comment {
+    border-color: hsla(208, 56%, 53%, 1); /* boostrap brand color */
+    border-left: 3px solid hsla(208, 56%, 53%, 1);
+}
+
+.comment[depth="2"] {
+    border-color: hsla(268, 56%, 53%, 1);
+    border-left: 3px solid hsla(268, 56%, 53%, 1);
+}
+
+.comment[depth="3"] {
+    border-color: hsla(328, 56%, 53%, 1);
+    border-left: 3px solid hsla(328, 56%, 53%, 1);
+}
+
+.comment[depth="4"] {
+    border-color: hsla(28, 56%, 53%, 1);
+    border-left: 3px solid hsla(28, 56%, 53%, 1);
+}
+
+.comment[depth="5"] {
+    border-color: hsla(88, 56%, 53%, 1);
+    border-left: 3px solid hsla(88, 56%, 53%, 1);
+}
+
+.comment[depth="6"] {
+    border-color: hsla(148, 56%, 53%, 1);
+    border-left: 3px solid hsla(148, 56%, 53%, 1);
+}
+
+.panel .panel-footer .pull-right a {
+  cursor: pointer;
+}
+
+.rating {
+  margin: 0px 5px;
+}
+
+/* jeditable styles */
+.msg {
+  margin-right: 100px;
+  height: auto;
+  overflow: visible;
+  word-wrap: break-word;
+}
+
+.editable {
+  margin-right: 100px;
+}
+
+.editable textarea:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+.editable textarea::-moz-placeholder {
+  color: #777;
+  opacity: 1;
+}
+.editable textarea:-ms-input-placeholder {
+  color: #777;
+}
+.editable textarea::-webkit-input-placeholder {
+  color: #777;
+}
+
+.editable textarea {
+  display: block;
+  width: 100%;
+  height: 44px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+   height: auto;
+ }
+  
+.editable button {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  
+  
+  border-radius-top-left: 0px;
+  border-radius-top-right: 0px;
+}
+.editable button:focus,
+.editable button:active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.editable button:hover,
+.editable button:focus {
+  color: #333;
+  text-decoration: none;
+
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.editable button:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+

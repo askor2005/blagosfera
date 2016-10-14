@@ -1,0 +1,104 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="rightSidebar" template="/views/layout/rightSidebar.jsp">
+    	<put-attribute name="sharerRightSidebar" value="/views/layout/sharerRightSidebar.jsp"></put-attribute>
+    	<put-attribute name="anonymousRightSidebar" value="/views/layout/anonymousRightSidebar.jsp"></put-attribute>
+    </definition>
+
+    <definition name="header" template="/views/layout/header.jsp">
+    	<put-attribute name="sharerHeader" value="/views/layout/sharerHeader.jsp"></put-attribute>
+    	<put-attribute name="anonymousHeader" value="/views/layout/anonymousHeader.jsp"></put-attribute>
+    </definition>
+    
+	<definition name="footer" template="/views/layout/footer.jsp">
+        <put-attribute name="commonDialogs" value="/views/utils/commonDialogs.jsp" />
+
+        <put-attribute name="communityMapDialog" value="/views/utils/communityMapDialog.jsp" />
+
+        <put-attribute name="iconUploadDialog" value="/views/utils/iconUploadDialog.jsp" />
+
+        <put-attribute name="signUploadDialog" value="/views/utils/signUploadDialog.jsp" />
+
+        <put-attribute name="sharerUploadDialog" value="/views/utils/sharerUploadDialog.jsp" />
+        <put-attribute name="uploadCropDialog" value="/views/utils/uploadCropDialog.jsp" />
+        <put-attribute name="uploadFromComputerDialog" value="/views/utils/uploadFromComputerDialog.jsp" />
+        <put-attribute name="uploadFromUrlDialog" value="/views/utils/uploadFromUrlDialog.jsp" />
+        <put-attribute name="uploadFromWebcamDialog" value="/views/utils/uploadFromWebcamDialog.jsp" />
+        <put-attribute name="uploadEditImageDialog" value="/views/utils/uploadEditImageDialog.jsp" />
+
+        <put-attribute name="outgoingPaymentDialog" value="/views/account/outgoingPaymentDialog.jsp" />
+        <put-attribute name="incomingPaymentDialog" value="/views/account/incomingPaymentDialog.jsp" />
+
+        <put-attribute name="communityToBookAccountsMoveDialog" value="/views/account/communityToBookAccountsMoveDialog.jsp" />
+        <put-attribute name="bookToSharerAccountsMoveDialog" value="/views/account/bookToSharerAccountsMoveDialog.jsp" />
+        <put-attribute name="sharerToBookAccountsMoveDialog" value="/views/account/sharerToBookAccountsMoveDialog.jsp" />
+        <put-attribute name="communityToCommunityAccountsMoveDialog" value="/views/account/communityToCommunityAccountsMoveDialog.jsp" />
+        <put-attribute name="communityToSharerAccountsMoveDialog" value="/views/account/communityToSharerAccountsMoveDialog.jsp" />
+        <put-attribute name="sharerToCommunityAccountsMoveDialog" value="/views/account/sharerToCommunityAccountsMoveDialog.jsp" />
+        <put-attribute name="selfAccountsMoveDialog" value="/views/account/selfAccountsMoveDialog.jsp" />
+        <put-attribute name="accountsMoveDialog" value="/views/account/accountsMoveDialog.jsp" />
+        <put-attribute name="debitDialog" value="/views/account/debitDialog.jsp" />
+        <put-attribute name="communityRequiredConditionsDialog" value="/views/communities/requiredConditionsDialog.jsp" />
+        <put-attribute name="fingerDialog" value="/views/bio/fingerDialog.jsp" />
+        <put-attribute name="imageLightboxDialog" value="/views/utils/imageLightboxDialog.jsp" />
+        <put-attribute name="sharerCertificationDialog" value="/views/sharer/certificationDialog.jsp" />
+        <put-attribute name="ratingDetailsDialog" value="/views/rating/ratingDetailsDialog.jsp" />
+        <put-attribute name="uploadDialog" value="/views/utils/uploadDialog.jsp" />
+        
+        <put-attribute name="systemSettings" value="/views/utils/systemSettings.jsp" />
+    </definition>
+
+    <definition name="layout" template="/views/layout/layout.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" cascade="true" />
+        <put-attribute name="head" value="/views/layout/head.jsp" />
+        <put-attribute name="header" value="header" />
+        <put-attribute name="breadcrumb" value="/views/layout/breadcrumb.jsp" />
+        <put-attribute name="leftSidebar" value="/views/layout/leftSidebar.jsp" />
+        <put-attribute name="rightSidebar" value="rightSidebar" />
+        <put-attribute name="footer" value="footer" />
+    </definition>
+
+    <definition name="onlyLeftSidebarLayout" template="/views/layout/onlyLeftSidebarLayout.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" cascade="true" />
+        <put-attribute name="head" value="/views/layout/head.jsp" />
+        <put-attribute name="header" value="header" />
+        <put-attribute name="breadcrumb" value="/views/layout/breadcrumb.jsp" />
+        <put-attribute name="leftSidebar" value="/views/layout/leftSidebar.jsp" />
+        <put-attribute name="footer" value="footer" />
+    </definition>
+
+    <definition name="onlyRightSidebarLayout" template="/views/layout/onlyRightSidebarLayout.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" cascade="true" />
+        <put-attribute name="head" value="/views/layout/head.jsp" />
+        <put-attribute name="header" value="header" />
+        <put-attribute name="breadcrumb" value="/views/layout/breadcrumb.jsp" />
+        <put-attribute name="rightSidebar" value="rightSidebar" />
+        <put-attribute name="footer" value="footer" />
+    </definition>
+
+    <definition name="wideLayout" template="/views/layout/wideLayout.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" cascade="true" />
+        <put-attribute name="head" value="/views/layout/head.jsp" />
+        <put-attribute name="header" value="header" />
+        <put-attribute name="breadcrumb" value="/views/layout/breadcrumb.jsp" />
+		<put-attribute name="footer" value="footer" />
+    </definition>
+
+    <definition name="fullscreenLayout" template="/views/layout/fullscreenLayout.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" cascade="true" />
+        <put-attribute name="head" value="/views/layout/head.jsp" />
+        <put-attribute name="header" value="header" />
+        <put-attribute name="breadcrumb" value="/views/layout/breadcrumb.jsp" />
+        <put-attribute name="footer" value="footer" />
+    </definition>
+
+    <definition name="errorLayout" template="/views/layout/errorLayout.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" cascade="true" />
+        <put-attribute name="head" value="/views/layout/head.jsp" />
+        <put-attribute name="header" value="header" />
+        <put-attribute name="breadcrumb" value="/views/layout/breadcrumb.jsp" />
+        <put-attribute name="footer" value="footer" />
+    </definition>
+	
+</tiles-definitions>

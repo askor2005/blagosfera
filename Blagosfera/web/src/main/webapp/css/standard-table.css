@@ -1,0 +1,15 @@
+table.standardTable {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+.standardTable th {
+    text-align: left;
+    background: #ccc;
+    padding: 5px;
+    border: 1px solid black;
+}
+.standardTable td {
+    padding: 5px;
+    border: 1px solid black;
+}

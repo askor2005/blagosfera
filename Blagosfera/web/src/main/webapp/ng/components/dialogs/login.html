@@ -1,0 +1,96 @@
+<md-dialog aria-label="login.html" ng-cloak id="login-dialog">
+    <md-toolbar class="md-accent md-hue-2">
+
+        <div class="md-toolbar-tools">
+            <span>
+                ВХОД В ЛИЧНЫЙ ИНФОРМАЦИОННЫЙ КАБИНЕТ
+                <md-tooltip md-direction="bottom">
+                    Вход в Личный Информационный Кабинет
+                </md-tooltip>
+            </span>
+        </div>
+
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+
+        <form novalidate name="loginForm">
+
+            <md-content flex>
+                <p class="md-body-1">
+                    Для входа в личный информационный кабинет используйте учетные
+                    <br>данные полученные при регистрации.
+                </p>
+            </md-content>
+
+            <div flex layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>E-mail</label>
+
+                    <input required type="email" name="username"
+                           ng-model="dialog.username"
+                           ng-disabled="dialog.readOnly">
+
+                    <div ng-messages="loginForm.username.$error" role="alert">
+                        <div ng-message-exp="['required', 'email']">
+                            Введен некорректный e-mail.
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-button class="md-fab md-mini" aria-label="login"
+                           ng-click="dialog.loginWithFingerprint()"
+                           ng-disabled="dialog.readOnly || !loginForm.username.$valid">
+                    <md-icon md-font-set="material-icons" class="clickable">fingerprint</md-icon>
+
+                    <md-tooltip md-direction="top">
+                        Биометрический вход
+                    </md-tooltip>
+                </md-button>
+            </div>
+
+            <md-input-container class="md-block" flex>
+                <label>Пароль</label>
+
+                <input required type="password" name="password"
+                       ng-model="dialog.password"
+                       ng-disabled="dialog.readOnly">
+
+                <div ng-messages="loginForm.password.$error" role="alert">
+                    <div ng-message-exp="['required']">
+                        Введите пароль.
+                    </div>
+                </div>
+            </md-input-container>
+
+            <md-checkbox ng-model="dialog.authSettings.rememberMe" aria-label=rememberMe" ng-disabled="dialog.readOnly">
+                Запомнить меня
+                <md-tooltip md-direction="top">
+                    Отметьте галочку если хотите, чтобы система запомнила Вас на 2 недели
+                </md-tooltip>
+            </md-checkbox>
+
+            <div flex layout="row" layout-align="center center">
+                <div id="g-recaptcha-login" class="recaptcha"></div>
+            </div>
+
+        </form>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-xs="column" layout-padding>
+
+        <span class="clickable link" ng-click="dialog.restorePassword()">
+            Забыли пароль?
+
+            <md-tooltip md-direction="top">
+                Если Вы забыли пароль, нажмите ссылку "Забыли пароль?"
+            </md-tooltip>
+        </span>
+        <div flex></div>
+
+        <div layout="row">
+            <md-button ng-click="dialog.login()" ng-disabled="!loginForm.$valid || dialog.readOnly">Войти</md-button>
+            <md-button ng-click="dialog.cancel()" ng-if="!dialog.cancelDisabled">Отмена</md-button>
+        </div>
+
+    </md-dialog-actions>
+</md-dialog>

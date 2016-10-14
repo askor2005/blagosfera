@@ -1,0 +1,40 @@
+.rating-inactive-link, .rating-inactive-link:hover {
+	color : #777;
+}
+
+.rating-inactive-link i.fa-thumbs-o-up:hover {
+    color : #3c763d;;
+}
+
+.rating-inactive-link i.fa-thumbs-o-down:hover {
+    color : #a94442;;
+}
+
+.rating-up-link, .rating-up-link:hover {
+	color : #3c763d;
+
+	background-color : rgba(193,226,179,0.6);
+	-webkit-box-shadow: 0px 0px 20px 10px rgba(193,226,179,0.6);
+	-moz-box-shadow: 0px 0px 20px 10px rgba(193,226,179,0.6);
+	box-shadow: 0px 0px 20px 10px rgba(193,226,179,0.6);
+	
+}
+
+.rating-down-link, .rating-down-link:hover {
+	color : #a94442;
+	
+	background-color : rgba(169, 68, 66, 0.2);
+	-webkit-box-shadow: 0px 0px 20px 10px rgba(169, 68, 66, 0.2);
+	-moz-box-shadow: 0px 0px 20px 10px rgba(169, 68, 66, 0.2);
+	box-shadow: 0px 0px 20px 10px rgba(169, 68, 66, 0.2);
+	
+}
+
+.rating-filter-icon {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 4px;
+}
+.rating-filter-icon:hover {
+    text-decoration: none;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="blagosferaNews" extends="layout">
+        <put-attribute name="content" value="/views/subportals/blagosferaNews.jsp" />
+		<put-attribute name="newsDialog" value="/views/news/dialog.jsp" cascade="true" />
+		<put-attribute name="newsListItem" value="/views/news/listItem.jsp" cascade="true" />
+    </definition>
+	
+    <definition name="radom" extends="layout">
+        <put-attribute name="content" value="/views/subportals/radom.jsp" />
+    </definition>
+
+    <definition name="razum" extends="layout">
+        <put-attribute name="content" value="/views/subportals/razum.jsp" />
+    </definition>
+    
+    <definition name="raven" extends="layout">
+        <put-attribute name="content" value="/views/subportals/raven.jsp" />
+    </definition>    
+
+    <definition name="radost" extends="layout">
+        <put-attribute name="content" value="/views/subportals/radost.jsp" />
+    </definition>
+    
+    <definition name="blagosferaCitizenship" extends="layout">
+        <put-attribute name="content" value="/views/subportals/blagosferaCitizenship.jsp" />
+    </definition>    
+
+</tiles-definitions>

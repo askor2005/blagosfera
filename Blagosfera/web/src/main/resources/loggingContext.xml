@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                           http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="ru.askor.blagosfera.logging" annotation-config="true">
+        <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
+
+    <bean id="loggingDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+          init-method="init" destroy-method="close"
+          depends-on="transactionManager">
+        <property name="xaDataSourceClassName" value="org.postgresql.xa.PGXADataSource"/>
+        <property name="uniqueResourceName" value="loggingDataSource"/>
+        <property name="poolSize" value="20"/>
+        <property name="maxLifetime" value="60"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="serverName">${db.log.serverName}</prop>
+                <prop key="portNumber">${db.log.portNumber}</prop>
+                <prop key="databaseName">${db.log.databaseName}</prop>
+                <prop key="user">${db.log.username}</prop>
+                <prop key="password">${db.log.password}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="loggingEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          depends-on="transactionManager">
+        <property name="persistenceUnitName" value="loggingPU"/>
+        <property name="jtaDataSource" ref="loggingDataSource"/>
+        <property name="persistenceProviderClass" value="org.hibernate.jpa.HibernatePersistenceProvider"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>org.springframework.data.jpa.convert.threeten</value>
+                <value>ru.askor.blagosfera.logging.data.jpa.entities.**</value>
+            </list>
+        </property>
+        <property name="jpaProperties" ref="jpaProperties"/>
+    </bean>
+
+    <jpa:repositories base-package="ru.askor.blagosfera.logging.data.jpa.repositories"
+                      entity-manager-factory-ref="loggingEntityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>
+
+</beans>

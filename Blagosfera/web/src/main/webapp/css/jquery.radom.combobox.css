@@ -1,0 +1,23 @@
+.radom-combobox {
+    position: relative;
+    display: inline-block;
+}
+
+.radom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+}
+
+.radom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+}
+
+.ui-autocomplete {
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

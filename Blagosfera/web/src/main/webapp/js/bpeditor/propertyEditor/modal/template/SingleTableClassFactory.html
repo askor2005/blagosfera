@@ -1,0 +1,29 @@
+<div class="modal-dialog" style="width: <%-data.dialogWidth||'70%'%>">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2><%=data.title%></h2>
+        </div>
+        <div class="modal-body">
+            <table class="table table-striped">
+                <caption>
+                    <a href="#" class="addItem"><i class="glyphicon glyphicon-plus"></i></a>
+                </caption>
+                <thead>
+                <tr>
+                    <% _.each(data.header, function(h) { %>
+                    <th><%=h%></th>
+                    <% }); %>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal">Отмена</button>
+            <a href="#" class="btn btn-primary accept">Сохранить</a>
+            <a href="#" class="btn btn-primary accept" data-dismiss="modal">Сохранить и выйти</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<md-dialog aria-label="" class="askor-dialog" ng-cloak style="text-align: center;">
+    <form name="createInvite">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 style="width: 100%;">{{'accept.success.title' | translate}}</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout-padding>
+            {{'accept.result.success' | translate}}
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="center center">
+            <md-button class="md-primary md-raised green-button" ng-click="showLoginDialog()">
+                {{'accept.success.show.login' | translate}}
+            </md-button>
+            <md-button class="md-primary md-raised" ng-click="closeSuccessDialog()">
+                {{'accept.success.close.dialog' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

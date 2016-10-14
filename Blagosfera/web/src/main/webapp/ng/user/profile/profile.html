@@ -1,0 +1,479 @@
+<div layout="column" layout-fill ng-cloak>
+
+    <span ng-if="profile.profile.exists === false">{{'USER_NOT_FOUND' | translate}}</span>
+
+    <md-card ng-if="profile.profile.data">
+        <md-card-title layout="column" layout-gt-sm="row">
+
+            <md-card-title-media>
+                <div class="md-media-xl">
+                    <img ng-src="{{profile.profile.data.avatar}}"/>
+                    <div layout="column">
+                    <md-button class="md-primary" ng-if="((profile.profile.data.isCurrentUser) && !(profile.profile.data.verified && !profile.profile.data.superadmin))" ng-click="profile.showUploadAvatarDialog()"><md-icon  md-font-set="material-icons" class="md-icon-20">&#xE2C6;</md-icon>Загрузить фото</md-button>
+                        <div  ng-if="profile.profile.data.isCurrentUser && (!profile.profile.data.verified) && (profile.profile.data.profileFillingPercent != 100) && !(profile.profile.data.registrationRequest)" layout="column">
+                            Для выбора регистратора и подачи заявки на идентификацию необходимо заполнить профиль на 100%.
+                        </div>
+                    <div ng-if="profile.profile.data.isCurrentUser && (!profile.profile.data.verified) && (profile.profile.data.profileFillingPercent === 100) && !(profile.profile.data.registrationRequest)" layout="column">
+                    <md-button  style="background-color: #cddc39;" ng-href="/registrator/select">Подать заявку на идентификацию</md-button>
+                     </div>
+                        <div ng-if="profile.profile.data.isCurrentUser && (!profile.profile.data.verified) && (profile.profile.data.profileFillingPercent === 100) && (profile.profile.data.registrationRequest)" layout="column">
+                        Отправлена заявка {{profile.profile.data.registrationRequest.created | date: 'dd.MM.yyyy'}} регистратору: {{profile.profile.data.registrationRequest.registrator.lastName | petrovichFull:profile.profile.data.registrationRequest.registrator.firstName:profile.profile.data.registrationRequest.registrator.secondName:'dative':profile.profile.data.registrationRequest.registrator.sex}}
+                        <md-button ng-click="profile.cancelRegistrationRequest()"  class="md-raised primary">Отменить заявку</md-button>
+                        </div>
+                    </div>
+                    <div layout="column" ng-if="(!profile.profile.data.verified) && profile.profile.data.isCurrentUser">
+                       <div>Ваш профиль заполнен на {{profile.profile.data.profileFillingPercent}} %</div>
+                    <md-progress-linear ng-if="profile.profile.data.profileFillingPercent < 100" class="md-warn" md-mode="determinate" value="{{profile.profile.data.profileFillingPercent}}"></md-progress-linear>
+                        <md-progress-linear ng-if="profile.profile.data.profileFillingPercent === 100"  md-mode="determinate" value="{{profile.profile.data.profileFillingPercent}}"></md-progress-linear>
+                    </div>
+                </div>
+            </md-card-title-media>
+
+            <md-card-title-text>
+                <div layout="column" layout-padding>
+                    <span class="md-headline">{{profile.profile.data.fullName}}</span>
+                    <span class="md-subhead" ng-if="profile.profile.data.verified === false">
+                        <md-icon md-font-set="material-icons" class="md-icon-20 color_grey">verified_user</md-icon>
+                        {{'NOT_VERIFIED' | translate}}
+                    </span>
+                      <span class="md-subhead" ng-if="profile.profile.data.registratorLevel == 0">
+                           {{'REGISTRATOR_HIGHEST_LEVEL' | translate}}
+                      </span>
+                     <span class="md-subhead" ng-if="profile.profile.data.registratorLevel > 0">
+                          {{'REGISTRATOR' | translate}} {{profile.profile.data.registratorLevel}} {{'CATHEGORY' | translate}}
+                      </span>
+                    <span class="md-subhead" ng-if="profile.profile.data.verified === true">
+                        <md-icon md-font-set="material-icons" class="md-icon-20 color_green">verified_user</md-icon>
+                        {{'VERIFIED' | translate}}
+                        <span>{{profile.profile.data.verificationDate | date : 'MM/dd/yyyy HH:mm'}}</span>
+                        <span class="clickable link color_blue" ng-click="app.setLocation('/user/profile/' + profile.profile.data.verifierIkp)">{{profile.getVerifierName()}}</span>
+                    </span>
+                    <span class="md-subhead" ng-if="profile.profile.invitation">
+                        <md-icon md-font-set="material-icons" class="md-icon-20 color_grey">person</md-icon>
+                        {{'INVITED' | translate}}
+                        <span>{{profile.profile.invitation.date | date : 'MM/dd/yyyy HH:mm'}}</span>
+                        <span class="clickable link color_blue" ng-click="app.setLocation('/user/profile/' + profile.profile.invitation.ikp)">{{profile.getInviterName()}}</span>
+                    </span>
+                    <span class="md-subhead" ng-if="!profile.profile.invitation">
+                        <md-icon md-font-set="material-icons" class="md-icon-20 color_grey">person</md-icon>
+                        {{'REGISTERED_WITHOUT_INVITATION' | translate}}
+                    </span>
+                    <span class="md-subhead" ng-if="profile.profile.data.email">
+                        <md-icon md-font-set="material-icons" class="md-icon-20 color_grey">email</md-icon>
+                        <a class="link" ng-href="mailto:{{profile.profile.data.email}}">{{profile.profile.data.email}}</a>
+                    </span>
+                    <span class="md-subhead">
+                        <md-icon md-font-set="material-icons" class="md-icon-20 color_grey">account_box</md-icon>
+                        {{'IKP' | translate}}: {{profile.profile.ikp}}
+                    </span>
+                    <span class="md-subhead">
+                        <md-icon md-font-set="material-icons" class="md-icon-20 color_grey">person_outline</md-icon>
+                        {{'REGISTERED' | translate}}
+                        <span>{{profile.profile.data.registrationDate | date : 'MM/dd/yyyy HH:mm'}}</span>
+                    </span>
+                     <span class="md-subhead"  ng-show="(profile.profile.data.isCurrentUser) && (profile.profile.data.communitiesCreated.length > 0)">
+                    Вы организовали обьединения (всего {{profile.profile.data.communitiesCreated.length}}):
+                    <div>
+                        <span ng-repeat="c in profile.profile.data.communitiesCreated | limitTo: profile.limitCreatedCommunities"><a ng-href="{{c.link}}">{{c.name}}</a>&nbsp;
+                        </span>
+                        <a href="" ng-show="profile.profile.data.communitiesCreated.length > profile.limitCreatedCommunities" ng-click="profile.showAllCreatedCommunities()">Показать еще...</a>
+                    </div>
+                     </span>
+                    <span class="md-subhead" ng-show="profile.profile.data.communitiesMember.length > 0">
+                    <span ng-show="profile.profile.data.isCurrentUser"> Вы состоите в обьединениях (всего {{profile.profile.data.communitiesMember.length}}):</span>
+                        <span ng-show="!profile.profile.data.isCurrentUser"> Состоит в обьединениях (всего {{profile.profile.data.communitiesMember.length}}):</span>
+                    <div>
+                        <span ng-repeat="c in profile.profile.data.communitiesMember | limitTo: profile.limitMemberCommunities"><a ng-href="{{c.link}}">{{c.name}}</a>&nbsp;
+                        </span>
+                        <a href="" ng-show="profile.profile.data.communitiesMember.length > profile.limitMemberCommunities" ng-click="profile.showAllMemberCommunities()">Показать еще...</a>
+                    </div>
+                     </span>
+                    <div class="md-subhead" ng-show="!profile.profile.data.isCurrentUser">
+                        <div ng-show="(profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'ACCEPTED') && (profile.profile.data.contact.otherStatus ===  'ACCEPTED')">
+                            Этот участник в списке Ваших контактов:
+                          <span ng-show="profile.profile.data.contact.contactGroups.length == 0">
+                              	<span>Список по умолчанию</span>
+                          </span>
+                            <span ng-show="profile.profile.data.contact.contactGroups.length > 0">
+                                <span ng-repeat="gr in profile.profile.data.contact.contactGroups"> <span>{{gr.name}}</span>&nbsp;</span>
+                          </span>
+                        </div>
+                        <div ng-show="!profile.profile.data.contact || ((profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'NEW') && (profile.profile.data.contact.otherStatus ===  'NEW'))">
+                            Не в списке ваших контактов
+                        </div>
+                        <span ng-show="(profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'NEW') && (profile.profile.data.contact.otherStatus ===  'ACCEPTED')">
+                            Вы получили заявку на добавление в список контактов от этого участника
+                        </span>
+                         <span ng-show="(profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'ACCEPTED') && (profile.profile.data.contact.otherStatus ===  'NEW`')">
+                            Вы подали заявку на добавление в список контактов от этого участника
+                        </span>
+                    </div>
+                </div>
+            </md-card-title-text>
+
+        </md-card-title>
+        <md-card-content>
+              <div flex layout="row" ng-show="!profile.profile.data.isCurrentUser">
+                  <md-input-container flex="50">
+                      <label ng-show="(!profile.profile.data.contact) || ((profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'NEW') && (profile.profile.data.contact.otherStatus ===  'ACCEPTED')) || ((profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'NEW') && (profile.profile.data.contact.otherStatus ===  'NEW'))">Добавить в список контактов</label>
+                      <label ng-show="!((!profile.profile.data.contact) || ((profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'NEW') && (profile.profile.data.contact.otherStatus ===  'ACCEPTED')) || ((profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'NEW') && (profile.profile.data.contact.otherStatus ===  'NEW')))">Перенести в список контактов</label>
+                      <md-select ng-change="profile.onContactGroupsChange()" ng-model-options="{trackBy: '$value.id'}" md-selected-text="''" multiple ng-model="profile.profile.data.contact.contactGroups">
+                          <md-option ng-value="{id:0,name:'Список по умолчанию'}">Список по умолчанию</md-option>
+                          <md-option ng-value="gr" ng-repeat="gr in profile.profile.data.contactGroups">{{gr.name}}</md-option>
+                      </md-select>
+                  </md-input-container>
+                  <md-button flex="50" ng-click="profile.deleteContact()" ng-show="(profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'ACCEPTED') && (profile.profile.data.contact.otherStatus ===  'ACCEPTED')">Удалить из списка контактов</md-button>
+                  <md-button flex="50" ng-click="profile.deleteContact()" ng-show="(profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'NEW') && (profile.profile.data.contact.otherStatus ===  'ACCEPTED')">Отклонить заявку</md-button>
+                  <md-button flex="50" ng-click="profile.deleteContact()" ng-show="(profile.profile.data.contact) && (profile.profile.data.contact.sharerStatus ===  'ACCEPTED') && (profile.profile.data.contact.otherStatus ===  'NEW')">Отменить заявку</md-button>
+              </div>
+            <md-tabs md-dynamic-height md-border-bottom
+                     md-center-tabs="false"
+                     md-stretch-tabs="auto"
+                     md-swipe-right="$event.stopPropagation()"
+                     md-swipe-left="$event.stopPropagation()"
+                     md-swipe-content="true"
+                     md-no-pagination="false">
+                <md-tab>
+                    <md-tab-label>
+                        <md-icon md-font-set="material-icons" class="md-icon-20">assignment</md-icon>
+                        <span hide show-gt-xs>{{'REGISTRATION_DATA' | translate}}</span>
+                    </md-tab-label>
+                    <md-tab-body>
+                        <div layout="column" layout-padding>
+
+                            <span class="panel_caption">Общие данные</span>
+
+                            <md-divider ng-cloak></md-divider>
+
+                            <div layout="row" layout-xs="column" layout-margin class="md-inline-form">
+
+                                <md-input-container class="md-block" flex ng-if="profile.profile.data.isCurrentUser || profile.profile.data.lastName">
+                                    <label>Фамилия</label>
+                                    <input ng-change="profile.setDataToSend('lastName',profile.profile.data.lastName)" ng-model="profile.profile.data.lastName" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex ng-if="profile.profile.data.isCurrentUser || profile.profile.data.firstName">
+                                    <label>Имя</label>
+                                    <input ng-change="profile.setDataToSend('firstName',profile.profile.data.firstName)" ng-model="profile.profile.data.firstName" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex ng-if="profile.profile.data.isCurrentUser || profile.profile.data.middleName">
+                                    <label>Отчество</label>
+                                    <input ng-change="profile.setDataToSend('middleName',profile.profile.data.middleName)" ng-model="profile.profile.data.middleName" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+
+                            </div>
+
+                            <div layout="row" layout-xs="column" layout-margin class="md-inline-form">
+
+                                <!--<div class="md-block" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.dateOfBirth">
+                                    <div class="md_input_hint_top">Дата рождения</div>
+
+                                    <md-datepicker ng-model="profile.profile.data.dateOfBirth" md-placeholder="Дата рождения" ng-disabled="!profile.profile.data.isCurrentUser">
+                                    </md-datepicker>
+                                </div>-->
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.dateOfBirth">
+                                <mdp-date-picker style="bottom:0px;" ng-change="profile.setDataToSendDate('dateOfBirth',profile.profile.data.dateOfBirth)" mdp-placeholder="Дата рождения" mdp-format="DD/MM/YYYY"
+
+                                                 mdp-disabled="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)"
+                                                 ng-model="profile.profile.data.dateOfBirth"></mdp-date-picker>
+                                <askor-field-visibility name="'dateOfBirth'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.dateOfBirth">
+                                </askor-field-visibility>
+                                </div>
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.gender">
+                                <md-input-container class="md-block">
+                                    <label>Пол</label>
+                                    <md-select ng-change="profile.setDataToSend('gender',profile.profile.data.gender)" ng-model="profile.profile.data.gender" ng-disabled="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                        <md-option value=""></md-option>
+                                        <md-option value="Мужской">Мужской</md-option>
+                                        <md-option value="Женский">Женский</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                    <askor-field-visibility name="'gender'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.gender">
+                                    </askor-field-visibility>
+                                </div>
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.placeOfBirth">
+                                <md-input-container class="md-block" flex>
+                                    <label>Место рождения</label>
+                                    <input ng-change="profile.setDataToSend('placeOfBirth',profile.profile.data.placeOfBirth)" ng-model="profile.profile.data.placeOfBirth" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'placeOfBirth'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.placeOfBirth">
+                                    </askor-field-visibility>
+                                </div>
+
+                            </div>
+
+                            <div layout="row" layout-xs="column" layout-margin class="md-inline-form">
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.nationality">
+                                <md-input-container class="md-block" flex>
+                                    <label>Национальность</label>
+                                    <!--<md-select ng-model="profile.profile.data.nationality">
+                                        <md-option value=""></md-option>
+                                    </md-select>-->
+                                    <input ng-change="profile.setDataToSend('nationality',profile.profile.data.nationality)" ng-model="profile.profile.data.nationality" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'nationality'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.nationality">
+                                    </askor-field-visibility>
+                                </div>
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.nativeLanguage">
+                                <md-input-container class="md-block" flex>
+                                    <label>Родной язык</label>
+                                    <!--<md-select ng-model="profile.profile.data.nativeLanguage">
+                                        <md-option value=""></md-option>
+                                    </md-select>-->
+                                    <input ng-change="profile.setDataToSend('nativeLanguage',profile.profile.data.nativeLanguage)" ng-model="profile.profile.data.nativeLanguage" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'nativeLanguage'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.nativeLanguage">
+                                    </askor-field-visibility>
+                                 </div>
+
+                            </div>
+
+                            <span class="panel_caption">Связи и коммуникации</span>
+
+                            <md-divider ng-cloak></md-divider>
+                            <div layout="row" layout-xs="column" layout-margin class="md-inline-form">
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.homePhone">
+                                <md-input-container class="md-block" flex>
+                                    <label>Домашний телефон</label>
+                                    <input ng-change="profile.setDataToSend('homePhone',profile.profile.data.homePhone)" ng-model="profile.profile.data.homePhone" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'homePhone'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.homePhone">
+                                    </askor-field-visibility>
+                                </div>
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.mobilePhone">
+                                <md-input-container class="md-block" flex>
+                                    <label>Мобильный телефон</label>
+                                    <input ng-change="profile.setDataToSend('mobilePhone',profile.profile.data.mobilePhone)" ng-model="profile.profile.data.mobilePhone" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'mobilePhone'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.mobilePhone">
+                                    </askor-field-visibility>
+                                 </div>
+
+                            </div>
+
+                            <div layout="row" layout-xs="column" layout-margin class="md-inline-form">
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.skype">
+                                <md-input-container class="md-block" flex>
+                                    <label>Skype</label>
+                                    <input ng-change="profile.setDataToSend('skype',profile.profile.data.skype)" ng-model="profile.profile.data.skype" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'skype'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.skype">
+                                    </askor-field-visibility>
+                                </div>
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.www">
+                                <md-input-container class="md-block" flex>
+                                    <label>www</label>
+                                    <input ng-change="profile.setDataToSend('www',profile.profile.data.www)" ng-model="profile.profile.data.www" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'www'" field-type="'basic_information'" field-hidden="profile.profile.data.basicInfoVisibilityMap.www">
+                                    </askor-field-visibility>
+                                </div>
+                            </div>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab>
+                    <md-tab-label>
+                        <md-icon md-font-set="material-icons" class="md-icon-20">verified_user</md-icon>
+                        <span hide show-gt-xs>{{'VERIFICATION_DATA' | translate}}</span>
+                    </md-tab-label>
+                    <md-tab-body>
+                        <div layout="column" layout-padding>
+                            <askor-passport-form citizenship-settings="profile.passportCitizenshipSettings" readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)" passport-field-change="profile.setDataToSend" passport-data="profile.profile.data"></askor-passport-form>
+                            <md-divider></md-divider>
+
+                            <span class="panel_caption">Адрес регистрации</span>
+
+                            <md-divider></md-divider>
+
+                            <askor-address-form address-type="'registration_address'"  visibility-map="profile.profile.data.regAddressVisibilityMap" address-field-change="profile.onRegAddressChange" name="'registrationAddress'" address="profile.profile.registrationAddress"
+                                                kladr-token="'543f7e2a7c523985378b456e'"
+                                                disabled="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)"></askor-address-form>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab ng-disabled="!profile.registrator">
+                    <md-tab-label>
+                        <md-icon md-font-set="material-icons" class="md-icon-20">&#xE86D;</md-icon>
+                        <span hide show-gt-xs>Реквизиты регистратора</span>
+                    </md-tab-label>
+                    <md-tab-body>
+                        <div layout="column" layout-padding>
+                            <span class="panel_caption">Адрес офиса регистратора</span>
+
+                            <md-divider></md-divider>
+                            <askor-address-form address-type="'registrator_office_address'"  visibility-map="profile.profile.data.registratorOfficeAddressVisibilityMap" address-field-change="profile.onRegistratorOfficeAddressChange" name="'registratorOfficeAddress'" address="profile.profile.registratorOfficeAddress"
+                                                kladr-token="'543f7e2a7c523985378b456e'"
+                                                disabled="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)"></askor-address-form>
+                            <span class="panel_caption">Время работы</span>
+
+                            <md-divider></md-divider>
+                            <div class="column">
+                            <askor-timetable readonly="!profile.profile.data.isCurrentUser" time-table-change="profile.timeTableChange" time-table-array="profile.profile.data.timetable"></askor-timetable>
+                                <askor-field-visibility name="'timetable'" field-type="'registrator_data'" field-hidden="profile.profile.data.registratorDataAddressVisibilityMap.timetable">
+                                </askor-field-visibility>
+                             </div>
+                            <span class="panel_caption">Связи и коммуникации</span>
+
+                            <md-divider ng-cloak></md-divider>
+
+                            <div layout="row" layout-xs="column" layout-margin class="md-inline-form">
+                                <div layout="row"  ng-if="profile.profile.data.isCurrentUser || profile.profile.data.registratorOfficePhone">
+                                <md-input-container class="md-block" flex>
+                                    <label>Телефон офиса</label>
+                                    <input ng-change="profile.setDataToSendRegistrator('officePhone',profile.profile.data.registratorOfficePhone)" ng-model="profile.profile.data.registratorOfficePhone" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'officePhone'" field-type="'registrator_data'" field-hidden="profile.profile.data.registratorDataAddressVisibilityMap.officePhone">
+                                    </askor-field-visibility>
+                                </div>
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.mobileRegistratorPhone">
+                                <md-input-container class="md-block" flex>
+                                    <label>Мобильный телефон</label>
+                                    <input ng-change="profile.setDataToSendRegistrator('mobilePhone',profile.profile.data.mobileRegistratorPhone)" ng-model="profile.profile.data.mobileRegistratorPhone" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'mobilePhone'" field-type="'registrator_data'" field-hidden="profile.profile.data.registratorDataAddressVisibilityMap.mobilePhone">
+                                    </askor-field-visibility>
+                                </div>
+
+                            </div>
+
+                            <div layout="row" layout-xs="column" layout-margin class="md-inline-form">
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.registratorSkype">
+                                <md-input-container class="md-block" flex>
+                                    <label>Skype</label>
+                                    <input ng-change="profile.setDataToSendRegistrator('skype',profile.profile.data.registratorSkype)" ng-model="profile.profile.data.registratorSkype" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'skype'" field-type="'registrator_data'" field-hidden="profile.profile.data.registratorDataAddressVisibilityMap.skype">
+                                    </askor-field-visibility>
+                                </div>
+                                <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.registratorWww">
+                                <md-input-container class="md-block" flex>
+                                    <label>www</label>
+                                    <input ng-change="profile.setDataToSendRegistrator('www',profile.profile.data.registratorWww)" ng-model="profile.profile.data.registratorWww" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                                </md-input-container>
+                                    <askor-field-visibility name="'www'" field-type="'registrator_data'" field-hidden="profile.profile.data.registratorDataAddressVisibilityMap.www">
+                                    </askor-field-visibility>
+                                </div>
+
+                            </div>
+                            <md-divider></md-divider>
+                            <span class="panel_caption">Дополнительные услуги регистратора</span>
+                            <div layout="row" ng-if="profile.profile.data.isCurrentUser || profile.profile.data.registratorAdditionalService">
+                            <md-input-container class="md-block" flex>
+                                <label>Дополнительные услуги регистратора</label>
+                                <input ng-change="profile.setDataToSendRegistrator('additionalService',profile.profile.data.registratorAdditionalService)" ng-model="profile.profile.data.registratorAdditionalService" ng-readonly="(!profile.profile.data.isCurrentUser) || (profile.profile.data.verified && !profile.profile.data.superadmin)">
+                            </md-input-container>
+                                <askor-field-visibility name="'additionalService'" field-type="'registrator_data'" field-hidden="profile.profile.data.registratorDataAddressVisibilityMap.additionalService">
+                                </askor-field-visibility>
+                            </div>
+                            <div layout="column" ng-show="profile.profile.data.isCurrentUser">
+                            <span class="panel_caption">Идентифицированные мною:</span>
+                            <md-divider></md-divider>
+                                <md-input-container>
+                                <div class="md-subhead">Пользователи: {{profile.profile.data.verifiedUsersCount}}</div>
+                                <div class="md-subhead">Объединения: {{profile.profile.data.verifiedCommunitiesCount}}</div>
+                                <div class="md-subhead">Регистраторы: {{profile.profile.data.verifiedRegistratorsCount}}</div>
+                                    </md-input-container>
+                            </div>
+                            <div layout="column" ng-show="profile.profile.data.isCurrentUser">
+                                <span class="panel_caption">Вами приглашено в систему {{profile.profile.data.countInvitedRegistered}} человек. Из них:</span>
+                                <md-divider></md-divider>
+                                <md-input-container>
+                                Идентифицированные: {{profile.profile.data.countInvitedVerified}} из {{profile.profile.data.countInvitedRegistered}}
+                                <md-progress-linear md-mode="determinate" value="{{(profile.profile.data.countInvitedVerified / profile.profile.data.countInvitedRegistered)*100}}"></md-progress-linear>
+                                    </md-input-container>
+                                <md-input-container>
+                                Регистраторы 3 Ранга: {{profile.profile.data.countInvitedReg3Level}} из {{profile.profile.data.countInvitedRegistered}}
+                                <md-progress-linear md-mode="determinate" value="{{(profile.profile.data.countInvitedReg3Level / profile.profile.data.countInvitedRegistered)*100}}"></md-progress-linear>
+                                    </md-input-container>
+                                <md-input-container>
+                                Регистраторы 2 Ранга: {{profile.profile.data.countInvitedReg1Level}} из {{profile.profile.data.countInvitedRegistered}}
+                                <md-progress-linear md-mode="determinate" value="{{(profile.profile.data.countInvitedReg2Level / profile.profile.data.countInvitedRegistered)*100}}"></md-progress-linear>
+                                </md-input-container>
+                                <md-input-container>
+                               Регистраторы 1 Ранга: {{profile.profile.data.countInvitedReg1Level}} из {{profile.profile.data.countInvitedRegistered}}
+                                <md-progress-linear md-mode="determinate" value="{{(profile.profile.data.countInvitedReg1Level / profile.profile.data.countInvitedRegistered)*100}}"></md-progress-linear>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab>
+                    <md-tab-label>
+                        <md-icon md-font-set="material-icons" class="md-icon-20">note_add</md-icon>
+                        <span hide show-gt-xs>{{'ADDITIONAL_DATA' | translate}}</span>
+                    </md-tab-label>
+                    <md-tab-body>
+                        <div layout="column" layout-padding>
+
+                            <span class="panel_caption">Фактический адрес</span>
+
+                            <md-divider></md-divider>
+
+                            <askor-address-form address-type="'fact_address'"  visibility-map="profile.profile.data.factAddressVisibilityMap" address-field-change="profile.onFactAddressChange" name="'actualAddress'" address="profile.profile.actualAddress"
+                                                kladr-token="'543f7e2a7c523985378b456e'"
+                                                disabled="!profile.profile.data.isCurrentUser"></askor-address-form>
+
+                            <span hide>
+                                {{profile.profile.actualAddress.countryName}}
+                                <br>
+                                {{profile.profile.actualAddress.zipCode}}
+
+                                <br>
+                                {{profile.profile.actualAddress.regionLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.regionShortLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.regionName}}
+
+                                <br>
+                                {{profile.profile.actualAddress.districtLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.districtShortLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.districtName}}
+
+                                <br>
+                                {{profile.profile.actualAddress.cityLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.cityShortLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.cityName}}
+
+                                <br>
+                                {{profile.profile.actualAddress.streetLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.streetShortLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.streetName}}
+
+                                <br>
+                                {{profile.profile.actualAddress.buildingLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.buildingShortLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.buildingName}}
+
+                                <br>
+                                {{profile.profile.actualAddress.appartmentLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.appartmentShortLabel}}
+                                <br>
+                                {{profile.profile.actualAddress.appartmentName}}
+                            </span>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+            </md-tabs>
+
+            <md-divider></md-divider>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+
+            <md-button ng-if="profile.profile.data.isCurrentUser" ng-click="profile.saveProfile()">{{'SAVE' | translate}}</md-button>
+
+        </md-card-actions>
+    </md-card>
+
+</div>

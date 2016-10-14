@@ -1,0 +1,28 @@
+{
+  "choose.photo.source.title" : "Изначальное фото",
+  "choose.photo.source.loading" : "Загрузка...",
+
+  "choose.photo.result.title" : "Итоговое фото",
+  "choose.photo.result.loading" : "Загрузка...",
+
+  "choose.photo.upload.btn" : "Загрузить фото",
+  "choose.photo.webcam.btn" : "Сделать фото с камеры",
+
+  "choose.photo.dialog.webcam.header" : "Снимок с камеры",
+  "choose.photo.dialog.webcam.source.title" : "Камера",
+  "choose.photo.dialog.webcam.result.title" : "Снимок",
+
+  "choose.photo.dialog.webcam.error" : "Необходимо дать доступ к веб камере.",
+
+  "choose.photo.dialog.makeSnapshot" : "Сделать снимок",
+  "choose.photo.dialog.doneSnapshot" : "Готово",
+
+  "choose.photo.maxSize.info" : "Максимальный размер фото:",
+  "choose.photo.minHeight.info" : "Минимальная высота фото:",
+  "choose.photo.minWidth.info" : "Минимальная ширина фото:",
+
+  "choose.photo.maxSize.error": "Недопустимый размер фото",
+  "choose.photo.pattern.error" : "Недопустимый формат файла. К загрузке возможны любые картинки.",
+  "choose.photo.minHeight.error" : "Недопустимая минимальная высота фото.",
+  "choose.photo.minWidth.error" : "Недопустимая минимальная ширина фото."
+}

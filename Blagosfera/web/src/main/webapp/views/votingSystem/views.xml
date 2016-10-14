@@ -1,0 +1,12 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="votingPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/votingSystem/votingPage.jsp" />
+    </definition>
+    <definition name="batchVotingResultPage" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/votingSystem/batchVotingResultPage.jsp" />
+    </definition>
+    <definition name="registrationInVoting" extends="onlyLeftSidebarLayout">
+        <put-attribute name="content" value="/views/votingSystem/registrationInVoting.jsp" />
+    </definition>
+</tiles-definitions>

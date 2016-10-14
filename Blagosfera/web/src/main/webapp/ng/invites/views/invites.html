@@ -1,0 +1,460 @@
+<div id="invitesBlock">
+    <div slayout-padding layout="row" layout-xs="column" flex>
+        <div layout="row" layout-xs="column" flex>
+            <h2 class="invites_header">{{'invites_list' | translate}} {{invites.count}}</h2>
+            <div>
+                <md-button class="md-icon-button" ng-click="invites.showSearch=!invites.showSearch" ng-disabled="invites.showFilter">
+                    <md-icon md-font-set="material-icons" class="clickable">search</md-icon>
+                </md-button>
+
+                <md-button class="md-icon-button" ng-click="invites.showFilter=!invites.showFilter">
+                    <md-icon md-font-set="material-icons" class="clickable">menu</md-icon>
+                </md-button>
+            </div>
+        </div>
+        <md-button style="
+            background-color: #cddc39;
+            "
+                   ng-click="invites.showTabDialog(app.userDetails.verified)">
+            {{'do_invite_to_system' | translate}}
+        </md-button>
+    </div>
+    <div ng-show="invites.showFilter || invites.showSearch">
+        <md-divider class=""></md-divider>
+        <div layout="column" layout-padding>
+            <div layout="row" layout-align="left top"><span class="panel_caption">{{'invites.filter.emailFilter' | translate}}</span></div>
+            <div layout="row">
+                <md-input-container class="md-block" flex style="margin: 5px 0;">
+                    <label>{{'invites.filter.emailFilter.title' | translate}}</label>
+                    <input name="emailFilter"
+                           type="text"
+                           ng-model="invites.filter.emailFilter"
+                           ng-change="invites.getInvites()"
+                            />
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+    <div ng-show="invites.showFilter" layout="column">
+        <md-divider class=""></md-divider>
+        <div layout="row" layout-xs="column" flex layout-align="center start">
+            <div flex>
+                <div layout="row" layout-xs="column" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.status.title' | translate}}</span></div>
+                <div style="padding: 0px 10px;">
+                    <md-radio-group ng-model="invites.filter.status" class="md-primary" ng-change="invites.getInvites()">
+                        <div layout="row" layout-align="start start">
+                            <div flex>
+                                <md-radio-button ng-value="null">
+                                    {{'invites.filter.statusAny' | translate}}
+                                </md-radio-button>
+                                <md-radio-button ng-value="0">
+                                    {{'invites.filter.status0' | translate}}
+                                </md-radio-button>
+                                <md-radio-button ng-value="1">
+                                    {{'invites.filter.status1' | translate}}
+                                </md-radio-button>
+                                <md-radio-button ng-value="2">
+                                    {{'invites.filter.status2' | translate}}
+                                </md-radio-button>
+                            </div>
+                            <div flex>
+                                <md-radio-button ng-value="3">
+                                    {{'invites.filter.status3' | translate}}
+                                </md-radio-button>
+                                <md-radio-button ng-value="4">
+                                    {{'invites.filter.status4' | translate}}
+                                </md-radio-button>
+                                <md-radio-button ng-value="5">
+                                    {{'invites.filter.status5' | translate}}
+                                </md-radio-button>
+                            </div>
+                        </div>
+                    </md-radio-group>
+                </div>
+            </div>
+            <div flex>
+                <div layout="row" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.inviteDate' | translate}}</span></div>
+                <div layout="row" layout-align="center center">
+                    <div flex>
+                        <md-datepicker
+                                ng-model="invites.filter.inviteDateStart"
+                                md-placeholder="{{'invites.filter.from' | translate}}"
+                                ng-change="invites.getInvites()"
+                        ></md-datepicker>
+                    </div>
+                    <div flex>
+                        <md-datepicker
+                                ng-model="invites.filter.inviteDateEnd"
+                                md-placeholder="{{'invites.filter.to' | translate}}"
+                                ng-change="invites.getInvites()"
+                        ></md-datepicker>
+                    </div>
+                </div>
+
+                <div layout="row" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.registrationDate' | translate}}</span></div>
+                <div layout="row" layout-align="center center">
+                    <div flex>
+                        <md-datepicker
+                                ng-model="invites.filter.registrationDateStart"
+                                md-placeholder="{{'invites.filter.from' | translate}}"
+                                ng-change="invites.getInvites()"
+                                ></md-datepicker>
+                    </div>
+                    <div flex>
+                        <md-datepicker
+                                ng-model="invites.filter.registrationDateEnd"
+                                md-placeholder="{{'invites.filter.to' | translate}}"
+                                ng-change="invites.getInvites()"
+                                ></md-datepicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <md-divider class=""></md-divider>
+        <div layout="row" layout-xs="column" flex layout-align="center top">
+            <div flex>
+                <div layout="row" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.verified' | translate}}</span></div>
+                <div layout="row" layout-align="center center">
+                    <label></label>
+                    <md-select
+                            placeholder="{{'invites.filter.notChoose' | translate}}"
+                               ng-model="invites.filter.verified"
+                               ng-change="invites.getInvites()"
+                               style="margin: 5px 0;">
+                        <md-option value="">
+                            {{'invites.filter.notChoose' | translate}}
+                        </md-option>
+                        <md-option value="true">
+                            {{'invites.filter.isVerified' | translate}}
+                        </md-option>
+                        <md-option value="false">
+                            {{'invites.filter.isNotVerified' | translate}}
+                        </md-option>
+                    </md-select>
+                </div>
+
+                <div layout="row" flex layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.verifiedDate' | translate}}</span></div>
+                <div layout="row" flex layout-align="center center">
+                    <div flex>
+                        <md-datepicker
+                                ng-model="invites.filter.verifiedDateStart"
+                                md-placeholder="{{'invites.filter.from' | translate}}"
+                                ng-change="invites.getInvites()"
+                        ></md-datepicker>
+                    </div>
+                    <div flex>
+                        <md-datepicker
+                                ng-model="invites.filter.verifiedDateEnd"
+                                md-placeholder="{{'invites.filter.to' | translate}}"
+                                ng-change="invites.getInvites()"
+                        ></md-datepicker>
+                    </div>
+                </div>
+
+            </div>
+
+            <div flex>
+                <div layout="row" layout-xs="column" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.countUsers' | translate}}</span></div>
+                <div layout="row" layout-xs="column" flex layout-align="center center">
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.from' | translate}}</label>
+                            <input name="countUsersStart"
+                                   type="number"
+                                   min="0" max="10000"
+                                   ng-model="invites.filter.countUsersStart"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.to' | translate}}</label>
+                            <input name="countUsersEnd"
+                                   type="number"
+                                   min="0" max="10000"
+                                   ng-model="invites.filter.countUsersEnd"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row" layout-xs="column" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.countCommunities' | translate}}</span></div>
+                <div layout="row" layout-xs="column" flex layout-align="center center">
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.from' | translate}}</label>
+                            <input name="countCommunitiesStart"
+                                   type="number"
+                                   min="0" max="10000"
+                                   ng-model="invites.filter.countCommunitiesStart"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.to' | translate}}</label>
+                            <input name="countCommunitiesEnd"
+                                   type="number"
+                                   min="0" max="10000"
+                                   ng-model="invites.filter.countCommunitiesEnd"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div layout="row" layout-xs="column" flex layout-align="center top">
+            <div flex>
+                <div layout="row" flex layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.registratorName' | translate}}</span></div>
+                <div layout="row" flex layout-align="center center">
+                    <md-input-container class="md-block" flex style="margin: 5px 0;">
+                        <label>{{'invites.filter.registratorNameLabel' | translate}}</label>
+                        <input name="verifierName"
+                               type="text"
+                               ng-model="invites.filter.verifierName",
+                               ng-change="invites.getInvites()"
+                                />
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+
+        <md-divider class=""></md-divider>
+        <div layout="row" layout-xs="column" flex layout-align="center top">
+            <div flex>
+                <div layout="row" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.guarantee' | translate}}</span></div>
+                <div layout="row" layout-align="center center">
+                    <label></label>
+                    <md-select
+                            placeholder="{{'invites.filter.notChoose' | translate}}"
+                            ng-model="invites.filter.guarantee"
+                            ng-change="invites.getInvites()"
+                            style="margin: 5px 0;">
+                        <md-option value="">
+                            {{'invites.filter.notChoose' | translate}}
+                        </md-option>
+                        <md-option value="true">
+                            {{'invites.filter.guarantee.yes' | translate}}
+                        </md-option>
+                        <md-option value="false">
+                            {{'invites.filter.guarantee.no' | translate}}
+                        </md-option>
+                    </md-select>
+                </div>
+                <div layout="row" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.gender' | translate}}</span></div>
+                <div layout="row" layout-align="center center">
+                    <label></label>
+                    <md-select
+                            placeholder="{{'invites.filter.notChoose' | translate}}"
+                            ng-model="invites.filter.gender"
+                            ng-change="invites.getInvites()"
+                            style="margin: 5px 0;">
+                        <md-option value="">
+                            {{'invites.filter.notChoose' | translate}}
+                        </md-option>
+                        <md-option value="true">
+                            {{'invites.filter.gender.male' | translate}}
+                        </md-option>
+                        <md-option value="false">
+                            {{'invites.filter.gender.female' | translate}}
+                        </md-option>
+                    </md-select>
+                </div>
+            </div>
+            <div flex>
+
+                <div layout="row" layout-xs="column" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.invites.count' | translate}}</span></div>
+                <div layout="row" layout-xs="column" flex layout-align="center center">
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.from' | translate}}</label>
+                            <input name="countInvitesStart"
+                                   type="number"
+                                   min="0" max="10000"
+                                   ng-model="invites.filter.countInvitesStart"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.to' | translate}}</label>
+                            <input name="countInvitesEnd"
+                                   type="number"
+                                   min="0" max="10000"
+                                   ng-model="invites.filter.countInvitesEnd"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row" layout-xs="column" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.howLongFamiliarStart' | translate}}</span></div>
+                <div layout="row" layout-xs="column" flex layout-align="center center">
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.from' | translate}}</label>
+                            <input name="middleName"
+                                   type="number"
+                                   min="0" max="100"
+                                   ng-model="invites.filter.howLongFamiliarStart"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                    <div flex>
+                        <md-input-container class="md-block" flex style="margin: 4px 0;">
+                            <label>{{'invites.filter.to' | translate}}</label>
+                            <input name="middleName"
+                                   type="number"
+                                   min="0" max="100"
+                                   ng-model="invites.filter.howLongFamiliarEnd"
+                                   ng-change="invites.getInvites()"
+                                    />
+                        </md-input-container>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <md-divider class=""></md-divider>
+        <div layout="row" layout-xs="column" flex layout-align="center top">
+            <div flex>
+                <div layout="row" layout-align="center center" layout-padding><span class="panel_caption">{{'invites.filter.registratorLevel' | translate}}</span></div>
+                <div style="padding: 0px 10px;">
+                    <md-radio-group ng-model="invites.filter.registratorLevel" ng-change="invites.getInvites()" class="md-primary">
+                        <div layout="row" layout-align="center center">
+                            <div flex>
+                                <md-radio-button ng-value="1">
+                                    {{'invites.filter.registratorLevel1' | translate}}
+                                </md-radio-button>
+                                <md-radio-button ng-value="2">
+                                    {{'invites.filter.registratorLevel2' | translate}}
+                                </md-radio-button>
+                            </div>
+                            <div flex>
+                                <md-radio-button ng-value="3">
+                                    {{'invites.filter.registratorLevel3' | translate}}
+                                </md-radio-button>
+                                <md-radio-button ng-value="">
+                                    {{'invites.filter.registratorLevelNo' | translate}}
+                                </md-radio-button>
+                            </div>
+                        </div>
+                    </md-radio-group>
+                </div>
+            </div>
+        </div>
+        <md-divider class=""></md-divider>
+    </div>
+    <div style="background-color: #f7f7f7;" layout="row" layout-xs="column" layout-align="center center">
+        <div style="height: 151px;" flex>
+            <div style="
+                color: #37474f;
+                font-size: 53px;
+                vertical-align: top;
+                padding-top: 18px;
+                text-align: center;
+            ">{{invites.pageData.inviteCount.countRegisterd}}</div>
+            <div style="
+                color: #37474f;
+                font-size: 20px;
+                vertical-align: top;
+                text-align: center;
+            ">{{'registeredCount' | translate}}</div>
+        </div>
+        <div style="height: 151px;" flex>
+            <div style="
+                color: #37474f;
+                font-size: 53px;
+                vertical-align: top;
+                padding-top: 18px;
+                text-align: center;
+            ">{{invites.pageData.inviteCount.countVerified}}</div>
+            <div style="
+                color: #37474f;
+                font-size: 20px;
+                vertical-align: top;
+                text-align: center;
+            ">{{'verifiedCount' | translate}}</div>
+        </div>
+        <div style="height: 151px;" flex=>
+            <div style="
+                color: #37474f;
+                font-size: 53px;
+                vertical-align: top;
+                padding-top: 18px;
+                text-align: center;
+            ">{{invites.pageData.inviteCount.countRegistrators}}</div>
+            <div style="
+                color: #37474f;
+                font-size: 20px;
+                vertical-align: top;
+                text-align: center;
+            ">{{'registratorsCount' | translate}}</div>
+        </div>
+    </div>
+    <md-table-pagination md-limit="invites.query.limit" md-limit-options="[15, 30, 50]" md-page="invites.query.page" md-total="{{invites.count}}" md-on-paginate="invites.getInvites" md-page-select md-label="{page: '{{'table.page' | translate}}', rowsPerPage: '{{'table.countRows' | translate}}', of: '{{'table.of' | translate}}'}"></md-table-pagination>
+    <md-table-container class="invites-table">
+        <table md-table multiple ng-model="invites.selected" md-progress="promise">
+            <thead md-head md-order="invites.query.order" md-on-reorder="invites.getInvites">
+            <tr md-row>
+                <th md-column><span></span></th>
+                <th md-column md-order-by="1"><span>{{'table.date' | translate}}</span></th>
+                <th md-column md-order-by="2"><span>{{'table.name' | translate}}</span></th>
+                <th md-column md-order-by="3"><span>{{'table.state' | translate}}</span></th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row
+                ng-repeat="invite in invites.data"
+                class="md-placeholder" ng-class="$index % 2 == 1 ? 'grey_row' : ''"
+            >
+                <td md-cell>
+                    <md-button
+                            class="md-icon-button" aria-label="dropdown"
+                            ng-click="invites.selectRow(invite, app)"
+                            ng-show="invite.invitedUser != null"
+                            >
+                        <md-icon md-svg-src="/ng/components/icons/ic_keyboard_arrow_down_black_24px.svg" aria-label="dropdown"></md-icon>
+                    </md-button>
+                </td>
+                <td md-cell>
+                    <span class="{{invite.inviteStatus | invitesStatusRowClassFilter}} invite-cell-text">
+                        {{invite.creationDate | simpleDateFormat}}
+                    </span>
+                </td>
+                <td md-cell>
+                    <span class="{{invite.inviteStatus | invitesStatusRowClassFilter}} invite-cell-text">
+                        {{invite.invitedLastName}} {{invite.invitedFirstName}} {{invite.invitedFatherName}}
+                    </span>
+                    <div>{{invite.email}}</div>
+                </td>
+                <td md-cell>
+                    <div class="{{invite.inviteStatus | invitesStatusRowClassFilter}} invite-row">
+                        <span class="{{invite.inviteStatus | invitesStatusClassFilter}}"></span>
+                        <span class="invite-cell-text">
+                            {{invite.inviteStatus | invitesStatusFilter}}
+                        </span>
+                        <span ng-show="(invite.inviteStatus == 1 || invite.inviteStatus == 2 || invite.inviteStatus == 3) && invite.invitesCount > 1">{{invite.invitesCount}}</span>
+                        <md-button aria-label="send"
+                                   ng-show="invite.inviteStatus == 1 || invite.inviteStatus == 2 || invite.inviteStatus == 3"
+                                   ng-click="invites.sendToEmail(invite.id)"
+                                >
+                            <md-icon md-font-set="material-icons" class="clickable">send</md-icon>
+                        </md-button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+    <md-table-pagination md-limit="invites.query.limit" md-limit-options="[15, 30, 50]" md-page="invites.query.page" md-total="{{invites.count}}" md-on-paginate="invites.getInvites" md-page-select md-label="{page: '{{'table.page' | translate}}', rowsPerPage: '{{'table.countRows' | translate}}', of: '{{'table.of' | translate}}'}"></md-table-pagination>
+</div>
+

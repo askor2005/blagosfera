@@ -1,0 +1,15 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="autopost" template="/views/utils/autopost.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" />
+    </definition>
+
+    <definition name="helpWindowPopup" template="/views/utils/helpWindowPopup.jsp">
+        <put-attribute name="favicon" value="/views/favicon.jsp" />
+    </definition>
+
+    <definition name="printablePage" template="/views/utils/printablePage.jsp">
+    </definition>
+
+</tiles-definitions>

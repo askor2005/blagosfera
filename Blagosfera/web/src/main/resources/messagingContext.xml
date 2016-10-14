@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.5.xsd
+                           http://www.springframework.org/schema/util   http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <rabbit:annotation-driven/>
+
+    <rabbit:connection-factory id="rabbitConnectionFactory"
+                               host="${rabbitmq.host}" port="${rabbitmq.port}" virtual-host="${rabbitmq.virtualhost}"
+                               username="${rabbitmq.username}" password="${rabbitmq.password}"/>
+
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
+
+    <rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory" reply-timeout="5000"
+                     message-converter="jsonMessageConverter" channel-transacted="false"/>
+
+    <rabbit:admin connection-factory="rabbitConnectionFactory"/>
+
+    <bean id="rabbitListenerContainerFactory"
+          class="org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory">
+        <property name="connectionFactory" ref="rabbitConnectionFactory"/>
+        <property name="concurrentConsumers" value="3"/>
+        <property name="maxConcurrentConsumers" value="10"/>
+        <property name="messageConverter" ref="jsonMessageConverter"/>
+    </bean>
+
+    <rabbit:listener-container connection-factory="rabbitConnectionFactory"/>
+
+    <rabbit:queue id="showPopupQueue" name="core.social.show.popup" durable="true">
+        <rabbit:queue-arguments>
+            <entry key="x-message-ttl" value="10000" value-type="java.lang.Integer"/>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!--
+        TODO нужно придумать более адекватный способ объвлять queue, как вариант можно использовать bindings в аннотации RabbitListener
+    -->
+    <rabbit:queue id="getContacts" name="core.social.get.contacts" durable="true"/>
+    <rabbit:queue id="executeClientScript" name="core.client.scripting.execute" durable="true"/>
+    <rabbit:queue id="createDocumentQueue" name="core.flow.document.create" durable="true"/>
+    <rabbit:queue id="getDocumentsByParticipantQueue" name="core.flow.document.by.participant" durable="true"/>
+    <rabbit:queue id="getDocumentQueue" name="core.flow.document.by.id.or.code" durable="true"/>
+    <rabbit:queue id="getDocumentParticipantsQueue" name="core.flow.document.participants.by.id.or.code"
+                  durable="true"/>
+    <rabbit:queue id="removeImagesFromDocument" name="core.flow.document.remove.images"
+                  durable="true"/>
+
+
+
+    <rabbit:queue id="createBatchVoting" name="core.batch.voting" durable="true"/>
+    <rabbit:queue id="addToBatchVotingParameters" name="batch.voting.add.parameters" durable="true"/>
+    <rabbit:queue id="getCandidatesWinnersIds" name="batch.voting.get.candidates.winners" durable="true"/>
+    <rabbit:queue id="communityCreate" name="community.create" durable="true"/>
+    <rabbit:queue id="createDocumentsZipOfPdf" name="documents.create.pdf.zip" durable="true"/>
+    <rabbit:queue id="communityAddFiles" name="community.add.files" durable="true"/>
+
+    <rabbit:queue id="commonQueue" name="core.common.queue" durable="true"/>
+
+
+    <rabbit:topic-exchange name="bp-rabbit-task-start-exchange" auto-delete="false" durable="true">
+        <rabbit:bindings>
+            <rabbit:binding pattern="#" exchange="task-exchange"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <rabbit:direct-exchange name="task-exchange" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="showPopupQueue"/>
+            <rabbit:binding queue="getContacts"/>
+            <rabbit:binding queue="executeClientScript"/>
+            <rabbit:binding queue="createDocumentQueue"/>
+            <rabbit:binding queue="getDocumentsByParticipantQueue"/>
+            <rabbit:binding queue="getDocumentQueue"/>
+            <rabbit:binding queue="getDocumentParticipantsQueue"/>
+            <rabbit:binding queue="removeImagesFromDocument"/>
+            <rabbit:binding queue="createBatchVoting"/>
+            <rabbit:binding queue="addToBatchVotingParameters"/>
+            <rabbit:binding queue="getCandidatesWinnersIds"/>
+            <rabbit:binding queue="communityCreate"/>
+            <rabbit:binding queue="createDocumentsZipOfPdf"/>
+            <rabbit:binding queue="communityAddFiles"/>
+            <rabbit:binding queue="commonQueue"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <bean id="soapMessageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory"/>
+
+    <bean id="robokassaJaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="packagesToScan">
+            <list>
+                <value>ru.askor.blagosfera.domain.xml.robokassa</value>
+            </list>
+        </property>
+        <property name="marshallerProperties">
+            <map>
+                <entry>
+                    <key>
+                        <util:constant static-field="javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT"/>
+                    </key>
+                    <value type="java.lang.Boolean">true</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="robokassaClient" class="ru.askor.blagosfera.core.services.robokassa.RobokassaClientImpl">
+        <constructor-arg name="messageFactory" ref="soapMessageFactory"/>
+        <property name="marshaller" ref="robokassaJaxbMarshaller"/>
+        <property name="unmarshaller" ref="robokassaJaxbMarshaller"/>
+        <property name="defaultUri" value="https://auth.robokassa.ru/Merchant/WebService/Service.asmx"/>
+    </bean>
+
+</beans>

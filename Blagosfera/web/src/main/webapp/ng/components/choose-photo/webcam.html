@@ -1,0 +1,48 @@
+<md-dialog aria-label="" class="askor-dialog" id="webCamDialog" ng-cloak style="text-align: center;">
+    <form name="createInvite">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 style="width: 100%; font-size: 26px; ">{{'choose.photo.dialog.webcam.header' | translate}}</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="row" layout-xs="column">
+                <div flex style="height: 100%; padding: 10px;">
+                    <md-toolbar>
+                        <h4>{{'choose.photo.dialog.webcam.source.title' | translate}}</h4>
+                    </md-toolbar>
+                    <md-content style="height: 250px; background: #E4E4E4;">
+                        <div flex style="height: 100%; border: dashed 1px #d3d3d3; overflow: hidden;">
+                            <div class="alert alert-error ng-scope" ng-show="webcamError" style="">
+                                <span>{{'choose.photo.dialog.webcam.error' | translate}}</span>
+                            </div>
+                            <webcam channel="channel"
+                                    on-streaming="onSuccess()"
+                                    on-error="onError(err)"
+                                    on-stream="onStream(stream)"
+                                    channel="createPhotoChannel"></webcam>
+                        </div>
+                    </md-content>
+                </div>
+                <div flex style="height: 100%; padding: 10px;">
+                    <md-toolbar>
+                        <h4>{{'choose.photo.dialog.webcam.result.title' | translate}}</h4>
+                    </md-toolbar>
+                    <md-content style="height: 250px; background: #E4E4E4;">
+                        <div flex style="height: 100%; border: dashed 1px #d3d3d3; overflow: hidden;">
+                            <canvas id="snapshot"></canvas>
+                        </div>
+                    </md-content>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-primary" ng-click="makeSnapshot()">
+                {{'choose.photo.dialog.makeSnapshot' | translate}}
+            </md-button>
+            <md-button class="md-primary" ng-click="doneCapture()">
+                {{'choose.photo.dialog.doneSnapshot' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

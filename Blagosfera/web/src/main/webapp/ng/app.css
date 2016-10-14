@@ -1,0 +1,432 @@
+html {
+    background-color: #EBECED !important;
+    overflow-x: auto !important;
+    overflow-y: scroll !important;
+}
+
+body {
+    /*width: 100% !important;
+    min-height: 100% !important;*/
+    /*overflow-x: auto !important;
+    overflow-y: scroll !important;*/
+    background-color: #EBECED !important;
+}
+
+a {
+    color: #3376ab;
+}
+
+.layout_container {
+    min-height: 100% !important;
+    background-color: white !important;
+}
+
+.layout_header {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 79px !important;
+    z-index: 59;
+}
+
+.layout_header_placeholder {
+    width: 100%;
+    height: 79px !important;
+}
+
+.layout_header_content {
+    color: white !important;
+    background-color: #37474F !important;
+    white-space: nowrap;
+}
+
+.layout_footer {
+    background-color: #EBECED !important;
+    white-space: nowrap;
+}
+
+.layout_main {
+}
+
+.layout-fab-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+/* navigation bar */
+
+.navigation_bar {
+    color: white !important;
+    background-color: #37474F !important;
+}
+
+/* breadcrumb */
+
+.breadcrumb_item {
+    text-transform: uppercase;
+    /*font-weight: bold;*/
+    color: #37474F;
+}
+
+ul.breadcrumb {
+    list-style: none;
+    padding: 0 0 0 0;
+    margin: 0.5em 0 0.5em 0;
+}
+
+ul.breadcrumb > li {
+    display: inline;
+}
+
+/* colors */
+
+.color_white {
+    color: white !important;
+}
+
+.background_color_white {
+    background-color: white !important;
+}
+
+.color_green {
+    color: limegreen !important;
+}
+
+.color_red {
+    color: red !important;
+}
+
+.color_red_alert {
+    color: rgb(213, 0, 0);
+}
+
+.color_grey {
+    color: darkgrey !important;
+}
+
+.color_blue {
+    color: blue;
+}
+
+.panel_caption {
+    color: rgb(96, 125, 139);
+}
+
+/* hide templates before compilation */
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+/* angular-material-data-table customizations */
+
+.md-row-select-single th.md-checkbox-column {
+    visibility: hidden !important;
+}
+
+.md-row-select-single-hide-checkboxes th.md-checkbox-column,
+.md-row-select-single-hide-checkboxes .md-checkbox-cell {
+    display: none !important;
+}
+
+/* animations */
+
+.fade-in.ng-enter {
+    -webkit-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+    opacity: 0;
+}
+
+.fade-in.ng-enter-active {
+    opacity: 1;
+}
+
+.fade-out.ng-leave {
+    -webkit-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+    opacity: 1;
+}
+
+.fade-out.ng-leave-active {
+    opacity: 0;
+}
+
+/* */
+
+.clickable {
+    cursor: pointer;
+}
+
+span.link {
+}
+
+span.link:hover {
+    text-decoration: underline;
+}
+
+/* angular material inputs */
+
+md-input-container .md-errors-spacer {
+    min-height: 0;
+}
+
+/* toasts */
+
+md-toast.md-warn-toast-theme .md-toast-content {
+    background-color: rgb(255, 196, 0);
+    color: black;
+}
+
+md-toast.md-error-toast-theme .md-toast-content {
+    background-color: red;
+    color: white;
+}
+
+/* material icons */
+
+ng-md-icon {
+    fill: #A4A4A5;
+}
+
+.md-icon-32 {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+}
+
+.md-icon-28 {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+}
+
+.md-icon-24 {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+}
+
+.md-icon-20 {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+.md-icon-16 {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+/* angular dialog always at center of screen */
+
+/*.md-dialog-container {
+    position: fixed !important;
+}
+
+md-tooltip {
+    position: fixed !important;
+}
+
+.md-virtual-repeat-container {
+    position: fixed !important;
+}
+
+.mdp-datepicker-select-year .md-virtual-repeat-container {
+    position: relative !important;
+}
+
+md-sidenav, md-backdrop {
+    position: fixed !important;
+}
+
+#kladr_autocomplete ul {
+    position: fixed !important;
+}*/
+
+md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active {
+    min-width: 10px !important;
+    width: auto !important;
+    max-width: 100% !important;
+}
+
+/* dialog caption */
+
+.md-toolbar-tools span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.overflow_ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* text alignment*/
+
+.align-left {
+    text-align: left !important;
+}
+
+h1, h2, h3 {
+    color: #37474f;
+}
+
+.askor-dialog {
+}
+
+.askor-dialog md-toolbar {
+    background-color: #ffc107;
+}
+
+.askor-dialog .md-toolbar-tools a {
+    color: #3376ab;
+}
+
+/* counters */
+
+.angular-notifications-icon {
+    min-width: 1em;
+    height: 1.5em;
+    font-size: x-small;
+}
+
+/* md-card image */
+
+md-card md-card-title md-card-title-media .md-media-xl {
+    min-width: 80px;
+    max-width: 300px;
+    height: auto;
+}
+
+/* message with error  */
+
+.msg-block {
+    margin-top: 5px;
+}
+
+.msg-error {
+    color: #F00;
+    font-size: 14px;
+}
+
+.green-button {
+    background-color: #8bc34a !important;
+    color: #ffffff !important;
+}
+
+.green-button * {
+    color: #ffffff;
+}
+
+/* recaptcha */
+
+.recaptcha {
+    width: 300px;
+    height: 74px;
+    background: repeating-linear-gradient(
+            30deg,
+            transparent,
+            transparent 10px,
+            #ccc 10px,
+            #ccc 20px
+    );
+}
+
+/* loading indicator, used before angular bootstrap */
+
+.app_loading_indicator_container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    top: 0;
+    z-index: 9999;
+    background-color: white;
+    opacity: 1;
+}
+
+.app_loading_indicator_container .app_loading_indicator {
+    display: flex;
+    margin: 0 auto;
+    opacity: 1;
+}
+
+.md-inline-form md-datepicker {
+    position: relative;
+    bottom: 17px;
+}
+
+.md_input_hint_top {
+    /* Position the hint */
+    position: relative;
+    left: 2px;
+    right: auto;
+    bottom: 17px;
+    /* Copy styles from ng-messages */
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    /* Set our own color */
+    color: grey;
+    min-height: 0;
+}
+
+.md_input_hint_bottom {
+    /* Position the hint */
+    /*position: relative;
+    left: 2px;
+    right: auto;
+    bottom: -5px;*/
+    /* Copy styles from ng-messages */
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    /* Set our own color */
+    color: grey;
+    min-height: 0;
+}
+
+md-autocomplete[md-floating-label] md-input-container {
+    padding-bottom: 0px !important;
+    /*margin: 0 !important;*/
+    /*margin: 18px 0 0 0 !important;*/
+}
+
+mdp-date-picker {
+    position: relative;
+    bottom: 18px;
+}
+
+.angular-leaflet-map {
+    min-height: 200px;
+    height: 300px;
+    width: 100%;
+}
+
+.text-muted {
+    color: #777;
+}
+
+@media (max-width: 960px) {
+    [layout-padding] {
+        padding: 0 !important;
+    }
+}
+
+.table-break-word {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-break-word td {
+    word-wrap: break-word;
+}
